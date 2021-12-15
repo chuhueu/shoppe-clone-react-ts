@@ -12,11 +12,16 @@ const useStyles = makeStyles((theme: Theme) =>
             top: "0",
             left: "0",
             right: "0",
+            transform: "translateZ(0)",
             zIndex: 99,
         },
         styleContainer: {
             margin: "0 auto",
             padding: "0 15px",
+        },
+        styleTop: {
+            width: "100%",
+            height: "123px",
         },
     })
 );
@@ -24,12 +29,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const Header = () => {
     const classes = useStyles();
     return (
-        <Box className={classes.styleHeader}>
-            <Container className={classes.styleContainer}>
-                <Navbar />
-                <HeaderBottom />
-            </Container>
-        </Box>
+        <React.Fragment>
+            <Box className={classes.styleHeader}>
+                <Container className={classes.styleContainer}>
+                    <Navbar />
+                    <HeaderBottom />
+                </Container>
+            </Box>
+            <Box className={classes.styleTop}></Box>
+        </React.Fragment>
     );
 };
 
