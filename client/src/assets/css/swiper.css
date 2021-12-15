@@ -1,0 +1,23 @@
+.swiper-wrapper {
+  padding-inline-start: 0;
+}
+.swiper-slide {
+  list-style: none;
+  width: 100%;
+}
+.swiper-pagination {
+  padding-bottom: 10px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.18);
+  padding: 5px;
+}
+.swiper-container:hover .swiper-button-prev,
+.swiper-container:hover .swiper-button-next {
+  display: block;
+  transition: 0.2s ease-in-out;
+}
