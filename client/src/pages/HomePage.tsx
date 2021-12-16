@@ -4,11 +4,15 @@ import {
     SearchTop,
     SearchTrend,
     ShopeeMall,
+    Directory,
+    FlashSale,
 } from "../components/index";
 const HomePage = () => {
     return (
         <>
             <Banner />
+            <Directory />
+            <FlashSale />
             <ShopeeMall />
             <SearchTrend />
             <SearchTop />

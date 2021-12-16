@@ -6,20 +6,6 @@ import "swiper/swiper-bundle.min.css";
 import "../../assets/css/swiper.css";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    styleContainer: {
-      marginTop: theme.spacing(2),
-    },
-    styleTitle: {
-      background: "#fff",
-      height: "3.75rem",
-      borderBottom: "1px solid rgba(0,0,0,.05)",
-      padding: "0 1.25rem",
-      "& p": {
-        color: "rgba(0,0,0,.54)",
-        fontWeight: 500,
-        textTransform: "uppercase",
-      },
-    },
     styleBox: {
       background: "#fff",
       overflow: "hidden",
@@ -44,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 SwiperCore.use([Navigation, Pagination, Autoplay]);
-const Directory = () => {
+const Test = () => {
   const classes = useStyles();
   const slides = [];
   for (let i = 0; i < 26; i++) {
     slides.push(
-      <SwiperSlide key={`directory-${i}`} tag="li">
+      <SwiperSlide key={`directory-${i}`} tag="li" style={{ width: "114px" }}>
         <img
           src={`/images/directory/directory-${i + 1}.png`}
           alt=""
@@ -60,10 +46,7 @@ const Directory = () => {
     );
   }
   return (
-    <Container className={classes.styleContainer}>
-      <Box display="flex" alignItems="center" className={classes.styleTitle}>
-        <Typography>Directory</Typography>
-      </Box>
+    <Container>
       <Box textAlign="center" className={classes.styleBox}>
         <Swiper
           tag="section"
@@ -76,7 +59,6 @@ const Directory = () => {
             1000: { slidesPerView: 10, slidesPerColumn: 2 },
             600: { slidesPerView: 5, slidesPerColumn: 2 },
             300: { slidesPerView: 3, slidesPerColumn: 2 },
-            100: { slidesPerView: 2, slidesPerColumn: 2 },
           }}
         >
           {slides}
@@ -86,4 +68,4 @@ const Directory = () => {
   );
 };
 
-export default Directory;
+export default Test;

@@ -1,5 +1,6 @@
 .swiper-wrapper {
     padding-inline-start: 0;
+    margin: 0;
 }
 .swiper-slide {
     list-style: none;
@@ -12,6 +13,10 @@
 }
 .swiper-pagination {
     padding-bottom: 10px;
+}
+.swiper-container-multirow-column > .swiper-wrapper {
+    flex-wrap: wrap;
+    flex-direction: inherit;
 }
 .swiper-button-prev,
 .swiper-button-next {
