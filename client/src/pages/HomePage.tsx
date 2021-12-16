@@ -1,10 +1,11 @@
 import React from "react";
-import { Banner, Directory } from "../components/index";
+import { Banner, Directory, FlashSale } from "../components/index";
 const HomePage = () => {
   return (
     <>
       <Banner />
       <Directory />
+      <FlashSale />
     </>
   );
 };

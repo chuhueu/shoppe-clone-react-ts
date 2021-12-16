@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { routes } from "./routes/routes";
 import { Header, Footer } from "./components/index";
+import Test from "./components/homepage/Test";
 function App() {
   return (
     <div className="wrapper">
@@ -12,6 +13,7 @@ function App() {
         {renderRoutes(routes)}
         <Footer />
       </Router>
+      {/* <Test /> */}
     </div>
   );
 }

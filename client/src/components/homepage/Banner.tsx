@@ -60,7 +60,6 @@ const Banner = () => {
           alt=""
           className="styleImg"
         />
-        aaaaaaa
       </SwiperSlide>
     );
   }
@@ -75,9 +74,9 @@ const Banner = () => {
                 wrapperTag="ul"
                 navigation
                 pagination={{ clickable: true }}
+                autoplay
                 spaceBetween={0}
                 slidesPerView={1}
-                autoplay
               >
                 {slides}
               </Swiper>
