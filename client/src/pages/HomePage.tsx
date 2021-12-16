@@ -1,13 +1,23 @@
 import React from "react";
-import { Banner, Directory, FlashSale } from "../components/index";
+import {
+    Banner,
+    SearchTop,
+    SearchTrend,
+    ShopeeMall,
+    Directory,
+    FlashSale,
+} from "../components/index";
 const HomePage = () => {
-  return (
-    <>
-      <Banner />
-      <Directory />
-      <FlashSale />
-    </>
-  );
+    return (
+        <>
+            <Banner />
+            <Directory />
+            <FlashSale />
+            <ShopeeMall />
+            <SearchTrend />
+            <SearchTop />
+        </>
+    );
 };
 
 export default HomePage;

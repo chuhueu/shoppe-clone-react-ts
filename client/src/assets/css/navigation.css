@@ -1,0 +1,36 @@
+/* Custom navigation swiper */
+.custom-navi .swiper-button-prev,
+.custom-navi .swiper-button-next {
+    display: block;
+    border-radius: 50%;
+    background-color: #fff;
+    color: rgb(0, 0, 0, 0.8);
+    padding: 5px;
+    box-shadow: 0 1px 12px 0 rgb(0 0 0 / 12%);
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+}
+.custom-navi .swiper-button-prev::after,
+.custom-navi .swiper-button-next::after {
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.custom-navi .swiper-button-prev {
+    left: 0;
+}
+.custom-navi .swiper-button-next {
+    right: 0;
+}
+.custom-navi:hover .swiper-button-prev {
+    transform: scale(1.5) translateX(20%);
+    transition: 0.2s ease-in-out;
+}
+.custom-navi:hover .swiper-button-next {
+    transform: scale(1.5) translateX(-20%);
+    transition: 0.2s ease-in-out;
+}
