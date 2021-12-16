@@ -1,23 +1,46 @@
 .swiper-wrapper {
-  padding-inline-start: 0;
+    padding-inline-start: 0;
 }
 .swiper-slide {
-  list-style: none;
-  width: 100%;
+    list-style: none;
+    width: 100%;
+    height: auto;
+}
+.swiper-container-multirow-column > .swiper-wrapper {
+    flex-wrap: wrap;
+    flex-direction: inherit;
 }
 .swiper-pagination {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
 }
-
 .swiper-button-prev,
 .swiper-button-next {
-  display: none;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.18);
-  padding: 5px;
+    display: none;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.18);
+    padding: 5px;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 16px;
+    font-weight: 600;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.swiper-button-prev {
+    left: 0;
+}
+.swiper-button-next {
+    right: 0;
 }
 .swiper-container:hover .swiper-button-prev,
 .swiper-container:hover .swiper-button-next {
-  display: block;
-  transition: 0.2s ease-in-out;
+    display: block;
+    transition: 0.2s ease-in-out;
+}
+.swiper-pagination-bullet-active {
+    background-color: rgb(238, 75, 45);
+    border-color: rgb(238, 75, 45);
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@material-ui/core";
+import { Box, Hidden } from "@material-ui/core";
 import logo from "../../../assets/images/shopee-logo.png";
 import SearchBox from "./SearchBox";
 import HeaderCart from "./HeaderCart";
@@ -10,7 +10,9 @@ const HeaderBottom = () => {
             <Box width="162px">
                 <img src={logo} alt="" style={{ maxWidth: "100%" }} />
             </Box>
-            <SearchBox />
+            <Hidden smDown>
+                <SearchBox />
+            </Hidden>
             <HeaderCart />
         </Box>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container } from "@material-ui/core";
+import { Box, Container, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import Navbar from "./Navbar";
 import HeaderBottom from "./HeaderBottom";
@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
             zIndex: 99,
         },
         styleContainer: {
+            maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 15px",
+            padding: "0",
         },
         styleTop: {
             width: "100%",
@@ -32,7 +33,9 @@ const Header = () => {
         <React.Fragment>
             <Box className={classes.styleHeader}>
                 <Container className={classes.styleContainer}>
-                    <Navbar />
+                    <Hidden smDown>
+                        <Navbar />
+                    </Hidden>
                     <HeaderBottom />
                 </Container>
             </Box>
