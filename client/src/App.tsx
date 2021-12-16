@@ -13,7 +13,6 @@ function App() {
         {renderRoutes(routes)}
         <Footer />
       </Router>
-      {/* <Test /> */}
     </div>
   );
 }
