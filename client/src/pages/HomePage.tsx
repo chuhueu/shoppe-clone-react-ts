@@ -1,11 +1,13 @@
 import React from "react";
-import { Banner } from "../components/index";
+import { Banner, Directory, FlashSale } from "../components/index";
 const HomePage = () => {
-    return (
-        <>
-            <Banner />
-        </>
-    );
+  return (
+    <>
+      <Banner />
+      <Directory />
+      <FlashSale />
+    </>
+  );
 };
 
 export default HomePage;

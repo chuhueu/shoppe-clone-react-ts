@@ -19,7 +19,6 @@ import ruby from "../../assets/images/icons/ruby.png";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
-      maxWidth: "1200px",
       "& img": {
         width: "100%",
       },
@@ -75,9 +74,9 @@ const Banner = () => {
                 wrapperTag="ul"
                 navigation
                 pagination={{ clickable: true }}
+                autoplay
                 spaceBetween={0}
                 slidesPerView={1}
-                autoplay
               >
                 {slides}
               </Swiper>
