@@ -50,6 +50,10 @@ const ShopeeMallList = () => {
             slidesPerColumn={2}
             slidesPerGroup={8}
             breakpoints={{
+                150: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 4,
+                },
                 300: {
                     slidesPerView: 2,
                     slidesPerGroup: 4,

@@ -200,7 +200,7 @@ const useStyles = makeStyles((theme: Theme) =>
         styleLanguageBox: {
             padding: "5px",
             cursor: "pointer",
-            "&:hover h3": {
+            "&:hover h4": {
                 color: "#f53d2d",
             },
         },
@@ -323,10 +323,10 @@ const Navbar = () => {
                     </Link>
                     <Box className={classes.styleLanguage}>
                         <Box className={classes.styleLanguageBox}>
-                            <Typography variant="h3">Tiếng Việt</Typography>
+                            <Typography variant="h4">Tiếng Việt</Typography>
                         </Box>
                         <Box className={classes.styleLanguageBox}>
-                            <Typography variant="h3">English</Typography>
+                            <Typography variant="h4">English</Typography>
                         </Box>
                     </Box>
                 </Typography>

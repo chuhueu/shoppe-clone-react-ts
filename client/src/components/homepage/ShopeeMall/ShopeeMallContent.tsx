@@ -41,6 +41,20 @@ const ShopeeMallContent = () => {
                                 delay: 3000,
                                 disableOnInteraction: false,
                             }}
+                            breakpoints={{
+                                150: {
+                                    slidesPerView: 1,
+                                },
+                                300: {
+                                    slidesPerView: 1,
+                                },
+                                768: {
+                                    slidesPerView: 1,
+                                },
+                                1024: {
+                                    slidesPerView: 1,
+                                },
+                            }}
                             pagination={{ clickable: true }}
                             navigation
                         >
