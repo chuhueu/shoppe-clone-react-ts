@@ -1,19 +1,19 @@
 body {
-  line-height: 1;
-  background: #f5f5f5;
-  margin: 0;
-  padding: 0;
+    line-height: 1;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 0;
 }
 .custom-p {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.87);
-  line-height: 125%;
-  overflow: hidden;
-  display: block;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  text-overflow: ellipsis;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.87);
+    line-height: 125%;
+    overflow: hidden;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
 }
