@@ -1,14 +1,11 @@
-import { Box, Container, Hidden } from "@material-ui/core";
+import { Box, Hidden } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
+import SwiperCore, { Navigation } from "swiper";
 import "swiper/swiper-bundle.min.css";
-//import "../../assets/css/swiper.css";
+import "../../assets/css/navigation.css";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    styleContainer: {
-      marginTop: theme.spacing(2),
-    },
     styleWrapper: {
       background: "#fff",
     },
@@ -85,7 +82,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+SwiperCore.use([Navigation]);
 const FlashSale = () => {
   const classes = useStyles();
   const slides = [];
@@ -122,8 +119,8 @@ const FlashSale = () => {
     );
   }
   return (
-    <Container className={classes.styleContainer}>
-      <Box mb={2} className={classes.styleWrapper}>
+    <>
+      <Box mt={2} mb={2} className={classes.styleWrapper}>
         <Box display="flex" alignItems="center" className={classes.styleTitle}>
           <img src="/images/flashSale/title.png" alt="" />
         </Box>
@@ -141,6 +138,7 @@ const FlashSale = () => {
               400: { slidesPerView: 2, slidesPerColumn: 1 },
               200: { slidesPerView: 1, slidesPerColumn: 1 },
             }}
+            className="custom-navi"
           >
             {slides}
           </Swiper>
@@ -153,7 +151,7 @@ const FlashSale = () => {
           style={{ width: "100%" }}
         />
       </Hidden>
-    </Container>
+    </>
   );
 };
 
