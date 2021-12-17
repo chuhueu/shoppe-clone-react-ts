@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Container, Typography } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
@@ -8,7 +8,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
       marginTop: theme.spacing(2),
-      maxWidth: "1200px",
     },
     styleTitle: {
       background: "#fff",
@@ -32,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
         borderRight: "1px solid rgba(0,0,0,.05)",
         borderBottom: "1px solid rgba(0,0,0,.05)",
         marginRight: "-1px",
+        cursor: "pointer",
+      },
+      "& li:hover": {
+        transform: "translateY(-2px)",
       },
       "& li p": {
         color: "rgba(0,0,0,.8)",
@@ -61,7 +64,7 @@ const Directory = () => {
     );
   }
   return (
-    <>
+    <Container className={classes.styleContainer}>
       <Box display="flex" alignItems="center" className={classes.styleTitle}>
         <Typography>Directory</Typography>
       </Box>
@@ -84,7 +87,7 @@ const Directory = () => {
           {slides}
         </Swiper>
       </Box>
-    </>
+    </Container>
   );
 };
 
