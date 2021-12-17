@@ -4,12 +4,6 @@ body {
   margin: 0;
   padding: 0;
 }
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow: hidden;
-  height: 4000px;
-}
 .custom-p {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -22,15 +16,4 @@ body {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   text-overflow: ellipsis;
-}
-.p-product {
-  line-height: 14px;
-  font-size: 0.75rem;
-  word-wrap: break-word;
-  white-space: normal;
-  overflow: hidden;
-  display: -webkit-box;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
 }
