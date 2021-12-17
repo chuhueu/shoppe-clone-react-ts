@@ -19,9 +19,8 @@ import ruby from "../../assets/images/icons/ruby.png";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         styleContainer: {
-            maxWidth: "1200px",
-            margin: "15px auto",
-            padding: "0",
+            marginTop: "15px",
+            marginBottom: "15px",
             "& img": {
                 width: "100%",
             },
