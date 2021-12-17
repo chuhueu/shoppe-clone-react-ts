@@ -4,11 +4,6 @@ body {
   margin: 0;
   padding: 0;
 }
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  overflow: hidden;
-}
 .custom-p {
   font-family: "Roboto", sans-serif;
   font-weight: 400;

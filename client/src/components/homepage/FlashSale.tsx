@@ -1,4 +1,4 @@
-import { Box, Hidden } from "@material-ui/core";
+import { Box, Container, Hidden } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
@@ -119,7 +119,7 @@ const FlashSale = () => {
     );
   }
   return (
-    <>
+    <Container>
       <Box mt={2} mb={2} className={classes.styleWrapper}>
         <Box display="flex" alignItems="center" className={classes.styleTitle}>
           <img src="/images/flashSale/title.png" alt="" />
@@ -151,7 +151,7 @@ const FlashSale = () => {
           style={{ width: "100%" }}
         />
       </Hidden>
-    </>
+    </Container>
   );
 };
 
