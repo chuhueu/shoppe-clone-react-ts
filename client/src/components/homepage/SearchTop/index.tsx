@@ -7,10 +7,8 @@ import SearchTopList from "./SearchTopList";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        styleContainer: {
-            maxWidth: "1200px",
+        styleWrapper: {
             margin: "15px auto",
-            padding: "0",
             backgroundColor: "#fff",
         },
         styleTop: {
@@ -38,23 +36,27 @@ const useStyles = makeStyles((theme: Theme) =>
 const SearchTop = () => {
     const classes = useStyles();
     return (
-        <Container className={classes.styleContainer}>
-            <Box
-                className={classes.styleTop}
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-            >
-                <Typography variant="subtitle1">TÌM KIẾM HÀNG ĐẦU</Typography>
-                <Link to="/" style={{ textDecoration: "none" }}>
-                    <Box display="flex" alignItems="center">
-                        <Typography variant="h5">Xem tất cả</Typography>
-                        <ArrowForwardIos className={classes.styleIcon} />
-                    </Box>
-                </Link>
-            </Box>
-            <Box className={classes.styleBottom}>
-                <SearchTopList />
+        <Container>
+            <Box className={classes.styleWrapper}>
+                <Box
+                    className={classes.styleTop}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                >
+                    <Typography variant="subtitle1">
+                        TÌM KIẾM HÀNG ĐẦU
+                    </Typography>
+                    <Link to="/" style={{ textDecoration: "none" }}>
+                        <Box display="flex" alignItems="center">
+                            <Typography variant="h5">Xem tất cả</Typography>
+                            <ArrowForwardIos className={classes.styleIcon} />
+                        </Box>
+                    </Link>
+                </Box>
+                <Box className={classes.styleBottom}>
+                    <SearchTopList />
+                </Box>
             </Box>
         </Container>
     );

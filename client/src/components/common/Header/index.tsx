@@ -15,11 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
             transform: "translateZ(0)",
             zIndex: 99,
         },
-        styleContainer: {
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "0",
-        },
+        styleContainer: {},
         styleTop: {
             width: "100%",
             height: "123px",

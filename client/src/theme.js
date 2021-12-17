@@ -52,6 +52,28 @@ export const theme = createTheme({
             color: "#d0011b",
             lineHeight: "100%",
         },
+        caption: {
+            fontStyle: "normal",
+            fontWeight: 600,
+            fontSize: "18px",
+            color: "rgba(0,0,0,.87)",
+            lineHeight: "125%",
+            textTransform: "uppercase",
+        },
+        body2: {
+            fontStyle: "normal",
+            fontWeight: 400,
+            fontSize: "12px",
+            color: "rgba(0,0,0,.87)",
+            lineHeight: "125%",
+        },
+        body1: {
+            fontStyle: "normal",
+            fontWeight: 300,
+            fontSize: "12px",
+            color: "rgba(0,0,0,.5)",
+            lineHeight: "125%",
+        },
     },
     palette: {},
 });
