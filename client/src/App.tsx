@@ -6,13 +6,13 @@ import { routes } from "./routes/routes";
 import { Header, Footer } from "./components/index";
 function App() {
   return (
-    <div className="wrapper">
+    <>
       <Router>
         <Header />
         {renderRoutes(routes)}
         <Footer />
       </Router>
-    </div>
+    </>
   );
 }
 
