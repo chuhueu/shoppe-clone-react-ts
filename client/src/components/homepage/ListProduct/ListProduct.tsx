@@ -1,6 +1,7 @@
 import { Box, Hidden, Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import slide1 from "../../../assets/images/banner/slide-1.png";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
@@ -87,9 +88,11 @@ const ListProduct = () => {
               </Box>
             </Box>
           </Box>
-          <Box textAlign="center" className={classes.styleFind}>
-            Find Similar
-          </Box>
+          <Hidden mdDown>
+            <Box textAlign="center" className={classes.styleFind}>
+              Find Similar
+            </Box>
+          </Hidden>
         </Link>
       </Grid>
     );

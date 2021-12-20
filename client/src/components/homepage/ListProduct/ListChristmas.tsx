@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "1.875rem",
       backgroundColor: "#ee4d2d",
       position: "absolute",
-      width: "187px",
+      width: "192px",
       borderRadius: "0px 0px 3px 3px",
     },
   })
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ListChristmas = () => {
   const classes = useStyles();
   const list = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 17; i >= 0; i--) {
     list.push(
       <Grid item xs={6} sm={4} md={2} key={`product-${i + 1}`}>
         <Link to="/" className={classes.styleLink}>
@@ -87,9 +87,11 @@ const ListChristmas = () => {
               </Box>
             </Box>
           </Box>
-          <Box textAlign="center" className={classes.styleFind}>
-            Find Similar
-          </Box>
+          <Hidden mdDown>
+            <Box textAlign="center" className={classes.styleFind}>
+              Find Similar
+            </Box>
+          </Hidden>
         </Link>
       </Grid>
     );
