@@ -1,4 +1,9 @@
-import { HomePage, DetailProduct } from "../pages/index";
+import {
+  HomePage,
+  DetailProductPage,
+  LoginPage,
+  SignUpPage,
+} from "../pages/index";
 export const routes = [
   {
     path: "/",
@@ -7,6 +12,14 @@ export const routes = [
   },
   {
     path: "/info/:infoID",
-    component: DetailProduct,
+    component: DetailProductPage,
+  },
+  {
+    path: "/login",
+    component: LoginPage,
+  },
+  {
+    path: "/signup",
+    component: SignUpPage,
   },
 ];
