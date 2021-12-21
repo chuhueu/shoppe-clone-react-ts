@@ -207,7 +207,7 @@ const SignUpAuth = () => {
     <Box className={classes.styleWrapper}>
       <Box className={classes.styleContainer}>
         <Grid container justifyContent="center" style={{ height: "100%" }}>
-          <Hidden lgDown>
+          <Hidden mdDown>
             <Grid item lg={6}>
               <Box
                 display="flex"
