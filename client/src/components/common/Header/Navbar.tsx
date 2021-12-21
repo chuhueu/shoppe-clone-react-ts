@@ -331,12 +331,12 @@ const Navbar = () => {
                     </Box>
                 </Typography>
                 <Typography variant="h2">
-                    <Link to="#" className={classes.styleLink}>
+                    <Link to="/login" className={classes.styleLink}>
                         Đăng kí
                     </Link>
                 </Typography>
                 <Typography variant="h2">
-                    <Link to="#" className={classes.styleLink}>
+                    <Link to="/signup" className={classes.styleLink}>
                         Đăng nhập
                     </Link>
                 </Typography>

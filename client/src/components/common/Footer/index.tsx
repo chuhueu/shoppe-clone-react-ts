@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
         styleFooter: {
             borderTop: "4px solid #ee4d2d",
             backgroundColor: "#fff",
-            marginTop: "50px",
+            paddingTop: "50px",
         },
     })
 );
