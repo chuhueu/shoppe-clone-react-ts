@@ -9,3 +9,8 @@ export { default as SearchTop } from "./homepage/SearchTop";
 export { default as Directory } from "./homepage/Directory";
 export { default as FlashSale } from "./homepage/FlashSale";
 export { default as ListProduct } from "./homepage/ListProduct/TabBar";
+
+//Authpage
+export { default as HeaderAuth } from "./authpage/HeaderAuth";
+export { default as LoginAuth } from "./authpage/LoginAuth";
+export { default as SignUpAuth } from "./authpage/SignUpAuth";

@@ -52,6 +52,13 @@ export const theme = createTheme({
             color: "#d0011b",
             lineHeight: "100%",
         },
+        subtitle2: {
+            fontStyle: "normal",
+            fontWeight: 500,
+            fontSize: "24px",
+            color: "#222",
+            lineHeight: "125%",
+        },
         caption: {
             fontStyle: "normal",
             fontWeight: 600,
@@ -72,6 +79,13 @@ export const theme = createTheme({
             fontWeight: 300,
             fontSize: "12px",
             color: "rgba(0,0,0,.5)",
+            lineHeight: "125%",
+        },
+        overline: {
+            fontStyle: "normal",
+            fontWeight: 500,
+            fontSize: "20px",
+            color: "#fff",
             lineHeight: "125%",
         },
     },
