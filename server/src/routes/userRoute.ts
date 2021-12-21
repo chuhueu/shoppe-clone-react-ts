@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 const router = require("express").Router();
-const User = require("../models/User");
+const User = require("../models/userModel");
 
 //REGISTER
 router.post("/register", async (req: Request, res: Response) => {
