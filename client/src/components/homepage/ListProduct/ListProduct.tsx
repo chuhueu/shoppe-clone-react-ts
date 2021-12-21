@@ -85,7 +85,10 @@ const ListProduct = () => {
         {listProduct.map((product) => {
           return (
             <Grid item xs={6} sm={4} md={2}>
-              <Link to={{ pathname: "/info/1" }} className={classes.styleLink}>
+              <Link
+                to={{ pathname: "/info/" + product?._id }}
+                className={classes.styleLink}
+              >
                 <Box className={classes.styleText}>
                   <img src={product?.image[0]} alt="" />
                   <Box padding={1}>
