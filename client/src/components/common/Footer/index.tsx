@@ -7,25 +7,25 @@ import FooterContact from "./FooterContact";
 import FooterBottom from "./FooterBottom";
 
 const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        styleFooter: {
-            borderTop: "4px solid #ee4d2d",
-            backgroundColor: "#fff",
-            paddingTop: "50px",
-        },
-    })
+  createStyles({
+    styleFooter: {
+      borderTop: "4px solid #ee4d2d",
+      backgroundColor: "#fff",
+      paddingTop: "50px",
+    },
+  })
 );
 
 const Footer = () => {
-    const classes = useStyles();
-    return (
-        <Box className={classes.styleFooter}>
-            <FooterTop />
-            <FooterCenter />
-            <FooterContact />
-            <FooterBottom />
-        </Box>
-    );
+  const classes = useStyles();
+  return (
+    <Box mt={5} className={classes.styleFooter}>
+      <FooterTop />
+      <FooterCenter />
+      <FooterContact />
+      <FooterBottom />
+    </Box>
+  );
 };
 
 export default Footer;

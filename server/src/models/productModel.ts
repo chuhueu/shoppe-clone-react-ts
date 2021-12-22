@@ -17,17 +17,13 @@ const ReviewSchema = new mongoose.Schema(
 
 const ProductSchema = new mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    productName: { type: String, required: true, unique: true },
-    productImage: { type: Array, required: true },
+    name: { type: String, required: true, unique: true },
+    image: { type: Array, required: true },
+    price: { type: String, required: true },
     sold: { type: Number, required: true, default: 0 },
     inStock: { type: Boolean, required: true, default: false },
     discount: { type: Number },
-    productDesc: { type: String },
+    desc: { type: String },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

@@ -1,6 +1,9 @@
 import { Box, Hidden, Grid, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { useEffect, useState } from "react";
+import productModel from "../../../models/productModel";
+import axios from "../../../axios";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
@@ -56,53 +59,67 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const ListProduct = () => {
+  //styles
   const classes = useStyles();
-  const list = [];
-  for (let i = 0; i < 18; i++) {
-    list.push(
-      <Grid item xs={6} sm={4} md={2} key={`product-${i + 1}`}>
-        <Link to="/" className={classes.styleLink}>
-          <Box className={classes.styleText}>
-            <img src={`/images/listproduct/product-${i + 1}.png`} alt="" />
-            <Box padding={1}>
-              <Typography>
-                Set nguyên liệu đầy đủ làm kẹo sữa hạt NOUGAT 750G - Tự làm kẹo
-                sữa hạt
-              </Typography>
-              <Box
-                mt={2}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Box>
-                  <Box component="span" fontSize=".75rem">
-                    đ
-                  </Box>
-                  <Box component="span" fontSize="1rem">
-                    190.000
-                  </Box>
-                </Box>
-                <Box>47 sold</Box>
-              </Box>
-            </Box>
-          </Box>
-          <Box textAlign="center" className={classes.styleFind}>
-            Find Similar
-          </Box>
-        </Link>
-      </Grid>
-    );
-  }
+  //state
+  const [listProduct, setListProduct] = useState<Array<productModel>>([]);
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get("/product");
+        setListProduct(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, []);
   return (
-    <Box pt={1} className={classes.styleBox}>
+    <Box mb={10} pt={1} className={classes.styleBox}>
       <Grid
         container
         justifyContent="center"
         spacing={2}
         className={classes.styleGrid}
       >
-        {list}
+        {listProduct.map((product) => {
+          return (
+            <Grid item xs={6} sm={4} md={2}>
+              <Link
+                to={{ pathname: "/info/" + product?._id }}
+                className={classes.styleLink}
+              >
+                <Box className={classes.styleText}>
+                  <img src={product?.image[0]} alt="" />
+                  <Box padding={1}>
+                    <Typography>{product?.name}</Typography>
+                    <Box
+                      mt={2}
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <Box>
+                        <Box component="span" fontSize=".75rem">
+                          đ
+                        </Box>
+                        <Box component="span" fontSize="1rem">
+                          {product?.price}
+                        </Box>
+                      </Box>
+                      <Box>{product.sold} sold</Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Hidden mdDown>
+                  <Box textAlign="center" className={classes.styleFind}>
+                    Find Similar
+                  </Box>
+                </Hidden>
+              </Link>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );

@@ -87,9 +87,11 @@ const ListChristmas = () => {
               </Box>
             </Box>
           </Box>
-          <Box textAlign="center" className={classes.styleFind}>
-            Find Similar
-          </Box>
+          <Hidden mdDown>
+            <Box textAlign="center" className={classes.styleFind}>
+              Find Similar
+            </Box>
+          </Hidden>
         </Link>
       </Grid>
     );
