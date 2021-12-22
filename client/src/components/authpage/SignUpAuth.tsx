@@ -223,7 +223,7 @@ const SignUpAuth = () => {
               </Box>
             </Grid>
           </Hidden>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={12}>
             <Box
               display="flex"
               flexDirection="column"
