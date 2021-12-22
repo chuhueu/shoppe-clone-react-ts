@@ -3,26 +3,27 @@ import dotenv from "dotenv";
 import connectDB from "./config/db";
 const cors = require("cors");
 var colors = require("colors");
-const userRoute = require("./routes/userRoute");
-const productRoute = require("./routes/productRoute");
-const brandRoute = require("./routes/brandRoute");
-const categoryRoute = require("./routes/categoryRoute");
+
+const userRoutes = require("./routes/userRoute");
+const productRoutes = require("./routes/productRoute");
+const brandRoutes = require("./routes/brandRoute");
+const categoryRoutes = require("./routes/categoryRoute");
+
 dotenv.config();
 
 connectDB();
 
 const app: Application = express();
+
 app.use(cors());
+
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
-app.use("/api/user", userRoute);
-app.use("/api/product", productRoute);
-app.use("/api/brand", brandRoute);
-app.use("/api/category", categoryRoute);
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("APP IS RUNNING");
-});
+app.use("/api/user", userRoutes);
+app.use("/api/product", productRoutes);
+app.use("/api/brand", brandRoutes);
+app.use("/api/category", categoryRoutes);
 
 const port = process.env.PORT! || 5000;
 
