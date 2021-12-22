@@ -1,28 +1,28 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 const cors = require("cors");
 var colors = require("colors");
-//controller
-const userController = require("./controllers/userController");
-const productController = require("./controllers/productController");
-const brandController = require("./controllers/brandController");
-const categoryController = require("./controllers/categoryController");
+const userRoute = require("./routes/userRoute");
+const productRoute = require("./routes/productRoute");
+const brandRoute = require("./routes/brandRoute");
+const categoryRoute = require("./routes/categoryRoute");
 dotenv.config();
 
 connectDB();
 
 const app: Application = express();
-
 app.use(cors());
-
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
+app.use("/api/user", userRoute);
+app.use("/api/product", productRoute);
+app.use("/api/brand", brandRoute);
+app.use("/api/category", categoryRoute);
 
-app.use("/api/user", userController);
-app.use("/api/product", productController);
-app.use("/api/brand", brandController);
-app.use("/api/category", categoryController);
+app.get("/", (req: Request, res: Response, next: NextFunction) => {
+  res.send("APP IS RUNNING");
+});
 
 const port = process.env.PORT! || 5000;
 
