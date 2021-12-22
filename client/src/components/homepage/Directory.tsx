@@ -87,7 +87,6 @@ const Directory = () => {
           {slides}
         </Swiper>
       </Box>
-      Box
     </Container>
   );
 };

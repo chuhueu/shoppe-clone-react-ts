@@ -14,3 +14,7 @@ export { default as ListProduct } from "./homepage/ListProduct/TabBar";
 export { default as HeaderAuth } from "./authpage/HeaderAuth";
 export { default as LoginAuth } from "./authpage/LoginAuth";
 export { default as SignUpAuth } from "./authpage/SignUpAuth";
+
+//Detail product page
+export { default as DirectoryProduct } from "./detailproduct/DirectoryProduct";
+export { default as MainProduct } from "./detailproduct/MainProduct";

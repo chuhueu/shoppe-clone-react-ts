@@ -75,7 +75,7 @@ const ListProduct = () => {
     getProduct();
   }, []);
   return (
-    <Box pt={1} className={classes.styleBox}>
+    <Box mb={10} pt={1} className={classes.styleBox}>
       <Grid
         container
         justifyContent="center"
