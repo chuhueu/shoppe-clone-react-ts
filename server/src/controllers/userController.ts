@@ -1,43 +1,35 @@
 import { Request, Response } from "express";
-const router = require("express").Router();
+const asyncHandler = require("express-async-handler");
+const generateToken = require("../utils/generateToken");
 const User = require("../models/userModel");
 
-//REGISTER
-router.post("/register", async (req: Request, res: Response) => {
-  const newUser = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    user && res.status(400).json("Email already exist");
-    const saveUser = await newUser.save();
-    res.status(201).json(saveUser);
-  } catch (error) {
-    res.status(500).json(error);
+//@desc    Register a new user
+//@router  POST /api/users
+//@access  Public
+const registerUser = asyncHandler(async (req: Request, res: Response) => {
+  const { username, email, password } = req.body;
+
+  const userExits = await User.findOne({ email });
+
+  if (userExits) {
+    res.status(400);
+    throw new Error("Tài khoản đã tồn tại");
+  }
+
+  const user = await User.create({ username, email, password });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      phone: user.phone,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Dữ liệu người dùng không hợp lệ");
   }
 });
 
-//LOGIN
-router.post("/login", async (req: Request, res: Response) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    !user && res.status(400).json("wrong password or username");
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-//GET
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const getUser = await User.find();
-    res.status(200).json(getUser);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
-module.exports = router;
+export { registerUser };

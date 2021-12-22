@@ -1,23 +1,10 @@
 import { Request, Response } from "express";
+import { registerUser } from "../controllers/userController";
 const router = require("express").Router();
 const User = require("../models/userModel");
 
 //REGISTER
-router.post("/register", async (req: Request, res: Response) => {
-  const newUser = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    user && res.status(400).json("Email already exist");
-    const saveUser = await newUser.save();
-    res.status(201).json(saveUser);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.post("/register", registerUser);
 
 //LOGIN
 router.post("/login", async (req: Request, res: Response) => {

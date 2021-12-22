@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    cateName: { type: String, required: true },
     content: [
       { type: mongoose.Schema.Types.ObjectId, default: [], ref: "Product" },
     ],
