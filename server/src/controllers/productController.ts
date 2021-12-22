@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
+const asyncHandler = require("express-async-handler");
 const router = require("express").Router();
 const Product = require("../models/productModel");
 
 //CREATE
-router.post("/", async (req: Request, res: Response) => {
+const createProduct = asyncHandler(async (req: Request, res: Response) => {
   const newProduct = new Product(req.body);
   try {
     const sendProduct = await newProduct.save();
@@ -13,7 +14,7 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 //GET ALL
-router.get("/", async (req: Request, res: Response) => {
+const getProduct = asyncHandler(async (req: Request, res: Response) => {
   try {
     const getProducts = await Product.find();
     res.status(200).json(getProducts);
@@ -22,7 +23,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 //GET FIND ID
-router.get("/find/:id", async (req: Request, res: Response) => {
+const getProductById = asyncHandler(async (req: Request, res: Response) => {
   try {
     const getProduct = await Product.findById(req.params.id);
     res.status(200).json(getProduct);
@@ -31,4 +32,4 @@ router.get("/find/:id", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export { createProduct, getProduct, getProductById };

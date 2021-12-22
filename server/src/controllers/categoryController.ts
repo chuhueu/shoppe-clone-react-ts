@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
+const asyncHandler = require("express-async-handler");
 const router = require("express").Router();
 const Category = require("../models/categoryModel");
 
 //CREATE
-router.post("/", async (req: Request, res: Response) => {
+const createCategory = asyncHandler(async (req: Request, res: Response) => {
   const newCategory = new Category(req.body);
   try {
     const sendCategory = await newCategory.save();
@@ -13,7 +14,7 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 //GET ALL
-router.get("/", async (req: Request, res: Response) => {
+const getCategory = asyncHandler(async (req: Request, res: Response) => {
   try {
     const getCategories = await Category.find();
     res.status(200).json(getCategories);
@@ -22,7 +23,7 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 //GET FIND ID
-router.get("/find/:id", async (req: Request, res: Response) => {
+const getCategoryById = asyncHandler(async (req: Request, res: Response) => {
   try {
     const getCategory = await Category.findById(req.params.id);
     res.status(200).json(getCategory);
@@ -31,4 +32,4 @@ router.get("/find/:id", async (req: Request, res: Response) => {
   }
 });
 
-module.exports = router;
+export { createCategory, getCategory, getCategoryById };

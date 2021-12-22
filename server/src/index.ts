@@ -1,14 +1,13 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db";
 const cors = require("cors");
 var colors = require("colors");
 
-//routes
 const userRoutes = require("./routes/userRoute");
-const productController = require("./controllers/productController");
-const brandController = require("./controllers/brandController");
-const categoryController = require("./controllers/categoryController");
+const productRoutes = require("./routes/productRoute");
+const brandRoutes = require("./routes/brandRoute");
+const categoryRoutes = require("./routes/categoryRoute");
 
 dotenv.config();
 
@@ -22,9 +21,9 @@ app.use(cors());
 app.use(express.json()); // Configure Express to parse incoming JSON data
 
 app.use("/api/user", userRoutes);
-app.use("/api/product", productController);
-app.use("/api/brand", brandController);
-app.use("/api/category", categoryController);
+app.use("/api/product", productRoutes);
+app.use("/api/brand", brandRoutes);
+app.use("/api/category", categoryRoutes);
 
 const port = process.env.PORT! || 5000;
 
