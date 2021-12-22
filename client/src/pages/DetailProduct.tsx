@@ -1,10 +1,16 @@
 import React from "react";
-import { Header, Footer } from "../components/index";
+import {
+  Header,
+  Footer,
+  DirectoryProduct,
+  MainProduct,
+} from "../components/index";
 const DetailProduct = () => {
   return (
     <>
       <Header />
-      <h1>this is detail product</h1>
+      <DirectoryProduct />
+      <MainProduct />
       <Footer />
     </>
   );
