@@ -11,6 +11,11 @@ const UserSchema = new mongoose.Schema(
     googleID: { type: String },
     facebookID: { type: String },
     appleID: { type: String },
+    avatar: {
+      type: String,
+      default:
+        "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
+    },
     // roleId: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   required: true,

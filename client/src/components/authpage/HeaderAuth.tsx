@@ -38,8 +38,6 @@ interface Props {
 }
 
 const HeaderAuth = ({ show }: Props) => {
-  console.log(show);
-
   const classes = useStyles();
   return (
     <Box className={classes.styleHeader}>
