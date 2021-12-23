@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/images/auth/shopee-logo-big.png";
 import qrIcon from "../../assets/images/auth/qr-code1.png";
 import facebookIcon from "../../assets/images/auth/facebook-logo.png";
 import googleIcon from "../../assets/images/auth/google-logo.png";
 import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
+import { login } from "../../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store/userStore";
+import { userState } from "../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -164,12 +168,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const LoginAuth = () => {
+  //styles
   const classes = useStyles();
-
+  //state
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  // const user = JSON.parse(localStorage.getItem("user") || " ");
+  // console.log(user);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { userInfo, error } = useSelector<RootState, userState>(
+    (state) => state.userLogin
+  );
 
   interface valuesInput {
     id: number;
@@ -206,8 +218,9 @@ const LoginAuth = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e: any) => {
+  const submitHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    dispatch(login(values.email, values.password));
   };
 
   return (
@@ -266,7 +279,12 @@ const LoginAuth = () => {
                       onChange={onChange}
                     />
                   ))}
-                  <Button className={classes.styleButton}>Đăng Nhập</Button>
+                  <Button
+                    onClick={submitHandler}
+                    className={classes.styleButton}
+                  >
+                    Đăng Nhập
+                  </Button>
                   <Box
                     display="flex"
                     justifyContent="space-between"

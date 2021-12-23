@@ -53,5 +53,15 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     throw new Error("Dữ liệu người dùng không hợp lệ");
   }
 });
-
-export { loginUser, registerUser };
+//@desc    get all user
+//@router  POST /api/user
+//@access  Public
+const getUser = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const getUsers = await User.find();
+    res.status(200).json(getUsers);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+export { loginUser, registerUser, getUser };
