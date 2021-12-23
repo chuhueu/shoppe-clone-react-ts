@@ -207,6 +207,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const logoutSocial = () => {
+  window.open("http://localhost:5000/auth/logout", "_self");
+};
+
 const Navbar = () => {
   const classes = useStyles();
   return (

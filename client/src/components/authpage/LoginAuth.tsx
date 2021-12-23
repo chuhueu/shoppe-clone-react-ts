@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
@@ -210,6 +210,13 @@ const LoginAuth = () => {
     e.preventDefault();
   };
 
+  const loginGoogle = () => {
+    window.open("http://localhost:5000/api/auth/google", "_self");
+  };
+  const loginFacebook = () => {
+    window.open("http://localhost:5000/api/auth/facebook", "_self");
+  };
+
   return (
     <Box className={classes.styleWrapper}>
       <Box className={classes.styleContainer}>
@@ -301,6 +308,7 @@ const LoginAuth = () => {
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
+                      onClick={loginFacebook}
                     >
                       <Box
                         display="flex"
@@ -321,6 +329,7 @@ const LoginAuth = () => {
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
+                      onClick={loginGoogle}
                     >
                       <Box
                         display="flex"
