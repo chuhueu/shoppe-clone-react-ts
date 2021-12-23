@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
   Facebook,
   Instagram,
@@ -15,6 +15,8 @@ import appStore from "../../../assets/images/header/app-store.png";
 import ggPlay from "../../../assets/images/header/gg-play.png";
 import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/actions/userAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -204,11 +206,58 @@ const useStyles = makeStyles((theme: Theme) =>
         color: "#f53d2d",
       },
     },
+    styleLogout: {
+      cursor: "pointer",
+      paddingRight: "20px",
+      "& h2": {
+        marginLeft: "5px",
+      },
+    },
   })
 );
 
 const Navbar = () => {
+  //styles
   const classes = useStyles();
+  //state
+  const user = JSON.parse(localStorage.getItem("user") || "");
+  const dispatch = useDispatch();
+  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    dispatch(logout());
+  };
+
+  const [userSocial, setUserSocial] = useState(null);
+
+  useEffect(() => {
+    const getUser = () => {
+      fetch("http://localhost:5000/api/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          throw new Error("authentication has been failed!");
+        })
+        .then((resObject) => {
+          setUserSocial(resObject.user);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
+  }, []);
+
+  console.log(userSocial);
+
+  const logoutSocial = () => {
+    window.open("http://localhost:5000/auth/logout", "_self");
+  };
   return (
     <Box display="flex" className={classes.styleWrapper}>
       <Box
@@ -316,16 +365,70 @@ const Navbar = () => {
             </Box>
           </Box>
         </Typography>
-        <Typography variant="h2">
-          <Link to="/signup" className={classes.styleLink}>
-            Đăng ký
-          </Link>
-        </Typography>
-        <Typography variant="h2">
-          <Link to="/login" className={classes.styleLink}>
-            Đăng nhập
-          </Link>
-        </Typography>
+        {userSocial ? (
+          <>
+            <Box
+              display="flex"
+              alignItems="center"
+              className={classes.styleLanguageHover}
+              style={{ cursor: "pointer", paddingRight: "20px" }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src="https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
+              ></Avatar>
+              <Typography variant="h2">{userSocial}</Typography>
+              <Box className={classes.styleLanguage}>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                </Box>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4" onClick={logoutSocial}>
+                    Đăng Xuất
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </>
+        ) : user ? (
+          <>
+            <Box
+              display="flex"
+              alignItems="center"
+              className={classes.styleLanguageHover}
+              style={{ cursor: "pointer", paddingRight: "20px" }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src="https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
+              ></Avatar>
+              <Typography variant="h2">{user.username}</Typography>
+              <Box className={classes.styleLanguage}>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                </Box>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4" onClick={handleLogout}>
+                    Đăng Xuất
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Typography variant="h2">
+              <Link to="/signup" className={classes.styleLink}>
+                Đăng ký
+              </Link>
+            </Typography>
+            <Typography variant="h2">
+              <Link to="/login" className={classes.styleLink}>
+                Đăng nhập
+              </Link>
+            </Typography>
+          </>
+        )}
       </Box>
     </Box>
   );

@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
 const bcrypt = require("bcryptjs");
+const findOrCreate = require("mongoose-findorcreate");
 
 const UserSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    username: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
     phone: { type: String },
+    googleID: { type: String },
+    facebookID: { type: String },
+    appleID: { type: String },
+    avatar: {
+      type: String,
+      default:
+        "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
+    },
     // roleId: {
     //   type: mongoose.Schema.Types.ObjectId,
     //   required: true,
@@ -28,5 +37,7 @@ UserSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
+
+UserSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model("User", UserSchema);
