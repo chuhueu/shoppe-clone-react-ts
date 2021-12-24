@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import axios, { AxiosResponse } from "axios";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
@@ -17,6 +18,8 @@ import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
+import { myContext } from "../../../context";
+import { IUser } from "../../../types/maintypes";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -222,42 +225,26 @@ const Navbar = () => {
   //state
   const user = JSON.parse(localStorage.getItem("user") || "");
   const dispatch = useDispatch();
+
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logout());
   };
 
-  const [userSocial, setUserSocial] = useState(null);
-
-  useEffect(() => {
-    const getUser = () => {
-      fetch("http://localhost:5000/api/auth/login/success", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+  const authInfo = useContext(myContext) as IUser;
+  const authLogout = () => {
+    axios
+      .get("http://localhost:5000/api/auth/logout", {
+        withCredentials: true,
       })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then((resObject) => {
-          setUserSocial(resObject.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);
-
-  console.log(userSocial);
-
-  const logoutSocial = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+        if (res.data === "done") {
+          window.location.href = "/";
+        }
+      });
   };
+
   return (
     <Box display="flex" className={classes.styleWrapper}>
       <Box
@@ -365,7 +352,7 @@ const Navbar = () => {
             </Box>
           </Box>
         </Typography>
-        {userSocial ? (
+        {authInfo ? (
           <>
             <Box
               display="flex"
@@ -373,19 +360,14 @@ const Navbar = () => {
               className={classes.styleLanguageHover}
               style={{ cursor: "pointer", paddingRight: "20px" }}
             >
-              <Avatar
-                alt="Remy Sharp"
-                src="https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
-              ></Avatar>
-              <Typography variant="h2">{userSocial}</Typography>
+              <Avatar alt="Remy Sharp" src={authInfo.avatar}></Avatar>
+              <Typography variant="h2">{authInfo.username}</Typography>
               <Box className={classes.styleLanguage}>
                 <Box className={classes.styleLanguageBox}>
                   <Typography variant="h4">Tài Khoản Của Tôi</Typography>
                 </Box>
-                <Box className={classes.styleLanguageBox}>
-                  <Typography variant="h4" onClick={logoutSocial}>
-                    Đăng Xuất
-                  </Typography>
+                <Box className={classes.styleLanguageBox} onClick={authLogout}>
+                  <Typography variant="h4">Đăng Xuất</Typography>
                 </Box>
               </Box>
             </Box>
@@ -407,10 +389,11 @@ const Navbar = () => {
                 <Box className={classes.styleLanguageBox}>
                   <Typography variant="h4">Tài Khoản Của Tôi</Typography>
                 </Box>
-                <Box className={classes.styleLanguageBox}>
-                  <Typography variant="h4" onClick={handleLogout}>
-                    Đăng Xuất
-                  </Typography>
+                <Box
+                  className={classes.styleLanguageBox}
+                  onClick={handleLogout}
+                >
+                  <Typography variant="h4">Đăng Xuất</Typography>
                 </Box>
               </Box>
             </Box>

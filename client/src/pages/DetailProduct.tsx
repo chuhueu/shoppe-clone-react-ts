@@ -11,7 +11,7 @@ const DetailProduct = () => {
       <Header />
       <DirectoryProduct />
       <MainProduct />
-      <Footer />
+      <Footer show={false} />
     </>
   );
 };

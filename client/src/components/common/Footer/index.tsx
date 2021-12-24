@@ -16,12 +16,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Footer = () => {
+interface Props {
+  show: boolean;
+}
+
+const Footer = ({ show }: Props) => {
   const classes = useStyles();
   return (
     <Box mt={5} className={classes.styleFooter}>
-      <FooterTop />
-      <FooterCenter />
+      {show && (
+        <>
+          <FooterTop />
+          <FooterCenter />
+        </>
+      )}
       <FooterContact />
       <FooterBottom />
     </Box>
