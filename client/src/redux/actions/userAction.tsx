@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { RootState } from "../store";
+import { RootState } from "../store/userStore";
 import axios from "../../axios";
 import {
   USER_LOGIN_REQUEST,
@@ -28,13 +28,17 @@ export const login =
         type: USER_LOGIN_SUCCESS,
         payload: res.data,
       });
-      localStorage.setItem("user", JSON.stringify(res.data));
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data) || JSON.stringify(null)
+      );
     } catch (error) {
       //USER LOGIN FAIL
       dispatch({
         type: USER_LOGIN_FAILED,
         payload: error,
       });
+      localStorage.setItem("user", JSON.stringify(null));
     }
   };
 
@@ -46,5 +50,5 @@ export const logout =
     dispatch({
       type: USER_LOGOUT,
     });
-    localStorage.removeItem("user");
+    localStorage.setItem("user", JSON.stringify(null));
   };

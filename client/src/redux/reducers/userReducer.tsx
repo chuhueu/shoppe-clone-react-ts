@@ -5,8 +5,15 @@ import {
   USER_LOGOUT,
 } from "../constants/userConstants";
 
+interface userInfo {
+  _id?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  avatar?: string;
+}
 export interface userState {
-  userInfo?: object | null;
+  userInfo?: userInfo | null;
   isFetching?: boolean;
   error?: boolean;
 }
@@ -37,7 +44,7 @@ export const userReducer = (state: userState, action: Action) => {
     case USER_LOGOUT: {
       return {
         userInfo: null,
-        isFetching: false,
+        isFetching: true,
         error: false,
       };
     }

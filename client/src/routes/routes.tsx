@@ -4,7 +4,6 @@ import {
   LoginPage,
   SignUpPage,
 } from "../pages/index";
-//const user = JSON.parse(localStorage.getItem("user") || "");
 
 export const routes = [
   {

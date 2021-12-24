@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import logo from "../../assets/images/auth/shopee-logo-big.png";
 import facebookIcon from "../../assets/images/auth/facebook-logo.png";
 import googleIcon from "../../assets/images/auth/google-logo.png";
 import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
-
+import axios from "../../axios";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleWrapper: {
@@ -132,6 +133,16 @@ const useStyles = makeStyles((theme: Theme) =>
         color: "rgba(0,0,0,.87)",
       },
     },
+    styleError: {
+      background: "#fff9fa",
+      border: "1px solid rgba(255,66,79,.2)",
+      padding: ".75rem .9375rem",
+      "& svg": {
+        color: "#ff424f",
+        width: "1rem",
+        height: "1rem",
+      },
+    },
   })
 );
 
@@ -144,6 +155,8 @@ const SignUpAuth = () => {
     password: "",
     confirmPassword: "",
   });
+  const [showError, setShowError] = useState(false);
+  const history = useHistory();
 
   interface valuesInput {
     id: number;
@@ -199,8 +212,19 @@ const SignUpAuth = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e: any) => {
+  const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    try {
+      await axios.post("/user/register", {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      });
+      history.push("/login");
+    } catch (error) {
+      console.log(error);
+      setShowError(true);
+    }
   };
 
   return (
@@ -240,6 +264,21 @@ const SignUpAuth = () => {
                 >
                   <p className={classes.styleHeadingText}>Đăng Ký</p>
                 </Box>
+                {showError && (
+                  <Box
+                    padding="5px 30px"
+                    alignItems="center"
+                    justifyContent="center"
+                    mb={2}
+                  >
+                    <Box display="flex" className={classes.styleError}>
+                      <HighlightOffOutlinedIcon />
+                      <Typography variant="h4">
+                        Username hoặc Email đã tồn tại! Mời bạn thử lại
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
                 <form className={classes.styleForm}>
                   {inputs.map((input) => (
                     <InputForm
@@ -249,7 +288,12 @@ const SignUpAuth = () => {
                       onChange={onChange}
                     />
                   ))}
-                  <Button className={classes.styleButton}>Đăng Ký</Button>
+                  <Button
+                    onClick={submitHandler}
+                    className={classes.styleButton}
+                  >
+                    Đăng Ký
+                  </Button>
                 </form>
                 <Box className={classes.styleLoginOther}>
                   <Box

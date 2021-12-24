@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
+import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import logo from "../../assets/images/auth/shopee-logo-big.png";
 import qrIcon from "../../assets/images/auth/qr-code1.png";
 import facebookIcon from "../../assets/images/auth/facebook-logo.png";
@@ -10,7 +11,7 @@ import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
 import { login } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../redux/store/userStore";
 import { userState } from "../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -164,6 +165,16 @@ const useStyles = makeStyles((theme: Theme) =>
       textDecoration: "none",
       color: "#ee4d2d",
     },
+    styleError: {
+      background: "#fff9fa",
+      border: "1px solid rgba(255,66,79,.2)",
+      padding: ".75rem .9375rem",
+      "& svg": {
+        color: "#ff424f",
+        width: "1rem",
+        height: "1rem",
+      },
+    },
   })
 );
 
@@ -175,7 +186,9 @@ const LoginAuth = () => {
     email: "",
     password: "",
   });
-  // const user = JSON.parse(localStorage.getItem("user") || " ");
+  // const user = localStorage.getItem("user")
+  //   ? JSON.parse(localStorage.getItem("user")!)
+  //   : null;
   // console.log(user);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -217,7 +230,11 @@ const LoginAuth = () => {
   const onChange = (e: any) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
+  useEffect(() => {
+    if (userInfo != undefined && userInfo.username) {
+      window.open("/", "_self");
+    }
+  }, [userInfo]);
   const submitHandler = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(login(values.email, values.password));
@@ -277,6 +294,22 @@ const LoginAuth = () => {
                     <img src={qrIcon} alt="" className={classes.styleQrIcon} />
                   </Box>
                 </Box>
+                {error && (
+                  <Box
+                    padding="22px 30px"
+                    alignItems="center"
+                    justifyContent="center"
+                    mb={2}
+                  >
+                    <Box display="flex" className={classes.styleError}>
+                      <HighlightOffOutlinedIcon />
+                      <Typography variant="h4">
+                        Tên tài khoản của bạn hoặc Mật khẩu không đúng, vui lòng
+                        thử lại
+                      </Typography>
+                    </Box>
+                  </Box>
+                )}
                 <form className={classes.styleForm}>
                   {inputs.map((input) => (
                     <InputForm
