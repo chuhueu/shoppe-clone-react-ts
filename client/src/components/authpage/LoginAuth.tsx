@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
@@ -10,7 +10,7 @@ import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
 import { login } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/userStore";
+import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>

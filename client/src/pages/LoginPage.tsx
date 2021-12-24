@@ -6,7 +6,7 @@ const LoginPage = () => {
     <>
       <HeaderAuth show={false} />
       <LoginAuth />
-      <Footer />
+      <Footer show={false} />
     </>
   );
 };

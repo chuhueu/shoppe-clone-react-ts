@@ -3,7 +3,7 @@ import "./assets/css/app.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { routes } from "./routes/routes";
-import { RootState, store } from "./redux/store/userStore";
+import { RootState } from "./redux/store";
 import { useSelector } from "react-redux";
 import { userState } from "./redux/reducers/userReducer";
 function App() {

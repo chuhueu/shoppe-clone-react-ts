@@ -1,6 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
-import { RootState } from "../store/userStore";
+import { RootState } from "../store";
 import axios from "../../axios";
 import {
   USER_LOGIN_REQUEST,

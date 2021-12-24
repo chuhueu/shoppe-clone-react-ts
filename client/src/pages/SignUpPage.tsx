@@ -6,7 +6,7 @@ const SignUpPage = () => {
     <>
       <HeaderAuth show={true} />
       <SignUpAuth />
-      <Footer />
+      <Footer show={false} />
     </>
   );
 };
