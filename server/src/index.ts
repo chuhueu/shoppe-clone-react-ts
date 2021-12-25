@@ -29,7 +29,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+<<<<<<< HEAD
 app.use(cors({ credentials: true, origin: true }));
+=======
+app.use(cors({ origin: true, credentials: true }));
+>>>>>>> 65b790f4447c753d743168c06cee5f2028894ae2
 
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
