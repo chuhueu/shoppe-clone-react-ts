@@ -26,7 +26,9 @@ interface GetUserAuthInfoReq extends Request {
 // });
 
 router.get("/getuser", (req: GetUserAuthInfoReq, res: Response) => {
-  res.send(req.user);
+  if (req.user) {
+    res.send(req.user);
+  }
 });
 
 router.get("/logout", (req: GetUserAuthInfoReq, res: Response) => {

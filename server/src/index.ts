@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db";
-const cors = require("cors");
+import cors from "cors";
 var colors = require("colors");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
@@ -28,8 +28,15 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+// Add a list of allowed origins.
+// If you have more origins you would like to add, you can add them to the array below.
+const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
 
-app.use(cors({ credentials: true, origin: true }));
+const options: cors.CorsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+};
+app.use(cors(options));
 
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
