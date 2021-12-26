@@ -231,7 +231,7 @@ const LoginAuth = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    if (userInfo != undefined && userInfo.username) {
+    if (userInfo !== undefined && userInfo?.username) {
       window.open("/", "_self");
     }
   }, [userInfo]);

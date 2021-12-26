@@ -16,11 +16,11 @@ const UserSchema = new mongoose.Schema(
       default:
         "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
     },
-    // roleId: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "Role",
-    // },
+    roleId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Role",
+    },
   },
   { timestamps: true }
 );

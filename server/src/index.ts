@@ -29,7 +29,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: `${process.env.CLIENT_URL!}`, credentials: true }));
 
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
