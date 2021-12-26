@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import axios from "../../../axios";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
@@ -235,7 +236,7 @@ const Navbar = () => {
   const authInfo = useContext(myContext) as IUser;
   const authLogout = () => {
     axios
-      .get("http://localhost:5000/api/auth/logout", {
+      .get("/auth/logout", {
         withCredentials: true,
       })
       .then((res: AxiosResponse) => {
