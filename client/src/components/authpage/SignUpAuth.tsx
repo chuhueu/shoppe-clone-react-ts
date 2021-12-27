@@ -215,7 +215,7 @@ const SignUpAuth = () => {
   const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     try {
-      await axios.post("/user/register", {
+      await axios.post("/auth/register", {
         username: values.username,
         email: values.email,
         password: values.password,

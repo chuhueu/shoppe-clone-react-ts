@@ -22,7 +22,7 @@ export const login =
         type: USER_LOGIN_REQUEST,
       });
       //fetch data from backend (userInfo). interact with the backend using axios
-      const res = await axios.post("/user/login", { email, password });
+      const res = await axios.post("/auth/login", { email, password });
       //pass this data to the reducer in the payload of the dispatch
       dispatch({
         type: USER_LOGIN_SUCCESS,

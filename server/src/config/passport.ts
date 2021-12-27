@@ -1,6 +1,7 @@
 const passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var FacebookStrategy = require("passport-facebook").Strategy;
+const generateToken = require("../utils/generateToken");
 const User = require("../models/userModel");
 import { IMongoDBUser } from "../types";
 
@@ -25,6 +26,7 @@ passport.use(
               username: profile.displayName,
               email: profile.emails[0].value,
               avatar: profile.photos[0].value,
+              token: generateToken(profile.id),
             });
             await newUser.save();
             cb(null, newUser);

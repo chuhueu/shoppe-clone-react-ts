@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { loginUser, registerUser } from "../controllers/authController";
 const router = require("express").Router();
 const passport = require("passport");
 
@@ -25,6 +26,13 @@ interface GetUserAuthInfoReq extends Request {
 //   });
 // });
 
+//LOGIN
+router.route("/login").post(loginUser);
+
+//REGISTER
+router.route("/register").post(registerUser);
+
+//LOGIN WITH GOOGLE AND FACE
 router.get("/getuser", (req: GetUserAuthInfoReq, res: Response) => {
   if (req.user) {
     res.send(req.user);
