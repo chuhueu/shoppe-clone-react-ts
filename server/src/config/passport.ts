@@ -1,9 +1,20 @@
+import { Request, Response } from "express";
 const passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var FacebookStrategy = require("passport-facebook").Strategy;
 const generateToken = require("../utils/generateToken");
 const User = require("../models/userModel");
 import { IMongoDBUser } from "../types";
+
+passport.serializeUser((user: IMongoDBUser, done: any) => {
+  return done(null, user._id);
+});
+
+passport.deserializeUser((id: string, done: any) => {
+  User.findById(id, (err: Error, doc: IMongoDBUser) => {
+    return done(null, doc);
+  });
+});
 
 passport.use(
   new GoogleStrategy(
@@ -15,7 +26,7 @@ passport.use(
     (accessToken: string, refreshToken: string, profile: any, cb: any) => {
       User.findOne(
         { googleID: profile.id },
-        async (err: Error, doc: IMongoDBUser) => {
+        async (err: Error, doc: IMongoDBUser, res: Response) => {
           if (err) {
             return cb(err, null);
           }
@@ -26,7 +37,6 @@ passport.use(
               username: profile.displayName,
               email: profile.emails[0].value,
               avatar: profile.photos[0].value,
-              token: generateToken(profile.id),
             });
             await newUser.save();
             cb(null, newUser);
@@ -67,13 +77,3 @@ passport.use(
     }
   )
 );
-
-passport.serializeUser((user: IMongoDBUser, done: any) => {
-  return done(null, user._id);
-});
-
-passport.deserializeUser((id: string, done: any) => {
-  User.findById(id, (err: Error, doc: IMongoDBUser) => {
-    return done(null, doc);
-  });
-});
