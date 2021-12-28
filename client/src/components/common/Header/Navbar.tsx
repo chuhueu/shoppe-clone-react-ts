@@ -1,6 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { AxiosResponse } from "axios";
-import axios from "../../../axios";
+import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
@@ -19,8 +17,6 @@ import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
-import { myContext } from "../../../context";
-import { IUser } from "../../../types/maintypes";
 import { RootState } from "../../../redux/store/userStore";
 import { userState } from "../../../redux/reducers/userReducer";
 

@@ -240,6 +240,20 @@ const SignUpAuth = () => {
     dispatch(register(values.username, values.email, values.password));
   };
 
+  const loginGoogle = () => {
+    window.open(
+      "https://shopee-clone-bhsoft.herokuapp.com/api/auth/google",
+      "_self"
+    );
+    // window.open("http://localhost:5000/api/auth/google", "_self");
+  };
+  const loginFacebook = () => {
+    window.open(
+      "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
+      "_self"
+    );
+  };
+
   return (
     <Box className={classes.styleWrapper}>
       <Box className={classes.styleContainer}>
@@ -332,6 +346,7 @@ const SignUpAuth = () => {
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
+                      onClick={loginFacebook}
                     >
                       <Box
                         display="flex"
@@ -352,6 +367,7 @@ const SignUpAuth = () => {
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
+                      onClick={loginGoogle}
                     >
                       <Box
                         display="flex"
