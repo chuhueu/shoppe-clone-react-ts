@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 const passport = require("passport");
 var GoogleStrategy = require("passport-google-oauth20").Strategy;
 var FacebookStrategy = require("passport-facebook").Strategy;

@@ -1,37 +1,34 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.13",
-    "@types/node": "^17.0.0",
-    "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
-    "cookie-session": "^2.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.2",
-    "mongoose-findorcreate": "^3.0.0",
-    "nodemon": "^2.0.15",
-    "passport": "^0.5.2",
-    "passport-facebook": "^3.0.0",
-    "passport-google-oauth20": "^2.0.0",
-    "path": "^0.12.7",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
-  },
-  "scripts": {
-    "start": "nodemon src/index.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/cors": "^2.8.12"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "@types/cors": "^2.8.12",
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.0",
+        "bcryptjs": "^2.4.3",
+        "colors": "^1.4.0",
+        "cookie-session": "^2.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.2",
+        "express-async-handler": "^1.2.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^6.1.2",
+        "mongoose-findorcreate": "^3.0.0",
+        "nodemon": "^2.0.15",
+        "passport": "^0.5.2",
+        "passport-facebook": "^3.0.0",
+        "passport-google-oauth20": "^2.0.0",
+        "path": "^0.12.7",
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.4"
+    },
+    "scripts": {
+        "start": "nodemon src/index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
 }
