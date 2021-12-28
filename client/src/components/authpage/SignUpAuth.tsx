@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Grid,
+  Button,
+  Hidden,
+  CircularProgress,
+} from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
@@ -8,7 +15,11 @@ import facebookIcon from "../../assets/images/auth/facebook-logo.png";
 import googleIcon from "../../assets/images/auth/google-logo.png";
 import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
-import axios from "../../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store/userStore";
+import { userState } from "../../redux/reducers/userReducer";
+import { register } from "../../redux/actions/userAction";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleWrapper: {
@@ -155,8 +166,6 @@ const SignUpAuth = () => {
     password: "",
     confirmPassword: "",
   });
-  const [showError, setShowError] = useState(false);
-  const history = useHistory();
 
   interface valuesInput {
     id: number;
@@ -212,19 +221,23 @@ const SignUpAuth = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = async (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    try {
-      await axios.post("/auth/register", {
-        username: values.username,
-        email: values.email,
-        password: values.password,
-      });
-      history.push("/login");
-    } catch (error) {
-      console.log(error);
-      setShowError(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const userRegister = useSelector<RootState, userState>(
+    (state) => state.userRegister
+  );
+  const { userInfo, isFetching, error } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/");
     }
+  }, [userInfo, history]);
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(register(values.username, values.email, values.password));
   };
 
   return (
@@ -264,7 +277,7 @@ const SignUpAuth = () => {
                 >
                   <p className={classes.styleHeadingText}>Đăng Ký</p>
                 </Box>
-                {showError && (
+                {error && (
                   <Box
                     padding="5px 30px"
                     alignItems="center"
@@ -279,7 +292,7 @@ const SignUpAuth = () => {
                     </Box>
                   </Box>
                 )}
-                <form className={classes.styleForm}>
+                <form className={classes.styleForm} onSubmit={submitHandler}>
                   {inputs.map((input) => (
                     <InputForm
                       key={input.id}
@@ -288,12 +301,15 @@ const SignUpAuth = () => {
                       onChange={onChange}
                     />
                   ))}
-                  <Button
-                    onClick={submitHandler}
-                    className={classes.styleButton}
-                  >
-                    Đăng Ký
-                  </Button>
+                  {isFetching ? (
+                    <Button type="submit" className={classes.styleButton}>
+                      <CircularProgress />
+                    </Button>
+                  ) : (
+                    <Button type="submit" className={classes.styleButton}>
+                      Đăng Ký
+                    </Button>
+                  )}
                 </form>
                 <Box className={classes.styleLoginOther}>
                   <Box

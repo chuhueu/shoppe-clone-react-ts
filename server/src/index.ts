@@ -14,9 +14,24 @@ const productRoutes = require("./routes/productRoute");
 const brandRoutes = require("./routes/brandRoute");
 const categoryRoutes = require("./routes/categoryRoute");
 
+const app: Application = express();
+
 connectDB();
 
-const app: Application = express();
+//MIDDLEWARE
+app.use(express.json()); // Configure Express to parse incoming JSON data
+
+// Add a list of allowed origins.
+// If you have more origins you would like to add, you can add them to the array below.
+const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+};
+app.use(cors(options));
+
+app.set("trust proxy", 1);
 
 app.use(
   cookieSession({
@@ -28,18 +43,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-// Add a list of allowed origins.
-// If you have more origins you would like to add, you can add them to the array below.
-const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
-
-const options: cors.CorsOptions = {
-  origin: allowedOrigins,
-  credentials: true,
-};
-app.use(cors(options));
-
-//MIDDLEWARE
-app.use(express.json()); // Configure Express to parse incoming JSON data
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
