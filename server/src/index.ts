@@ -2,7 +2,6 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db";
-//import cors from "cors";
 import cors = require("cors");
 var colors = require("colors");
 const cookieSession = require("cookie-session");
@@ -11,6 +10,8 @@ const passportSetup = require("./config/passport");
 
 const userRoutes = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
+const roleRoute = require("./routes/roleRoute");
+const permissionRoute = require("./routes/permissionRoute");
 const productRoutes = require("./routes/productRoute");
 const brandRoutes = require("./routes/brandRoute");
 const categoryRoutes = require("./routes/categoryRoute");
@@ -28,6 +29,7 @@ const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
+  methods: "GET, POST, PUT, DELETE",
   credentials: true,
 };
 app.use(cors(options));
@@ -47,6 +49,8 @@ app.use(passport.session());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
+app.use("/api/role", roleRoute);
+app.use("/api/permission", permissionRoute);
 app.use("/api/product", productRoutes);
 app.use("/api/brand", brandRoutes);
 app.use("/api/category", categoryRoutes);

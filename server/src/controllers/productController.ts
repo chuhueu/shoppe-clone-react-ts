@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const router = require("express").Router();
 const Product = require("../models/productModel");
 
 //CREATE
@@ -31,5 +30,14 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+//DELETE
+const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const deleteProduct = await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json(deleteProduct);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
-export { createProduct, getProduct, getProductById };
+export { createProduct, getProduct, getProductById, deleteProduct };

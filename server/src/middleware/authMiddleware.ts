@@ -1,39 +1,53 @@
 import { Request, Response, NextFunction } from "express";
-const jwt = require("jsonwebtoken");
-const asyncHandler = require("express-async-handler");
+import { UserInfo } from "../types";
 const User = require("../models/userModel");
+const Role = require("../models/roleModel");
 
-interface IUserReq extends Request {
-  user?: any;
-}
-
-const protect = asyncHandler(
-  async (req: IUserReq, res: Response, next: NextFunction) => {
-    let token;
-
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
-    ) {
-      try {
-        token = req.headers.authorization.split(" ")[1];
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        req.user = await User.findById(decoded.id).select("-password");
-
-        next();
-      } catch (error) {
-        console.log(error);
-        res.status(401);
-        throw new Error("Tài khoản không được ủy quyền, token bị lỗi!");
+//CHECK USER
+const checkUser = async (req: Request, res: Response, next: NextFunction) => {
+  let userToken = req.headers.token;
+  console.log(userToken);
+  let userInfo = await User.findUserByToken(userToken);
+  if (userInfo) {
+    const roleInfo = await Role.findById(userInfo.roleId);
+    if (roleInfo) {
+      if (roleInfo.roleName === "user") {
+        await next();
+      } else {
+        return res.status(401).json("Bạn không có quyền xem dữ liệu này");
       }
+    } else {
+      return res.status(401).json("Không tìm thấy role tương ứng");
     }
-    if (!token) {
-      res.status(401);
-      throw new Error("Tài khoản không được ủy quyền, không có token");
-    }
+  } else {
+    return res.status(401).json("Không tìm thấy user");
   }
-);
+};
 
-export { protect };
+//CHECK SELLER
+const checkSeller = async (req: Request, res: Response, next: NextFunction) => {
+  let userToken = req.headers.token;
+  console.log(userToken);
+  let userInfo = await User.findUserByToken(userToken);
+  if (userInfo) {
+    const roleInfo = await Role.findById(userInfo.roleId);
+    if (roleInfo) {
+      if (roleInfo.roleName === "seller") {
+        await next();
+      } else {
+        return res.status(401).json("Bạn không có quyền xem dữ liệu này");
+      }
+    } else {
+      return res.status(401).json("Không tìm thấy role tương ứng");
+    }
+  } else {
+    return res.status(401).json("Không tìm thấy user");
+  }
+};
+const checkAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {};
+
+module.exports = { checkUser, checkSeller, checkAdmin };

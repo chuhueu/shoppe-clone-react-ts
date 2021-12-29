@@ -7,21 +7,22 @@ import {
   getUserProfile,
   updateUserProfile,
 } from "../controllers/userController";
-import { protect } from "../middleware/authMiddleware";
+import { verify } from "../middleware/tokenMiddleware";
+
+//admin
+router.route("/").get(verify, getUsers);
 
 //user
 router
-  .router("/profile")
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+  .route("/profile")
+  .get(verify, getUserProfile)
+  .put(verify, updateUserProfile);
 
 //admin
-router.route("/").get(protect, getUsers);
-
 router
   .route("/:id")
-  .get(protect, getUserById)
-  .put(protect, updateUser)
-  .delete(protect, deleteUser);
+  .get(verify, getUserById)
+  .put(verify, updateUser)
+  .delete(verify, deleteUser);
 
 module.exports = router;

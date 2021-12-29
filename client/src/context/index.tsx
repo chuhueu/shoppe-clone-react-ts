@@ -12,6 +12,12 @@ const Context = (props: any) => {
     axios
       .get("/auth/getuser", {
         withCredentials: true,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Credentials": "true",
+        },
       })
       .then((res: AxiosResponse) => {
         if (res.data) {

@@ -221,7 +221,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   //styles
   const classes = useStyles();
-
   const dispatch = useDispatch();
 
   //state

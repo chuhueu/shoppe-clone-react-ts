@@ -10,3 +10,13 @@ export interface IMongoDBUser {
   appleID?: string;
   avatar?: string;
 }
+
+export interface UserInfo {
+  _id?: ObjectId;
+  username?: string;
+  email?: string;
+  password?: string;
+  avatar?: string;
+  roleId?: ObjectId;
+  token?: string;
+}

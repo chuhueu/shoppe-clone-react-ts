@@ -5,11 +5,9 @@ import {
 } from "../controllers/brandController";
 const router = require("express").Router();
 
-//CREATE
-router.post("/", createBrand);
-//GET ALL
-router.get("/", getBrand);
-//GET BY ID
-router.get("/:id", getBrandById);
+//CREATE AND GET
+router.route("/").post(createBrand).get(getBrand);
+//GET BY ID AND DELETE
+router.route("/").get(getBrandById);
 
 module.exports = router;
