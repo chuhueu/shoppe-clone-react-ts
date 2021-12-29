@@ -21,7 +21,8 @@ const Context = (props: any) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": "*",
+          "Access-Control-Allow-Origin": "http://localhost:3000/",
+          "Access-Control-Allow-Credentials": "true",
         },
       })
       .then((res: AxiosResponse) => {

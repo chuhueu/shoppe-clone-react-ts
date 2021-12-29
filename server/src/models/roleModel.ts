@@ -4,11 +4,11 @@ const RoleModel = new mongoose.Schema(
   {
     roleName: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
-    permissons: [
+    userId: [
       {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Permission",
+        ref: "User",
       },
     ],
   },

@@ -2,7 +2,6 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db";
-//import cors from "cors";
 import cors = require("cors");
 var colors = require("colors");
 const cookieSession = require("cookie-session");
@@ -28,6 +27,7 @@ const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
+  methods: "GET, POST, PUT, DELETE",
   credentials: true,
 };
 app.use(cors(options));
