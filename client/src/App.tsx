@@ -1,4 +1,3 @@
-import React from "react";
 import "./assets/css/app.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { renderRoutes } from "react-router-config";

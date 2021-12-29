@@ -30,7 +30,6 @@ passport.use(
           if (err) {
             return cb(err, null);
           }
-
           if (!doc) {
             const newUser = new User({
               googleID: profile.id,

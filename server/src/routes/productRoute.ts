@@ -2,14 +2,22 @@ import {
   createProduct,
   getProduct,
   getProductById,
+  deleteProduct,
 } from "../controllers/productController";
+import { verify } from "../middleware/tokenMiddleware";
+const {
+  checkSeller,
+  checkUser,
+  checkAdmin,
+} = require("../middleware/authMiddleware");
 const router = require("express").Router();
 
-//CREATE
-router.post("/", createProduct);
-//GET ALL
-router.get("/", getProduct);
-//GET BY ID
-router.get("/:id", getProductById);
+//CREATE AND GET
+router
+  .route("/")
+  .post(verify, checkSeller, createProduct)
+  .get(verify, checkUser, getProduct);
+//GET BY ID AND DELETE
+router.route("/:id").get(getProductById).delete(deleteProduct);
 
 module.exports = router;
