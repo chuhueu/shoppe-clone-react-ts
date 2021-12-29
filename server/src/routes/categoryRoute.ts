@@ -5,11 +5,9 @@ import {
 } from "../controllers/categoryController";
 const router = require("express").Router();
 
-//CREATE
-router.post("/", createCategory);
-//GET ALL
-router.get("/", getCategory);
-//GET BY ID
-router.get("/:id", getCategoryById);
+//CREATE AND GET
+router.route("/").post(createCategory).get(getCategory);
+//GET BY ID AND DELETE
+router.route("/").get(getCategoryById);
 
 module.exports = router;

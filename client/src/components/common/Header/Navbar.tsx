@@ -240,6 +240,7 @@ const Navbar = () => {
         withCredentials: true,
       })
       .then((res: AxiosResponse) => {
+        dispatch(logout());
         console.log(res.data);
         if (res.data === "done") {
           window.location.href = "/";

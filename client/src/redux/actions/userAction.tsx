@@ -51,4 +51,5 @@ export const logout =
       type: USER_LOGOUT,
     });
     localStorage.setItem("user", JSON.stringify(null));
+    localStorage.removeItem("authInfo");
   };

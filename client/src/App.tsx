@@ -1,4 +1,3 @@
-import React from "react";
 import "./assets/css/app.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
@@ -11,7 +10,6 @@ function App() {
     (state) => state.userLogin
   );
   localStorage.setItem("user", JSON.stringify(userInfo));
-
   return (
     <div className="wrapper">
       <Router>{renderRoutes(routes)}</Router>

@@ -10,6 +10,8 @@ const passportSetup = require("./config/passport");
 
 const userRoutes = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
+const roleRoute = require("./routes/roleRoute");
+const permissionRoute = require("./routes/permissionRoute");
 const productRoutes = require("./routes/productRoute");
 const brandRoutes = require("./routes/brandRoute");
 const categoryRoutes = require("./routes/categoryRoute");
@@ -43,6 +45,8 @@ app.use(express.json()); // Configure Express to parse incoming JSON data
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
+app.use("/api/role", roleRoute);
+app.use("/api/permission", permissionRoute);
 app.use("/api/product", productRoutes);
 app.use("/api/brand", brandRoutes);
 app.use("/api/category", categoryRoutes);
