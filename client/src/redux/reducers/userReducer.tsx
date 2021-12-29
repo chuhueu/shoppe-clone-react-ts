@@ -48,7 +48,7 @@ export const userLoginReducer = (state: userState, action: Action) => {
     case USER_LOGOUT: {
       return {
         userInfo: null,
-        isFetching: true,
+        isFetching: false,
         error: false,
       };
     }
@@ -78,7 +78,7 @@ export const userRegisterReducer = (state: userState, action: Action) => {
     case USER_LOGOUT: {
       return {
         userInfo: null,
-        isFetching: true,
+        isFetching: false,
         error: false,
       };
     }

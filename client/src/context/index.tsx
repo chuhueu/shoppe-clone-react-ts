@@ -1,18 +1,12 @@
 import React, { createContext, useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import axios from "../axios";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store/userStore";
-import { userState } from "../redux/reducers/userReducer";
 
 export const myContext = createContext({});
 const Context = (props: any) => {
   const [userObject, setUserObject] = useState<any>();
 
-  const userLogin = useSelector<RootState, userState>(
-    (state) => state.userLogin
-  );
-  const { userInfo } = userLogin;
+  const userInfo = localStorage.getItem("userInfo");
 
   useEffect(() => {
     axios

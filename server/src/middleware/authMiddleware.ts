@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { UserInfo } from "../types";
 const User = require("../models/userModel");
 const Role = require("../models/roleModel");
+
 //CHECK USER
 const checkUser = async (req: Request, res: Response, next: NextFunction) => {
   let userToken = req.headers.token;
@@ -22,6 +23,7 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
     return res.status(401).json("Không tìm thấy user");
   }
 };
+
 //CHECK SELLER
 const checkSeller = async (req: Request, res: Response, next: NextFunction) => {
   let userToken = req.headers.token;

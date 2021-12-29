@@ -23,10 +23,16 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/api/auth/google/callback",
     },
-    (accessToken: string, refreshToken: string, profile: any, cb: any) => {
+    (
+      req: Request,
+      accessToken: string,
+      refreshToken: string,
+      profile: any,
+      cb: any
+    ) => {
       User.findOne(
         { googleID: profile.id },
-        async (err: Error, doc: IMongoDBUser, res: Response) => {
+        async (err: Error, doc: IMongoDBUser) => {
           if (err) {
             return cb(err, null);
           }

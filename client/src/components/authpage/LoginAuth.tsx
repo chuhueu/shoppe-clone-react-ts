@@ -256,10 +256,11 @@ const LoginAuth = () => {
     window.open("http://localhost:5000/api/auth/google", "_self");
   };
   const loginFacebook = () => {
-    window.open(
-      "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
-      "_self"
-    );
+    // window.open(
+    //   "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
+    //   "_self"
+    // );
+    window.open("http://localhost:5000/api/auth/facebook", "_self");
   };
 
   return (
