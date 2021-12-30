@@ -17,8 +17,6 @@ import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
-import { myContext } from "../../../context";
-import { IUser } from "../../../types/maintypes";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "../../../assets/css/popup.css";
@@ -226,23 +224,20 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   //styles
   const classes = useStyles();
-  //state
-  const user = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user")!)
-    : null;
-  const [checkRole, setCheckRole] = useState(false);
-  useEffect(() => {
-    if (user?.role === "ROLE_SELLER") {
-      setCheckRole(true);
-    }
-  }, [user]);
-  const dispatch = useDispatch();
 
   //state
   const userLogin = useSelector<RootState, userState>(
     (state) => state.userLogin
   );
   const { userInfo } = userLogin;
+
+  const [checkRole, setCheckRole] = useState(false);
+  useEffect(() => {
+    if (userInfo?.role === "ROLE_SELLER") {
+      setCheckRole(true);
+    }
+  }, [userInfo]);
+  const dispatch = useDispatch();
 
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

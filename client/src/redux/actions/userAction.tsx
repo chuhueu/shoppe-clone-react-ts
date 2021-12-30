@@ -105,8 +105,8 @@ export const logout =
       })
       .then((res: AxiosResponse) => {
         if (res.data === "done") {
-          window.location.href = "/";
           localStorage.removeItem("userInfo");
+          window.location.href = "/";
         }
       });
     dispatch({
