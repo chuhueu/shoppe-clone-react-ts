@@ -16,7 +16,8 @@ const router = require("express").Router();
 router
   .route("/")
   .post(verify, checkSeller, createProduct)
-  .get(verify, checkUser, getProduct);
+  .get(checkUser, getProduct);
+
 //GET BY ID AND DELETE
 router.route("/:id").get(getProductById).delete(deleteProduct);
 

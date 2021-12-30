@@ -9,24 +9,6 @@ interface GetUserAuthInfoReq extends Request {
   logout: any;
 }
 
-// router.get("/login/success", async (req: GetUserAuthInfoReq, res: Response) => {
-//   if (req.user) {
-//     res.status(200).json({
-//       user: req.user,
-//       success: true,
-//       message: "Đăng nhập thành công",
-//       //   cookies: req.cookies,
-//     });
-//   }
-// });
-
-// router.get("/login/failed", (req: Request, res: Response) => {
-//   res.status(401).json({
-//     success: false,
-//     message: "Đăng nhập thất bại",
-//   });
-// });
-
 //LOGIN
 router.route("/login").post(loginUser);
 
