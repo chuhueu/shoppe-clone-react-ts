@@ -19,6 +19,7 @@ const getUserProfile = asyncHandler(async (req: IUserReq, res: Response) => {
       username: user.username,
       email: user.email,
       avatar: user.avatar,
+      roleId: user.roleId,
     });
   } else {
     res.status(404);

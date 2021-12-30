@@ -231,7 +231,7 @@ const SignUpAuth = () => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/");
+      history.push("/login");
     }
   }, [userInfo, history]);
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
@@ -17,6 +17,11 @@ import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
+import { myContext } from "../../../context";
+import { IUser } from "../../../types/maintypes";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import "../../../assets/css/popup.css";
 import { RootState } from "../../../redux/store/userStore";
 import { userState } from "../../../redux/reducers/userReducer";
 
@@ -221,6 +226,16 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   //styles
   const classes = useStyles();
+  //state
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+  const [checkRole, setCheckRole] = useState(false);
+  useEffect(() => {
+    if (user?.role === "ROLE_SELLER") {
+      setCheckRole(true);
+    }
+  }, [user]);
   const dispatch = useDispatch();
 
   //state
@@ -242,17 +257,48 @@ const Navbar = () => {
         className={classes.styleWrapperLeft}
       >
         <Typography variant="h2">
-          <Link to="#" className={classes.styleLink}>
-            Kênh Người Bán
-          </Link>
+          {!checkRole ? (
+            <Popup
+              trigger={
+                <Link to="/" className={classes.styleLink}>
+                  Kênh Người Bán
+                </Link>
+              }
+              modal
+              nested
+            >
+              {(
+                close: React.MouseEventHandler<HTMLButtonElement> | undefined
+              ) => (
+                <div className="modal">
+                  <button className="close" onClick={close}>
+                    &times;
+                  </button>
+                  <div className="header">Oops!</div>
+                  <div className="content">
+                    Tài khoản bạn chưa đăng kí quyền Người bán!
+                  </div>
+                  <div className="actions">
+                    <Link to="/signup" className="button">
+                      Đăng kí
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          ) : (
+            <Link to="/seller" className={classes.styleLink}>
+              Kênh Người Bán
+            </Link>
+          )}
         </Typography>
         <Typography variant="h2">
-          <Link to="#" className={classes.styleLink}>
+          <Link to="/" className={classes.styleLink}>
             Trở thành Người bán Shopee
           </Link>
         </Typography>
         <Typography variant="h2" className={classes.styleDownloadHover}>
-          <Link to="#" className={classes.styleLink}>
+          <Link to="/" className={classes.styleLink}>
             Tải ứng dụng
           </Link>
           <Box className={classes.styleDownload}>

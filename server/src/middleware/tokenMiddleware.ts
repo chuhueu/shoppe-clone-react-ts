@@ -25,13 +25,12 @@ const verify = asyncHandler(
 
         next();
       } catch (error) {
-        console.log(error);
-        res.status(401);
+        res.status(401).json("Tài khoản không được ủy quyền, token bị lỗi!");
         throw new Error("Tài khoản không được ủy quyền, token bị lỗi!");
       }
     }
     if (!token) {
-      res.status(401);
+      res.status(401).json("Tài khoản không được ủy quyền, không có token");
       throw new Error("Tài khoản không được ủy quyền, không có token");
     }
   }
