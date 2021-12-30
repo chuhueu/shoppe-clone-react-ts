@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AxiosResponse } from "axios";
 import axios from "../../../axios";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -21,6 +21,9 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
 import { myContext } from "../../../context";
 import { IUser } from "../../../types/maintypes";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import "../../../assets/css/popup.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -224,7 +227,15 @@ const Navbar = () => {
   //styles
   const classes = useStyles();
   //state
-  const user = JSON.parse(localStorage.getItem("user") || "");
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+  const [checkRole, setCheckRole] = useState(false);
+  useEffect(() => {
+    if (user?.role === "ROLE_SELLER") {
+      setCheckRole(true);
+    }
+  }, [user]);
   const dispatch = useDispatch();
 
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
@@ -256,17 +267,48 @@ const Navbar = () => {
         className={classes.styleWrapperLeft}
       >
         <Typography variant="h2">
-          <Link to="#" className={classes.styleLink}>
-            Kênh Người Bán
-          </Link>
+          {!checkRole ? (
+            <Popup
+              trigger={
+                <Link to="/" className={classes.styleLink}>
+                  Kênh Người Bán
+                </Link>
+              }
+              modal
+              nested
+            >
+              {(
+                close: React.MouseEventHandler<HTMLButtonElement> | undefined
+              ) => (
+                <div className="modal">
+                  <button className="close" onClick={close}>
+                    &times;
+                  </button>
+                  <div className="header">Oops!</div>
+                  <div className="content">
+                    Tài khoản bạn chưa đăng kí quyền Người bán!
+                  </div>
+                  <div className="actions">
+                    <Link to="/signup" className="button">
+                      Đăng kí
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </Popup>
+          ) : (
+            <Link to="/seller" className={classes.styleLink}>
+              Kênh Người Bán
+            </Link>
+          )}
         </Typography>
         <Typography variant="h2">
-          <Link to="#" className={classes.styleLink}>
+          <Link to="/" className={classes.styleLink}>
             Trở thành Người bán Shopee
           </Link>
         </Typography>
         <Typography variant="h2" className={classes.styleDownloadHover}>
-          <Link to="#" className={classes.styleLink}>
+          <Link to="/" className={classes.styleLink}>
             Tải ứng dụng
           </Link>
           <Box className={classes.styleDownload}>

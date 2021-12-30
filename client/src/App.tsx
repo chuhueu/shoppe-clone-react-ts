@@ -1,18 +1,25 @@
 import "./assets/css/app.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
-import { routes } from "./routes/routes";
-import { RootState } from "./redux/store/userStore";
-import { useSelector } from "react-redux";
-import { userState } from "./redux/reducers/userReducer";
+import { routesUser, routesSeller } from "./routes/routes";
+import { useState, useEffect } from "react";
 function App() {
-  const { userInfo } = useSelector<RootState, userState>(
-    (state) => state.userLogin
-  );
-  localStorage.setItem("user", JSON.stringify(userInfo));
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")!)
+    : null;
+  const [check, setCheck] = useState(false);
+  useEffect(() => {
+    if (user?.role === "ROLE_SELLER") {
+      setCheck(true);
+    }
+  }, [user]);
   return (
     <div className="wrapper">
-      <Router>{renderRoutes(routes)}</Router>
+      {check ? (
+        <Router>{renderRoutes(routesSeller)}</Router>
+      ) : (
+        <Router>{renderRoutes(routesUser)}</Router>
+      )}
     </div>
   );
 }

@@ -1,0 +1,48 @@
+.modal {
+  font-family: Netflix Sans;
+  font-size: 12px;
+  width: 100%;
+}
+.modal > .header {
+  width: 100%;
+  font-size: 23px;
+  text-align: center;
+  padding: 5px 0px;
+}
+.modal > .content {
+  width: 100%;
+  padding: 20px 0px 10px 0px;
+  font-size: 18px;
+  text-align: center;
+}
+.modal > .actions {
+  width: 100%;
+  padding: 15px 0px;
+  text-align: center;
+}
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: 10px;
+  top: 10px;
+  font-size: 30px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: none;
+}
+.modal > .close:hover {
+  color: #e40519;
+}
+
+.modal > .actions .button {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 23px;
+  padding: 7px 12px;
+  background: linear-gradient(-180deg, #f53d2d, #f63);
+  color: #fff;
+  border-radius: 5px;
+}
