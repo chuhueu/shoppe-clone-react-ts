@@ -14,6 +14,7 @@ const router = require("express").Router();
 
 //CREATE AND GET
 router.route("/").post(verify, checkSeller, createProduct).get(getProduct);
+
 //GET BY ID AND DELETE
 router
   .route("/:id")
