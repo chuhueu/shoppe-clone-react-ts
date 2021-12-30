@@ -5,7 +5,11 @@ import {
   deleteProduct,
 } from "../controllers/productController";
 import { verify } from "../middleware/tokenMiddleware";
-const { checkSeller, checkAdmin } = require("../middleware/authMiddleware");
+const {
+  checkUser,
+  checkSeller,
+  checkAdmin,
+} = require("../middleware/authMiddleware");
 const router = require("express").Router();
 
 //CREATE AND GET

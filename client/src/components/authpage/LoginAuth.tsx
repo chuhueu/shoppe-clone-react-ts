@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Grid, Button, Hidden } from "@material-ui/core";
+import {
+  Box,
+  Typography,
+  Grid,
+  Button,
+  Hidden,
+  CircularProgress,
+} from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
@@ -186,15 +193,6 @@ const LoginAuth = () => {
     email: "",
     password: "",
   });
-  // const user = localStorage.getItem("user")
-  //   ? JSON.parse(localStorage.getItem("user")!)
-  //   : null;
-  // console.log(user);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { userInfo, error } = useSelector<RootState, userState>(
-    (state) => state.userLogin
-  );
 
   interface valuesInput {
     id: number;
@@ -230,12 +228,22 @@ const LoginAuth = () => {
   const onChange = (e: any) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector<RootState, userState>(
+    (state) => state.userLogin
+  );
+  const { userInfo, isFetching, error } = userLogin;
+
   useEffect(() => {
-    if (userInfo !== undefined && userInfo?.username) {
-      window.open("/", "_self");
+    if (userInfo) {
+      history.push("/");
     }
-  }, [userInfo]);
-  const submitHandler = (e: React.MouseEvent<HTMLElement>) => {
+  }, [userInfo, history]);
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(login(values.email, values.password));
   };
@@ -248,10 +256,11 @@ const LoginAuth = () => {
     window.open("http://localhost:5000/api/auth/google", "_self");
   };
   const loginFacebook = () => {
-    window.open(
-      "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
-      "_self"
-    );
+    // window.open(
+    //   "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
+    //   "_self"
+    // );
+    window.open("http://localhost:5000/api/auth/facebook", "_self");
   };
 
   return (
@@ -317,7 +326,7 @@ const LoginAuth = () => {
                     </Box>
                   </Box>
                 )}
-                <form className={classes.styleForm}>
+                <form className={classes.styleForm} onSubmit={submitHandler}>
                   {inputs.map((input) => (
                     <InputForm
                       key={input.id}
@@ -326,12 +335,15 @@ const LoginAuth = () => {
                       onChange={onChange}
                     />
                   ))}
-                  <Button
-                    onClick={submitHandler}
-                    className={classes.styleButton}
-                  >
-                    Đăng Nhập
-                  </Button>
+                  {isFetching ? (
+                    <Button type="submit" className={classes.styleButton}>
+                      <CircularProgress size={20} color="primary" />
+                    </Button>
+                  ) : (
+                    <Button type="submit" className={classes.styleButton}>
+                      Đăng Nhập
+                    </Button>
+                  )}
                   <Box
                     display="flex"
                     justifyContent="space-between"

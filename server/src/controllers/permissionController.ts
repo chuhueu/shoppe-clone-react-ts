@@ -12,6 +12,7 @@ const createPermission = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //GET ALL
 const getPermission = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,7 @@ const getPermission = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //GET FIND ID
 const getPermissionById = asyncHandler(async (req: Request, res: Response) => {
   try {

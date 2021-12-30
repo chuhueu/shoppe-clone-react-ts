@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { loginUser, registerUser } from "../controllers/authController";
 const router = require("express").Router();
 const passport = require("passport");
+const generateToken = require("../utils/generateToken");
 
 interface GetUserAuthInfoReq extends Request {
   user: any;
@@ -35,7 +36,14 @@ router.route("/register").post(registerUser);
 //LOGIN WITH GOOGLE AND FACE
 router.get("/getuser", (req: GetUserAuthInfoReq, res: Response) => {
   if (req.user) {
-    res.send(req.user);
+    res.status(201).json({
+      _id: req.user._id,
+      googleID: req.user.googleID,
+      email: req.user.email,
+      username: req.user.username,
+      avatar: req.user.avatar,
+      token: generateToken(req.user._id),
+    });
   }
 });
 

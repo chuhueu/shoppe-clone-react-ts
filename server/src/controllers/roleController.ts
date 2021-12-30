@@ -12,6 +12,7 @@ const createRole = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //GET ALL
 const getRole = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,7 @@ const getRole = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //GET FIND ID
 const getRoleById = asyncHandler(async (req: Request, res: Response) => {
   try {

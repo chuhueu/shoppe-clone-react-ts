@@ -1,6 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AxiosResponse } from "axios";
-import axios from "../../../axios";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Button, Typography, Avatar } from "@material-ui/core";
 import {
@@ -17,13 +15,15 @@ import appStore from "../../../assets/images/header/app-store.png";
 import ggPlay from "../../../assets/images/header/gg-play.png";
 import appGallery from "../../../assets/images/header/app-gallery.png";
 import noNoti from "../../../assets/images/header/no-noti.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/actions/userAction";
 import { myContext } from "../../../context";
 import { IUser } from "../../../types/maintypes";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "../../../assets/css/popup.css";
+import { RootState } from "../../../redux/store/userStore";
+import { userState } from "../../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -238,25 +238,15 @@ const Navbar = () => {
   }, [user]);
   const dispatch = useDispatch();
 
+  //state
+  const userLogin = useSelector<RootState, userState>(
+    (state) => state.userLogin
+  );
+  const { userInfo } = userLogin;
+
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logout());
-    window.location.reload();
-  };
-
-  const authInfo = useContext(myContext) as IUser;
-  const authLogout = () => {
-    axios
-      .get("/auth/logout", {
-        withCredentials: true,
-      })
-      .then((res: AxiosResponse) => {
-        dispatch(logout());
-        console.log(res.data);
-        if (res.data === "done") {
-          window.location.href = "/";
-        }
-      });
   };
 
   return (
@@ -397,27 +387,7 @@ const Navbar = () => {
             </Box>
           </Box>
         </Typography>
-        {authInfo ? (
-          <>
-            <Box
-              display="flex"
-              alignItems="center"
-              className={classes.styleLanguageHover}
-              style={{ cursor: "pointer", paddingRight: "20px" }}
-            >
-              <Avatar alt="Remy Sharp" src={authInfo.avatar}></Avatar>
-              <Typography variant="h2">{authInfo.username}</Typography>
-              <Box className={classes.styleLanguage}>
-                <Box className={classes.styleLanguageBox}>
-                  <Typography variant="h4">Tài Khoản Của Tôi</Typography>
-                </Box>
-                <Box className={classes.styleLanguageBox} onClick={authLogout}>
-                  <Typography variant="h4">Đăng Xuất</Typography>
-                </Box>
-              </Box>
-            </Box>
-          </>
-        ) : user ? (
+        {userInfo ? (
           <>
             <Box
               display="flex"
@@ -427,9 +397,13 @@ const Navbar = () => {
             >
               <Avatar
                 alt="Remy Sharp"
-                src="https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
+                src={`${
+                  userInfo.avatar
+                    ? userInfo.avatar
+                    : "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
+                }`}
               ></Avatar>
-              <Typography variant="h2">{user.username}</Typography>
+              <Typography variant="h2">{userInfo.username}</Typography>
               <Box className={classes.styleLanguage}>
                 <Box className={classes.styleLanguageBox}>
                   <Typography variant="h4">Tài Khoản Của Tôi</Typography>

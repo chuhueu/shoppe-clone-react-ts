@@ -8,7 +8,14 @@ import {
   updateUserProfile,
 } from "../controllers/userController";
 import { verify } from "../middleware/tokenMiddleware";
-const { checkSeller, checkAdmin } = require("../middleware/authMiddleware");
+const {
+  checkUser,
+  checkSeller,
+  checkAdmin,
+} = require("../middleware/authMiddleware");
+
+//admin
+router.route("/").get(verify, getUsers);
 
 //user
 router
@@ -17,8 +24,6 @@ router
   .put(verify, updateUserProfile);
 
 //admin
-router.route("/").get(verify, getUsers);
-
 router
   .route("/:id")
   .get(verify, getUserById)
