@@ -14,6 +14,7 @@ interface userInfo {
   email?: string;
   password?: string;
   avatar?: string;
+  role?: string;
   googleID?: string;
 }
 export interface userState {
