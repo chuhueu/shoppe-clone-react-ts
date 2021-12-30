@@ -22,6 +22,11 @@ const UserSchema = new mongoose.Schema(
       ref: "Role",
       default: "61cbc5391efe64b6e77f4661",
     },
+    role: {
+      type: String,
+      default: "ROLE_MEMBER",
+      enum: ["ROLE_MEMBER", "ROLE_ADMIN", "ROLE_SELLER"],
+    },
   },
   { timestamps: true }
 );

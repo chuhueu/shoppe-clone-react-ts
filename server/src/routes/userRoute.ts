@@ -8,6 +8,11 @@ import {
   updateUserProfile,
 } from "../controllers/userController";
 import { verify } from "../middleware/tokenMiddleware";
+const {
+  checkUser,
+  checkSeller,
+  checkAdmin,
+} = require("../middleware/authMiddleware");
 
 //admin
 router.route("/").get(verify, getUsers);

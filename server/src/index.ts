@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from "express";
+const jwt = require("jsonwebtoken");
 import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db";
