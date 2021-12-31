@@ -2,7 +2,6 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { RootState } from "../store/userStore";
 import axios from "../../axios";
-import { AxiosResponse } from "axios";
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -99,16 +98,6 @@ export const logout =
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>
   ): Promise<void> => {
-    axios
-      .get("/auth/logout", {
-        withCredentials: true,
-      })
-      .then((res: AxiosResponse) => {
-        if (res.data === "done") {
-          localStorage.removeItem("userInfo");
-          window.location.href = "/";
-        }
-      });
     dispatch({
       type: USER_LOGOUT,
     });
