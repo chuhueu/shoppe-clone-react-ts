@@ -12,6 +12,6 @@ router.route("/login").post(loginUser);
 router.route("/register").post(registerUser);
 
 //LOGIN GOOGLE
-router.router("/google").post(loginGoogle);
+router.route("/google").post(loginGoogle);
 
 module.exports = router;
