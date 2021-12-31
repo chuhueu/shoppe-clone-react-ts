@@ -3,6 +3,7 @@ import {
   DetailProductPage,
   LoginPage,
   SignUpPage,
+  CartPage,
 } from "../pages/index";
 
 const routesUser = [
@@ -22,6 +23,10 @@ const routesUser = [
   {
     path: "/signup",
     component: SignUpPage,
+  },
+  {
+    path: "/cart",
+    component: CartPage,
   },
 ];
 

@@ -9,6 +9,8 @@ import {
 } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link, useHistory } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
+import axios from "../../axios";
 import HighlightOffOutlinedIcon from "@material-ui/icons/HighlightOffOutlined";
 import logo from "../../assets/images/auth/shopee-logo-big.png";
 import qrIcon from "../../assets/images/auth/qr-code1.png";
@@ -20,7 +22,6 @@ import { login } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/userStore";
 import { userState } from "../../redux/reducers/userReducer";
-import Facebook from "./Facebook";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -249,24 +250,25 @@ const LoginAuth = () => {
     dispatch(login(values.email, values.password));
   };
 
-  const loginGoogle = () => {
-    // window.open(
-    //   "https://shopee-clone-bhsoft.herokuapp.com/api/auth/google",
-    //   "_self"
-    // );
-    window.open("http://localhost:5000/api/auth/google", "_self");
+  const handleLoginGG = async (googledData: any) => {
+    const { data } = await axios({
+      method: "POST",
+      url: "/auth/google",
+      data: { tokenId: googledData.tokenId },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+    window.location.href = "/";
   };
-  const loginFacebook = () => {
-    // window.open(
-    //   "https://shopee-clone-bhsoft.herokuapp.com/api/auth/facebook",
-    //   "_self"
-    // );
-    window.open("http://localhost:5000/api/auth/facebook", "_self");
+
+  const handleFailureGG = (result: any) => {
+    alert(result);
   };
 
   return (
     <Box className={classes.styleWrapper}>
-      {/* <Facebook /> */}
       <Box className={classes.styleContainer}>
         <Grid container justifyContent="center" style={{ height: "100%" }}>
           <Hidden mdDown>
@@ -380,7 +382,6 @@ const LoginAuth = () => {
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
-                      onClick={loginFacebook}
                     >
                       <Box
                         display="flex"
@@ -396,12 +397,18 @@ const LoginAuth = () => {
                       </Box>
                       <span>Facebook</span>
                     </Box>
-                    <Box
+                    <GoogleLogin
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                      buttonText="Google"
+                      onSuccess={handleLoginGG}
+                      onFailure={handleFailureGG}
+                      cookiePolicy={"single_host_origin"}
+                    ></GoogleLogin>
+                    {/* <Box
                       display="flex"
                       alignItems="center"
                       justifyContent="space-between"
                       className={classes.styleButtonSocial}
-                      onClick={loginGoogle}
                     >
                       <Box
                         display="flex"
@@ -416,7 +423,7 @@ const LoginAuth = () => {
                         />
                       </Box>
                       <span>Google</span>
-                    </Box>
+                    </Box> */}
                     <Box
                       display="flex"
                       alignItems="center"
