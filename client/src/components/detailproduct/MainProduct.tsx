@@ -11,8 +11,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Thumbs } from "swiper";
 import "swiper/swiper-bundle.min.css";
 import "../../assets/css/navigation.css";
-import { useState } from "react";
-//import axios from "../../axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import productModel from "../../models/productModel";
+import axios from "../../axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -116,11 +118,29 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 SwiperCore.use([Navigation, Thumbs]);
 
+export interface Params {
+  infoID?: string;
+}
+
 const MainProduct = () => {
   //styles
   const classes = useStyles();
   //state
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [product, setProduct] = useState<productModel>();
+  const params: Params = useParams();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await axios.get("product/" + params?.infoID);
+        setProduct(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [params?.infoID]);
   const slides = [];
   for (let i = 0; i < 6; i++) {
     slides.push(
@@ -135,6 +155,11 @@ const MainProduct = () => {
         <Grid container spacing={2} className={classes.styleGrid}>
           <Grid item xs={12} sm={6} md={5}>
             <Box>
+              {/* {product?.image.map((img) => {
+                return (
+
+                )
+              })} */}
               <Swiper
                 id="main"
                 tag="section"
@@ -182,9 +207,7 @@ const MainProduct = () => {
                 className={classes.styleHead}
               >
                 <Box>Yêu Thích</Box>
-                <Box component="span">
-                  💃 Áo Sweater Nỉ Nữ Tay Nơ Khoét Vai Tay Bồng 2 Màu
-                </Box>
+                <Box component="span">{product?.name}</Box>
               </Box>
             </Box>
             <Box display="flex" mt={1}>
@@ -221,7 +244,7 @@ const MainProduct = () => {
                 className={classes.styleStatistic}
                 style={{ border: 0 }}
               >
-                <Box style={{ border: 0 }}>449</Box>
+                <Box style={{ border: 0 }}>{product?.sold}</Box>
                 <Box>Đã Bán</Box>
               </Box>
             </Box>
@@ -238,7 +261,7 @@ const MainProduct = () => {
                   className={classes.stylePriceDis}
                 >
                   <Box>đ60.000</Box>
-                  <Box>20% Giảm</Box>
+                  <Box>{product?.discount}% Giảm</Box>
                 </Box>
               </Box>
             </Box>

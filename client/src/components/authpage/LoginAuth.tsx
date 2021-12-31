@@ -20,6 +20,7 @@ import { login } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/userStore";
 import { userState } from "../../redux/reducers/userReducer";
+import Facebook from "./Facebook";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -265,6 +266,7 @@ const LoginAuth = () => {
 
   return (
     <Box className={classes.styleWrapper}>
+      {/* <Facebook /> */}
       <Box className={classes.styleContainer}>
         <Grid container justifyContent="center" style={{ height: "100%" }}>
           <Hidden mdDown>
