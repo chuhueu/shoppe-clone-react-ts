@@ -5,9 +5,6 @@ dotenv.config();
 import connectDB from "./config/db";
 import cors = require("cors");
 var colors = require("colors");
-const cookieSession = require("cookie-session");
-const passport = require("passport");
-const passportSetup = require("./config/passport");
 
 const userRoutes = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
@@ -24,29 +21,9 @@ connectDB();
 //MIDDLEWARE
 app.use(express.json()); // Configure Express to parse incoming JSON data
 
-// Add a list of allowed origins.
-// If you have more origins you would like to add, you can add them to the array below.
-const allowedOrigins = ["http://localhost:3000", `${process.env.CLIENT_URL!}`];
-
-const options: cors.CorsOptions = {
-  origin: allowedOrigins,
-  methods: "GET, POST, PUT, DELETE",
-  credentials: true,
-};
-app.use(cors(options));
+app.use(cors());
 
 app.set("trust proxy", 1);
-
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_SECRET],
-    maxAge: 24 * 60 * 60 * 100,
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
