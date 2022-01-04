@@ -218,6 +218,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: "5px",
       },
     },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
   })
 );
 
@@ -391,7 +395,7 @@ const Navbar = () => {
               style={{ cursor: "pointer", paddingRight: "20px" }}
             >
               <Avatar
-                alt="Remy Sharp"
+                className={classes.small}
                 src={`${
                   userInfo.avatar
                     ? userInfo.avatar
