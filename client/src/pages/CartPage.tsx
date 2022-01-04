@@ -1,12 +1,26 @@
 import React from "react";
-import HeaderCartPage from "../components/cartpage/HeaderCartPage";
-import NavbarCartPage from "../components/cartpage/NavbarCartPage";
+import {
+  NavbarCartPage,
+  HeaderCartPage,
+  TopCart,
+  Footer,
+  HeadingCart,
+  ItemCart,
+  BottomCart,
+  ListProduct,
+} from "../components";
 
 const CartPage = () => {
   return (
     <>
       <NavbarCartPage />
       <HeaderCartPage />
+      <TopCart />
+      <HeadingCart />
+      <ItemCart />
+      <BottomCart />
+      <ListProduct />
+      <Footer show={false} />
     </>
   );
 };
