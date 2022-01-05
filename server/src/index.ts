@@ -10,9 +10,10 @@ const userRoutes = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const roleRoute = require("./routes/roleRoute");
 const permissionRoute = require("./routes/permissionRoute");
-const productRoutes = require("./routes/productRoute");
-const brandRoutes = require("./routes/brandRoute");
-const categoryRoutes = require("./routes/categoryRoute");
+const productRoute = require("./routes/productRoute");
+const brandRoute = require("./routes/brandRoute");
+const categoryRoute = require("./routes/categoryRoute");
+const productTypeRoute = require("./routes/productTypeRoute");
 
 const app: Application = express();
 
@@ -29,9 +30,10 @@ app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
 app.use("/api/role", roleRoute);
 app.use("/api/permission", permissionRoute);
-app.use("/api/product", productRoutes);
-app.use("/api/brand", brandRoutes);
-app.use("/api/category", categoryRoutes);
+app.use("/api/product", productRoute);
+app.use("/api/brand", brandRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/productType", productTypeRoute);
 app.get("/", (req: Request, res: Response) => {
   res.send("APP IS RUNNING");
 });
