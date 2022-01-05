@@ -74,6 +74,15 @@ const ListProduct = () => {
     };
     getProduct();
   }, []);
+  const toVND = (price: any) => {
+    let vnd =
+      typeof price === "undefined"
+        ? 0
+        : price.toLocaleString("vi-VN", {
+            currency: "VND",
+          });
+    return vnd;
+  };
   return (
     <Box mb={10} pt={1} className={classes.styleBox}>
       <Grid
@@ -86,7 +95,7 @@ const ListProduct = () => {
           return (
             <Grid item xs={6} sm={4} md={2}>
               <Link
-                to={{ pathname: "/info/" + product?._id }}
+                to={{ pathname: "/info/" + product?.name + "/" + product?._id }}
                 className={classes.styleLink}
               >
                 <Box className={classes.styleText}>
@@ -104,7 +113,7 @@ const ListProduct = () => {
                           đ
                         </Box>
                         <Box component="span" fontSize="1rem">
-                          {product?.price}
+                          {toVND(product?.price)}
                         </Box>
                       </Box>
                       <Box>{product.sold} sold</Box>

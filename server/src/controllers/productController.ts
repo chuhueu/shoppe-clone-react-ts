@@ -30,6 +30,8 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+//GET BY QUERY
+
 //DELETE
 const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
   try {
