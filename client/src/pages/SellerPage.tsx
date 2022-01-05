@@ -5,7 +5,7 @@ const SellerPage = () => {
   return (
     <div>
       <Header />
-      <Box textAlign="center" component="h1">
+      <Box mt={2} component="h1">
         This is the Seller page
       </Box>
       <Footer show={true} />

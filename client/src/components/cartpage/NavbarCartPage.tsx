@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "10px 0",
     },
     styleContainer: {
-      maxWidth: "1200px",
+      maxWidth: "1280px",
       padding: "0 24px",
       margin: "0 auto",
       height: "100%",
@@ -228,6 +228,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: "5px",
       },
     },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
   })
 );
 
@@ -411,7 +415,7 @@ const NavbarCartPage = () => {
                 style={{ cursor: "pointer", paddingRight: "20px" }}
               >
                 <Avatar
-                  alt="Remy Sharp"
+                  className={classes.small}
                   src={`${
                     userInfo.avatar
                       ? userInfo.avatar
