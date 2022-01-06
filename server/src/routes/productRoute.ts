@@ -3,6 +3,7 @@ import {
   getProduct,
   getProductById,
   deleteProduct,
+  searchProduct,
 } from "../controllers/productController";
 import { verify } from "../middleware/tokenMiddleware";
 const {
@@ -20,5 +21,8 @@ router
   .route("/:id")
   .get(getProductById)
   .delete(verify, checkSeller, deleteProduct);
+
+//SEARCH
+router.route("/search").get(searchProduct);
 
 module.exports = router;
