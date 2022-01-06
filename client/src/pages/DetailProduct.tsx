@@ -4,6 +4,8 @@ import {
   Footer,
   DirectoryProduct,
   MainProduct,
+  ShopProduct,
+  ListProduct,
 } from "../components/index";
 const DetailProduct = () => {
   return (
@@ -11,6 +13,8 @@ const DetailProduct = () => {
       <Header />
       <DirectoryProduct />
       <MainProduct />
+      <ShopProduct />
+      <ListProduct />
       <Footer show={false} />
     </>
   );

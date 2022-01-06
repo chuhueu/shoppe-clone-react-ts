@@ -30,6 +30,19 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+//SEARCH
+const searchProduct = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const searchFiled = req.query.name;
+    const search = await Product.find({
+      name: { $regex: searchFiled, $options: "$i" },
+    });
+    res.status(200).json(search);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 //DELETE
 const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -40,4 +53,10 @@ const deleteProduct = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-export { createProduct, getProduct, getProductById, deleteProduct };
+export {
+  createProduct,
+  getProduct,
+  getProductById,
+  deleteProduct,
+  searchProduct,
+};

@@ -19,7 +19,7 @@ const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
     image: { type: Array, required: true },
-    price: { type: String, required: true },
+    price: { type: Number, required: true },
     sold: { type: Number, required: true, default: 0 },
     inStock: { type: Boolean, required: true, default: false },
     discount: { type: Number },
@@ -28,6 +28,11 @@ const ProductSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Category",
+    },
+    productType: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "ProductType",
     },
     brand: {
       type: mongoose.Schema.Types.ObjectId,

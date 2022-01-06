@@ -1,4 +1,11 @@
-import { Container, Box, Hidden, Button, Grid } from "@material-ui/core";
+import {
+  Container,
+  Box,
+  Hidden,
+  Button,
+  Grid,
+  TextField,
+} from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import {
   FavoriteBorderOutlined,
@@ -6,6 +13,9 @@ import {
   StarHalf,
   LocalShippingOutlined,
   KeyboardArrowDown,
+  Remove,
+  Add,
+  AddShoppingCart,
 } from "@material-ui/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Thumbs } from "swiper";
@@ -114,11 +124,83 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: "10px",
       },
     },
+    styleLabel: {
+      color: "#757575",
+      fontSize: "18px",
+    },
+    styleChooseColor: {
+      "& button": {
+        marginRight: theme.spacing(2),
+        transition: "0s",
+        textTransform: "capitalize",
+      },
+      "& button:hover": {
+        color: "#ee4d2d",
+        border: "1px solid #ee4d2d",
+        background: " rgba(255,87,34,0.1)",
+        transition: "0s",
+      },
+    },
+    styleCount: {
+      background: "#fff",
+      "& input": {
+        width: "50px",
+        height: "32px",
+        borderLeft: 0,
+        borderRight: 0,
+        fontSize: "16px",
+        fontWeight: 400,
+        "-moz-box-sizing": "border-box",
+        boxSizing: "border-box",
+        textAlign: "center",
+        cursor: "text",
+        borderRadius: 0,
+      },
+      "& button:nth-child(1)": {
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+      },
+    },
+    styleQuantity: {
+      color: "#757575",
+      outline: "none",
+      cursor: "pointer",
+      lineHeight: "1",
+      alignItems: "center",
+      justifyContent: "center",
+      transition: "background-color .1s cubic-bezier(.4,0,.6,1)",
+      border: "1px solid rgba(0,0,0,.09)",
+      borderRadius: "2px",
+      background: "transparent",
+      width: "32px",
+      height: "32px",
+    },
+    styleButtonCart: {
+      "& button": {
+        minWidth: "11.25rem",
+        padding: "12px",
+        textTransform: "capitalize",
+      },
+      "& button:nth-child(1)": {
+        marginRight: theme.spacing(2),
+        color: "#ee4d2d",
+        background: "rgba(255,87,34,0.1)",
+        border: "1px solid #ee4d2d",
+      },
+      "& button:nth-child(1):hover": {
+        background: "#fff",
+      },
+      "& button:nth-child(2)": {
+        color: "#fff",
+        background: "#ee4d2d",
+      },
+    },
   })
 );
 SwiperCore.use([Navigation, Thumbs]);
 
 export interface Params {
+  name?: string;
   infoID?: string;
 }
 
@@ -126,14 +208,16 @@ const MainProduct = () => {
   //styles
   const classes = useStyles();
   //state
+  const [count, setCount] = useState<number>(1);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [product, setProduct] = useState<productModel>();
   const params: Params = useParams();
-
+  //console.log(params?.name);
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await axios.get("product/" + params?.infoID);
+        const res = await axios.get("/product/" + params?.infoID);
+        //console.log(res.data);
         setProduct(res.data);
       } catch (error) {
         console.log(error);
@@ -141,25 +225,33 @@ const MainProduct = () => {
     };
     getProduct();
   }, [params?.infoID]);
-  const slides = [];
-  for (let i = 0; i < 6; i++) {
-    slides.push(
-      <SwiperSlide key={`thumbs-${i}`} tag="li">
-        <img src={`/images/detailproduct/thumbs-${i + 1}.png`} alt="" />
-      </SwiperSlide>
-    );
-  }
+  const toVND = (price: any) => {
+    let vnd =
+      typeof price === "undefined"
+        ? 0
+        : price.toLocaleString("vi-VN", {
+            currency: "VND",
+          });
+    return vnd;
+  };
+
+  const priceDiscount = (price: any, discount: any) => {
+    return toVND(price - price * (discount / 100));
+  };
+  const minusQuantity = () => {
+    if (count === 1) {
+      setCount(1);
+    } else {
+      setCount(count - 1);
+    }
+  };
+
   return (
     <Container>
       <Box mt={2} className={classes.styleBox}>
         <Grid container spacing={2} className={classes.styleGrid}>
           <Grid item xs={12} sm={6} md={5}>
             <Box>
-              {/* {product?.image.map((img) => {
-                return (
-
-                )
-              })} */}
               <Swiper
                 id="main"
                 tag="section"
@@ -167,7 +259,13 @@ const MainProduct = () => {
                 slidesPerColumn={1}
                 thumbs={{ swiper: thumbsSwiper }}
               >
-                {slides}
+                {product?.image.map((img) => {
+                  return (
+                    <SwiperSlide tag="li">
+                      <img src={img} alt="" />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </Box>
             <Box mt={1}>
@@ -179,7 +277,13 @@ const MainProduct = () => {
                 navigation
                 className={classes.styleThumbs}
               >
-                {slides}
+                {product?.image.map((img) => {
+                  return (
+                    <SwiperSlide tag="li">
+                      <img src={img} alt="" />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </Box>
             <Box
@@ -254,13 +358,13 @@ const MainProduct = () => {
                 alignItems="center"
                 className={classes.stylePrice}
               >
-                <Box>đ75.000</Box>
+                <Box>đ{toVND(product?.price)}</Box>
                 <Box
                   display="flex"
                   alignItems="center"
                   className={classes.stylePriceDis}
                 >
-                  <Box>đ60.000</Box>
+                  <Box>đ{priceDiscount(product?.price, product?.discount)}</Box>
                   <Box>{product?.discount}% Giảm</Box>
                 </Box>
               </Box>
@@ -268,26 +372,100 @@ const MainProduct = () => {
             <Box mt={2} padding="0 1.25rem">
               <Box display="flex" flexDirection="column">
                 <Box pb={2.5} display="flex" alignItems="flex-start">
-                  <Box component="label">Ship</Box>
+                  <Box component="label" pr={5} className={classes.styleLabel}>
+                    Ship
+                  </Box>
                   <Box display="flex">
-                    <Box>
+                    <Box mr={1}>
                       <LocalShippingOutlined />
                     </Box>
                     <Box display="flex" flexDirection="column">
-                      <Box display="flex" alignItems="center">
-                        <Box>Incoming Shipping</Box>
-                        <Box>Ba Vi District</Box>
+                      <Box display="flex" alignItems="center" mb={2}>
+                        <Box width={110} className={classes.styleLabel}>
+                          Incoming Shipping
+                        </Box>
+                        <Box fontWeight="600">
+                          Quang Ha Town, Hai Ha District
+                        </Box>
                         <KeyboardArrowDown />
                       </Box>
-                      <Box display="flex" alignItems="center">
-                        <Box>Shipping Charges</Box>
+                      <Box display="flex" alignItems="center" mb={2}>
+                        <Box width={110} className={classes.styleLabel}>
+                          Shipping Charges
+                        </Box>
                         <Box>Not Supported</Box>
                         <KeyboardArrowDown />
                       </Box>
                     </Box>
                   </Box>
                 </Box>
-                <Box></Box>
+                <Box display="flex" flexDirection="column">
+                  <Box display="flex" alignItems="center" mb={4}>
+                    <Box
+                      component="label"
+                      pr={5}
+                      className={classes.styleLabel}
+                    >
+                      Colour
+                    </Box>
+                    <Box className={classes.styleChooseColor}>
+                      <Button variant="outlined" disabled>
+                        White
+                      </Button>
+                      <Button variant="outlined">Black</Button>
+                    </Box>
+                  </Box>
+                  <Box display="flex" alignItems="center" mb={2}>
+                    <Box
+                      component="label"
+                      pr={5}
+                      className={classes.styleLabel}
+                    >
+                      Amount
+                    </Box>
+                    <Box display="flex" className={classes.styleCount}>
+                      <button
+                        className={classes.styleQuantity}
+                        onClick={minusQuantity}
+                      >
+                        <Remove />
+                      </button>
+                      <input value={count} className={classes.styleQuantity} />
+                      <button
+                        className={classes.styleQuantity}
+                        onClick={() => setCount(count + 1)}
+                      >
+                        <Add />
+                      </button>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+              <Box display="flex" className={classes.styleButtonCart}>
+                <Button variant="outlined">
+                  <AddShoppingCart /> Add To Cart
+                </Button>
+                <Button variant="outlined">Buy Now</Button>
+              </Box>
+              <Box mt={4} borderTop="1px solid rgba(0, 0, 0, 0.05)">
+                <Box
+                  mt={3}
+                  display="flex"
+                  textAlign="center"
+                  alignItems="center"
+                >
+                  <img
+                    src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/pdp/67454c89080444c5997b53109072c9e0.png"
+                    alt=""
+                    style={{ width: "20px" }}
+                  />
+                  <Box mr={3} component="span" color="#222">
+                    Shopee Guarantee
+                  </Box>
+                  <Box component="span" color="rgba(0,0,0,.54)">
+                    3 Days of Return / Refund
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Grid>

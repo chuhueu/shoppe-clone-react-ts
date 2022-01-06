@@ -2,7 +2,7 @@ export default interface productModel {
   _id?: string;
   name: string;
   image: Array<string>;
-  price: string;
+  price: number;
   sold: number;
   inStock: number;
   discount: number;
