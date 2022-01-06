@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: "400px",
       padding: "5px",
       zIndex: 9,
-      boxShadow: "0 0.125rem 0.25rem rgb(0 0 0 / 9%)",
+      boxShadow: "0 0.125rem 0.25rem rgba(0,0,0,.54)",
       transformOrigin: "calc(100% - 32px) top",
       opacity: "0",
       transform: "scale(0)",
@@ -65,6 +65,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     styleImgCartEmpty: {
       maxWidth: "100%",
+    },
+    styleList: {
+      overflowY: "scroll",
+      maxHeight: "300px",
+      "&::-webkit-scrollbar": {
+        width: "5px",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#f5f5f5",
+        borderRadius: "10px",
+      },
     },
     styleItem: {
       marginBottom: "10px",
@@ -110,6 +121,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#ee4d2d",
       backgroundColor: "#fff",
       border: "3px solid #ee4d2d",
+      cursor: "pointer",
     },
   })
 );
@@ -133,49 +145,166 @@ const HeaderCart = () => {
           <Box padding="10px 0">
             <Typography variant="h4">Sản Phẩm Mới Thêm</Typography>
           </Box>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            className={classes.styleItem}
-          >
-            <Box display="flex">
-              <img src={product1} alt="" className={classes.styleImg} />
-              <Box
-                display="flex"
-                alignItems="center"
-                marginLeft="5px"
-                maxWidth="250px"
-              >
-                <p className="custom-p-3">
-                  Bông tẩy trang 222 miếng Lameila BTT222
-                </p>
+          <Box className={classes.styleList}>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product1} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <p className="custom-p-3">
+                    Bông tẩy trang 222 miếng Lameila BTT222
+                  </p>
+                </Box>
               </Box>
+              <Typography variant="h5">₫22.000</Typography>
             </Box>
-            <Typography variant="h5">₫22.000</Typography>
-          </Box>
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-            className={classes.styleItem}
-          >
-            <Box display="flex">
-              <img src={product2} alt="" className={classes.styleImg} />
-              <Box
-                display="flex"
-                alignItems="center"
-                marginLeft="5px"
-                maxWidth="250px"
-              >
-                <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
-                <p className="custom-p-3">
-                  Ốp lưng iphone B@R trong cạnh vuông
-                  6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
-                </p>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
               </Box>
+              <Typography variant="h5">₫22.000</Typography>
             </Box>
-            <Typography variant="h5">₫22.000</Typography>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
+              </Box>
+              <Typography variant="h5">₫22.000</Typography>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
+              </Box>
+              <Typography variant="h5">₫22.000</Typography>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
+              </Box>
+              <Typography variant="h5">₫22.000</Typography>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
+              </Box>
+              <Typography variant="h5">₫22.000</Typography>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              className={classes.styleItem}
+            >
+              <Box display="flex">
+                <img src={product2} alt="" className={classes.styleImg} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  marginLeft="5px"
+                  maxWidth="250px"
+                >
+                  <Box className={classes.styleComboSale}>Combo khuyến mãi</Box>
+                  <p className="custom-p-3">
+                    Ốp lưng iphone B@R trong cạnh vuông
+                    6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
+                  </p>
+                </Box>
+              </Box>
+              <Typography variant="h5">₫22.000</Typography>
+            </Box>
           </Box>
           <Box display="flex" alignItems="center" justifyContent="flex-end">
             <Link to="/cart" className={classes.styleButton}>

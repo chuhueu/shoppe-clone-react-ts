@@ -99,14 +99,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ProductCart = () => {
+interface Props {
+  idOption: string;
+  isChecked: any;
+  toggleCheck: any;
+}
+
+const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
   const classes = useStyles();
-
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
 
   return (
     <Box className={classes.styleWrapper}>
@@ -120,16 +120,20 @@ const ProductCart = () => {
       </Box>
       <Box className={classes.styleGrid}>
         <Grid container>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} xs={12}>
             <Box className={classes.styleLeft}>
               <Grid container>
-                <Grid item lg={8}>
+                <Grid item lg={8} md={12} xs={12}>
                   <Box display="flex" alignItems="center" overflow="hidden">
-                    <Checkbox checked={checked} onChange={handleChange} />
+                    <Checkbox
+                      checked={isChecked}
+                      name={isChecked}
+                      onChange={() => toggleCheck(idOption)}
+                    />
                     <Link to="/">
                       <img src={product1} alt="" className={classes.styleImg} />
                     </Link>
-                    <Box>
+                    <Box maxWidth="220px">
                       <Link to="/" className={classes.styleLink}>
                         <p className="custom-p-2">
                           Ốp lưng iphone B@R trong cạnh vuông
@@ -144,7 +148,7 @@ const ProductCart = () => {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item lg={4}>
+                <Grid item lg={4} md={12} xs={12}>
                   <Box
                     display="flex"
                     alignItems="flex-start"
@@ -163,9 +167,9 @@ const ProductCart = () => {
               </Grid>
             </Box>
           </Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} xs={12}>
             <Grid container className={classes.styleRight}>
-              <Grid item lg={3}>
+              <Grid item lg={3} md={3} sm={3} xs={6}>
                 <Box
                   display="flex"
                   alignItems="center"
@@ -177,7 +181,7 @@ const ProductCart = () => {
                   <p className={classes.stylePriceNew}>₫22.000</p>
                 </Box>
               </Grid>
-              <Grid item lg={3}>
+              <Grid item lg={3} md={3} sm={3} xs={6}>
                 <Box
                   display="flex"
                   alignItems="center"
@@ -197,7 +201,7 @@ const ProductCart = () => {
                   </button>
                 </Box>
               </Grid>
-              <Grid item lg={3}>
+              <Grid item lg={3} md={3} sm={3} xs={6}>
                 <Box
                   display="flex"
                   alignItems="center"
@@ -207,7 +211,7 @@ const ProductCart = () => {
                   <Typography variant="h5">₫22.000</Typography>
                 </Box>
               </Grid>
-              <Grid item lg={3}>
+              <Grid item lg={3} md={3} sm={3} xs={6}>
                 <Box
                   display="flex"
                   alignItems="center"
