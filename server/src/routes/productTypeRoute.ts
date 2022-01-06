@@ -2,7 +2,7 @@ import {
   createProductType,
   getProductType,
   getProductTypeById,
-} from "../controllers/productTypeController";
+} from "../controllers/product/productTypeController";
 const router = require("express").Router();
 
 //CREATE AND GET

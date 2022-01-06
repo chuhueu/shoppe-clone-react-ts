@@ -3,7 +3,7 @@ import {
   getPermission,
   getPermissionById,
   deletePermission,
-} from "../controllers/permissionController";
+} from "../controllers/auth/permissionController";
 const router = require("express").Router();
 
 //CREATE AND GET

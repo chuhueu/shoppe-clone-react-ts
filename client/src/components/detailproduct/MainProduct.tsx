@@ -245,6 +245,7 @@ const MainProduct = () => {
       setCount(count - 1);
     }
   };
+  const addCart = () => {};
 
   return (
     <Container>
@@ -442,7 +443,7 @@ const MainProduct = () => {
                 </Box>
               </Box>
               <Box display="flex" className={classes.styleButtonCart}>
-                <Button variant="outlined">
+                <Button variant="outlined" onClick={addCart}>
                   <AddShoppingCart /> Add To Cart
                 </Button>
                 <Button variant="outlined">Buy Now</Button>

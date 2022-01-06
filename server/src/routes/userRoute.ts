@@ -6,7 +6,7 @@ import {
   deleteUser,
   getUserProfile,
   updateUserProfile,
-} from "../controllers/userController";
+} from "../controllers/auth/userController";
 import { verify } from "../middleware/tokenMiddleware";
 const {
   checkUser,
