@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Hidden, Typography } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -73,38 +73,40 @@ const SearchBoxCartPage = () => {
   };
 
   return (
-    <Box className={classes.styleWrapper}>
-      <form className={classes.styleForm}>
-        <input
-          type="text"
-          placeholder="+5 mã Freeship trong ví"
-          className={classes.styleInput}
-          onClick={handleShowBox}
-        />
-        <Button className={classes.styleButton}>
-          <Search />
-        </Button>
-        <Box
-          className={`${classes.styleHistoryBox} ${showBox ? "active" : ""}`}
-        >
-          <Box className={classes.styleHistoryItem}>
-            <Typography variant="h4">abc</Typography>
+    <Hidden xsDown>
+      <Box className={classes.styleWrapper}>
+        <form className={classes.styleForm}>
+          <input
+            type="text"
+            placeholder="+5 mã Freeship trong ví"
+            className={classes.styleInput}
+            onClick={handleShowBox}
+          />
+          <Button className={classes.styleButton}>
+            <Search />
+          </Button>
+          <Box
+            className={`${classes.styleHistoryBox} ${showBox ? "active" : ""}`}
+          >
+            <Box className={classes.styleHistoryItem}>
+              <Typography variant="h4">abc</Typography>
+            </Box>
+            <Box className={classes.styleHistoryItem}>
+              <Typography variant="h4">abc</Typography>
+            </Box>
+            <Box className={classes.styleHistoryItem}>
+              <Typography variant="h4">abc</Typography>
+            </Box>
+            <Box className={classes.styleHistoryItem}>
+              <Typography variant="h4">abc</Typography>
+            </Box>
+            <Box className={classes.styleHistoryItem}>
+              <Typography variant="h4">abc</Typography>
+            </Box>
           </Box>
-          <Box className={classes.styleHistoryItem}>
-            <Typography variant="h4">abc</Typography>
-          </Box>
-          <Box className={classes.styleHistoryItem}>
-            <Typography variant="h4">abc</Typography>
-          </Box>
-          <Box className={classes.styleHistoryItem}>
-            <Typography variant="h4">abc</Typography>
-          </Box>
-          <Box className={classes.styleHistoryItem}>
-            <Typography variant="h4">abc</Typography>
-          </Box>
-        </Box>
-      </form>
-    </Box>
+        </form>
+      </Box>
+    </Hidden>
   );
 };
 

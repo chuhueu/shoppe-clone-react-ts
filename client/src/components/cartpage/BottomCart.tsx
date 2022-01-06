@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -20,15 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
     styleContainer: {
       backgroundColor: "#fff",
       marginTop: "20px",
-      marginBottom: "20px",
       transition: "all .5s cubic-bezier(.4,0,.6,1)",
       "&.active": {
         position: "fixed",
-        zIndex: "2",
+        zIndex: 2,
         bottom: "0",
         left: "50%",
         transform: "translateX(-50%)",
-        boxShadow: "0 0 10px 5px rgba(0,0,0,.32)",
+        boxShadow: "0 0 10px 5px rgba(0,0,0,.12)",
         transition: "all .5s cubic-bezier(.4,0,.6,1)",
       },
     },
@@ -60,30 +59,37 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const BottomCart = () => {
+interface Props {
+  checkedAll: boolean;
+  selectAll: any;
+}
+
+const BottomCart = ({ checkedAll, selectAll }: Props) => {
   const classes = useStyles();
-
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
 
   const [onScroll, setOnScroll] = useState(true);
 
+  const numLocation = useRef<HTMLDivElement>(null);
+  let number1: number = numLocation.current?.getBoundingClientRect()
+    .y as number;
+  let number2: number = numLocation.current?.getBoundingClientRect()
+    .height as number;
+  let number = number1 + number2 * 2;
+
   window.onscroll = () => {
-    setOnScroll(window.pageYOffset === 0 ? true : false);
+    setOnScroll(window.pageYOffset < number ? true : false);
     return () => (window.onscroll = null);
   };
 
   return (
     <Container
+      ref={numLocation}
       className={`${classes.styleContainer} ${onScroll ? "active" : ""}`}
     >
       <Box className={classes.styleTop}>
         <Grid container>
-          <Grid item lg={6}></Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}></Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Box
               display="flex"
               alignItems="center"
@@ -102,8 +108,8 @@ const BottomCart = () => {
       </Box>
       <Box className={classes.styleCenter}>
         <Grid container>
-          <Grid item lg={6}></Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}></Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Box
               display="flex"
               alignItems="center"
@@ -127,9 +133,12 @@ const BottomCart = () => {
       </Box>
       <Box className={classes.styleBottom}>
         <Grid container>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Box display="flex" alignItems="center" height="100%">
-              <Checkbox checked={checked} onChange={handleChange} />
+              <Checkbox
+                checked={checkedAll}
+                onChange={(e) => selectAll(e.target.checked)}
+              />
               <Box className={classes.styleAction}>
                 <Typography variant="h6">Chọn Tất Cả (1)</Typography>
               </Box>
@@ -141,7 +150,7 @@ const BottomCart = () => {
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6} sm={12} xs={12}>
             <Box
               display="flex"
               alignItems="center"

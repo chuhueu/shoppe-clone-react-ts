@@ -26,29 +26,31 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const HeadingCart = () => {
+interface Props {
+  checkedAll: boolean;
+  selectAll: any;
+}
+
+const HeadingCart = ({ checkedAll, selectAll }: Props) => {
   const classes = useStyles();
-
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
 
   return (
     <Container className={classes.styleContainer}>
       <Grid className={classes.styleWrapper} container>
-        <Grid item lg={6}>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
           <Box display="flex" alignItems="center" className={classes.styleLeft}>
-            <Checkbox checked={checked} onChange={handleChange} />
+            <Checkbox
+              checked={checkedAll}
+              onChange={(e) => selectAll(e.target.checked)}
+            />
             <Box className={classes.styleText}>
               <Typography variant="h4">Sản Phẩm</Typography>
             </Box>
           </Box>
         </Grid>
-        <Grid item lg={6}>
+        <Grid item lg={6} md={6} sm={12} xs={12}>
           <Grid container className={classes.styleRight}>
-            <Grid item lg={3}>
+            <Grid item lg={3} md={3} sm={3} xs={3}>
               <Box
                 display="flex"
                 alignItems="center"
@@ -58,7 +60,7 @@ const HeadingCart = () => {
                 <Typography variant="h4">Đơn Giá</Typography>
               </Box>
             </Grid>
-            <Grid item lg={3}>
+            <Grid item lg={3} md={3} sm={3} xs={3}>
               <Box
                 display="flex"
                 alignItems="center"
@@ -68,7 +70,7 @@ const HeadingCart = () => {
                 <Typography variant="h4">Số Lượng</Typography>
               </Box>
             </Grid>
-            <Grid item lg={3}>
+            <Grid item lg={3} md={3} sm={3} xs={3}>
               <Box
                 display="flex"
                 alignItems="center"
@@ -78,7 +80,7 @@ const HeadingCart = () => {
                 <Typography variant="h4">Số Tiền</Typography>
               </Box>
             </Grid>
-            <Grid item lg={3}>
+            <Grid item lg={3} md={3} sm={3} xs={3}>
               <Box
                 display="flex"
                 alignItems="center"

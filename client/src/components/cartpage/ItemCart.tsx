@@ -36,18 +36,22 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ItemCart = () => {
+interface Props {
+  idOption: string;
+  isChecked: any;
+  toggleCheck: any;
+}
+
+const ItemCart = ({ idOption, isChecked, toggleCheck }: Props) => {
   const classes = useStyles();
 
-  const [checked, setChecked] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(e.target.checked);
-  };
   return (
     <Container className={classes.styleContainer}>
       <Box display="flex" alignItems="center" className={classes.styleTop}>
-        <Checkbox checked={checked} onChange={handleChange} />
+        <Checkbox
+          checked={isChecked[idOption]}
+          onChange={() => toggleCheck(idOption)}
+        />
         <Box className={classes.styleLike}>
           <Typography variant="h3">Yêu thích</Typography>
         </Box>
@@ -56,7 +60,11 @@ const ItemCart = () => {
         </Box>
       </Box>
       <Box padding="20px 0">
-        <ProductCart />
+        <ProductCart
+          idOption={idOption}
+          isChecked={isChecked[idOption]}
+          toggleCheck={toggleCheck}
+        />
       </Box>
       <Box display="flex" alignItems="center" className={classes.styleVoucher}>
         <img src={voucherIcon} alt="" className={classes.styleIcon} />
