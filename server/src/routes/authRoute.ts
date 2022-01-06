@@ -2,7 +2,7 @@ import {
   loginUser,
   registerUser,
   loginGoogle,
-} from "../controllers/authController";
+} from "../controllers/auth/authController";
 const router = require("express").Router();
 
 //LOGIN

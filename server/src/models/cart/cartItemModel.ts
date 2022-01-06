@@ -21,16 +21,4 @@ const CartItemsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const CartSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    cartItems: [CartItemsSchema],
-  },
-  { timestamps: true }
-);
-
-module.exports = mongoose.model("Cart", CartSchema);
+module.exports = mongoose.model("CartItem", CartItemsSchema);
