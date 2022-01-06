@@ -107,7 +107,7 @@ const ShopProduct = () => {
   }, [params?.infoID]);
   return (
     <Container>
-      <Box mt={3} className={classes.styleBox}>
+      <Box mt={3} mb={3} className={classes.styleBox}>
         <Grid container spacing={2} className={classes.styleGrid}>
           <Grid item xs={12} sm={6} md={5}>
             <Box display="flex" className={classes.styleBoxLeft}>
