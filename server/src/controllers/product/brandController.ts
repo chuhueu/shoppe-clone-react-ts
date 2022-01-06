@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
 const router = require("express").Router();
-const Brand = require("../models/brandModel");
+const Brand = require("../../models/product/brandModel");
 
 //CREATE
 const createBrand = asyncHandler(async (req: Request, res: Response) => {

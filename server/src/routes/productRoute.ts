@@ -4,7 +4,7 @@ import {
   getProductById,
   deleteProduct,
   searchProduct,
-} from "../controllers/productController";
+} from "../controllers/product/productController";
 import { verify } from "../middleware/tokenMiddleware";
 const {
   checkUser,

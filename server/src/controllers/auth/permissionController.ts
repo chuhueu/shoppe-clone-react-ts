@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const Permission = require("../models/permissionModel");
+const Permission = require("../../models/auth/permissionModel");
 
 //CREATE
 const createPermission = asyncHandler(async (req: Request, res: Response) => {

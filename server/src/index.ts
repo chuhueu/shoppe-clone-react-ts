@@ -14,7 +14,7 @@ const productRoute = require("./routes/productRoute");
 const brandRoute = require("./routes/brandRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const productTypeRoute = require("./routes/productTypeRoute");
-
+const cartRoute = require("./routes/cartRoute");
 const app: Application = express();
 
 connectDB();
@@ -34,6 +34,7 @@ app.use("/api/product", productRoute);
 app.use("/api/brand", brandRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/productType", productTypeRoute);
+app.use("/api/cart", cartRoute);
 app.get("/", (req: Request, res: Response) => {
   res.send("APP IS RUNNING");
 });

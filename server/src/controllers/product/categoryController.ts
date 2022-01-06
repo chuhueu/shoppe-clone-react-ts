@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
 const router = require("express").Router();
-const Category = require("../models/categoryModel");
+const Category = require("../../models/product/categoryModel");
 
 //CREATE
 const createCategory = asyncHandler(async (req: Request, res: Response) => {

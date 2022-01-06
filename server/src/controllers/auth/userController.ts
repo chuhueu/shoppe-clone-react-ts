@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const generateToken = require("../utils/generateToken");
-const User = require("../models/userModel");
+const generateToken = require("../../utils/generateToken");
+const User = require("../../models/auth/userModel");
 
 interface IUserReq extends Request {
   user?: any;
