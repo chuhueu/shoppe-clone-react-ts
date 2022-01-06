@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const ProductType = require("../models/productTypeModel");
+const ProductType = require("../../models/product/productTypeModel");
 
 //CREATE
 const createProductType = asyncHandler(async (req: Request, res: Response) => {

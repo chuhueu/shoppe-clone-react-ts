@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
-const Role = require("../models/roleModel");
+const User = require("../models/auth/userModel");
+const Role = require("../models/auth/roleModel");
 
 //CHECK USER
 const checkUser = async (req: Request, res: Response, next: NextFunction) => {

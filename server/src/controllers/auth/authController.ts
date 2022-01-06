@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const generateToken = require("../utils/generateToken");
-const User = require("../models/userModel");
+const generateToken = require("../../utils/generateToken");
+const User = require("../../models/auth/userModel");
 const { OAuth2Client } = require("google-auth-library");
 
 //@desc    Login user and get token

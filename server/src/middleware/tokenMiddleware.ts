@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
+const User = require("../models/auth/userModel");
 
 interface IUserReq extends Request {
   user?: any;

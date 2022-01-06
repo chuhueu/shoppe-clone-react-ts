@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
-const Role = require("../models/roleModel");
+const Role = require("../../models/auth/roleModel");
 
 //CREATE
 const createRole = asyncHandler(async (req: Request, res: Response) => {
