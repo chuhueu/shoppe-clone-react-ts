@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     styleContainer: {
       backgroundColor: "#fff",
       marginTop: "20px",
-      transition: "all .5s cubic-bezier(.4,0,.6,1)",
       "&.active": {
         position: "fixed",
         zIndex: 2,
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
         left: "50%",
         transform: "translateX(-50%)",
         boxShadow: "0 0 10px 5px rgba(0,0,0,.12)",
-        transition: "all .5s cubic-bezier(.4,0,.6,1)",
       },
     },
     styleTop: {

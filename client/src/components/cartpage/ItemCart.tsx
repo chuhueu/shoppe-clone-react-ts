@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Container, Typography } from "@material-ui/core";
 import ProductCart from "./ProductCart";
