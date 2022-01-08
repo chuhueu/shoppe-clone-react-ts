@@ -20,7 +20,7 @@ interface Action {
   payload: string;
 }
 
-export const userLoginReducer = (state: cartState, action: Action) => {
+export const cartReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case ADD_TO_CART:
       return {
