@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
+const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
-import { Cart, CartItem } from "../../models/cart/cartModel";
-
+const Cart = require("../../models/cart/cartModel");
+const CartItem = require("../../models/cart/cartItemModel");
 interface IUserReq extends Request {
   user?: any;
 }
-
 //CREATE
 const createCart = asyncHandler(async (req: IUserReq, res: Response) => {
   const newCart = new Cart(req.body);
@@ -32,8 +32,8 @@ const updateCart = asyncHandler(async (req: Request, res: Response) => {
 //GET ALL
 const getCart = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const getCategories = await Cart.find();
-    res.status(200).json(getCategories);
+    const get = await Cart.find();
+    res.status(200).json(get);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -41,8 +41,8 @@ const getCart = asyncHandler(async (req: Request, res: Response) => {
 //GET FIND ID
 const getCartById = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const getCart = await Cart.findById(req.params.id);
-    res.status(200).json(getCart);
+    const getById = await Cart.findById(req.params.id);
+    res.status(200).json(getById);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -51,7 +51,7 @@ const getCartById = asyncHandler(async (req: Request, res: Response) => {
 //@desc    add cartItems to cart
 //@router  POST /api/cart/:id/add
 //@access  User
-const addToCart = asyncHandler(async (req: Request, res: Response) => {
+/*const addToCart = asyncHandler(async (req: Request, res: Response) => {
   const { product, brand, name, image, price, discount } = req.body;
 
   const cart = await Cart.findById(req.params.id);
@@ -83,6 +83,27 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
   // } catch (error) {
   //   res.status(500).json(error);
   // }
+});*/
+
+const addToCart = asyncHandler(async (req: Request, res: Response) => {
+  const newCartItem = new CartItem(req.body);
+  try {
+    const sendCartItem = await newCartItem.save();
+    res.status(200).json(sendCartItem);
+  } catch (error) {
+    res.status(500).json("Thêm vào giỏ hàng thất bại" + error);
+  }
+});
+
+const getCartItems = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const getCartItem = await CartItem.find({
+      cart: mongoose.Types.ObjectId(req.params.id),
+    });
+    res.status(200).json(getCartItem);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 //@desc    Remove cart item
@@ -106,5 +127,6 @@ export {
   getCartById,
   updateCart,
   addToCart,
+  getCartItems,
   removeCartItem,
 };
