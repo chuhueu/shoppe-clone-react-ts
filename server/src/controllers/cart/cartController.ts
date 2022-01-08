@@ -95,6 +95,7 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
+// GET CART ITEM BY CARTID
 const getCartItems = asyncHandler(async (req: Request, res: Response) => {
   try {
     const getCartItem = await CartItem.find({
