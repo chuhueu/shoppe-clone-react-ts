@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const Cart = require("../../models/cart/cartModel");
 const CartItem = require("../../models/cart/cartItemModel");
@@ -6,7 +7,6 @@ const CartItem = require("../../models/cart/cartItemModel");
 interface IUserReq extends Request {
   user?: any;
 }
-
 //CREATE
 const createCart = asyncHandler(async (req: IUserReq, res: Response) => {
   const newCart = new Cart(req.body);
@@ -33,8 +33,8 @@ const updateCart = asyncHandler(async (req: Request, res: Response) => {
 //GET ALL
 const getCart = asyncHandler(async (req: Request, res: Response) => {
   try {
-    const getCategories = await Cart.find();
-    res.status(200).json(getCategories);
+    const get = await Cart.find();
+    res.status(200).json(get);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -71,7 +71,7 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
     const data = await newItemCart.save();
     res.status(200).json(data);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json("Thêm vào giỏ hàng thất bại" + error);
   }
 });
 
