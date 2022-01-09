@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Grid, Typography } from "@material-ui/core";
 import {
@@ -7,9 +7,10 @@ import {
   ChevronRightSharp,
   Remove,
 } from "@material-ui/icons";
-import product1 from "../../assets/images/products/product-1.jpg";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removeCartItem } from "../../redux/actions/cartAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -100,13 +101,34 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  idOption: string;
+  cartItem: any;
+  idOption: number;
   isChecked: any;
   toggleCheck: any;
 }
 
-const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
+const ProductCart = ({ cartItem, idOption, isChecked, toggleCheck }: Props) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const toVND = (price: any) => {
+    let vnd =
+      typeof price === "undefined"
+        ? 0
+        : price.toLocaleString("vi-VN", {
+            currency: "VND",
+          });
+    return vnd;
+  };
+
+  const priceDiscount = (price: any, discount: any) => {
+    return toVND(price - price * (discount / 100));
+  };
+
+  const deleteCartItem = () => {
+    dispatch(removeCartItem(cartItem._id));
+  };
 
   return (
     <Box className={classes.styleWrapper}>
@@ -131,14 +153,15 @@ const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
                       onChange={() => toggleCheck(idOption)}
                     />
                     <Link to="/">
-                      <img src={product1} alt="" className={classes.styleImg} />
+                      <img
+                        src={cartItem.image}
+                        alt=""
+                        className={classes.styleImg}
+                      />
                     </Link>
                     <Box maxWidth="220px">
                       <Link to="/" className={classes.styleLink}>
-                        <p className="custom-p-2">
-                          Ốp lưng iphone B@R trong cạnh vuông
-                          6/6plus/6s/6splus/7/7plus/8/8plus/x/xr/xs/11/12/13/pro/max/plus/promax
-                        </p>
+                        <p className="custom-p-2">{cartItem.name}</p>
                       </Link>
                       <img
                         src={shipExtra}
@@ -177,8 +200,12 @@ const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
                   height="100%"
                   className={classes.stylePrice}
                 >
-                  <p className={classes.stylePriceOld}>₫40.000</p>
-                  <p className={classes.stylePriceNew}>₫22.000</p>
+                  <p className={classes.stylePriceOld}>
+                    ₫{priceDiscount(cartItem.price, cartItem.discount)}
+                  </p>
+                  <p className={classes.stylePriceNew}>
+                    ₫{toVND(cartItem.price)}
+                  </p>
                 </Box>
               </Grid>
               <Grid item lg={3} md={3} sm={3} xs={6}>
@@ -194,7 +221,7 @@ const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
                   <input
                     type="text"
                     className={classes.styleInputQty}
-                    value={1}
+                    value={cartItem.quantity}
                   />
                   <button className={classes.styleButtonQty}>
                     <Add />
@@ -208,7 +235,7 @@ const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
                   justifyContent="center"
                   height="100%"
                 >
-                  <Typography variant="h5">₫22.000</Typography>
+                  <Typography variant="h5">₫{cartItem.price}</Typography>
                 </Box>
               </Grid>
               <Grid item lg={3} md={3} sm={3} xs={6}>
@@ -219,7 +246,7 @@ const ProductCart = ({ idOption, isChecked, toggleCheck }: Props) => {
                   flexDirection="column"
                   height="100%"
                 >
-                  <Box className={classes.styleDelete}>
+                  <Box className={classes.styleDelete} onClick={deleteCartItem}>
                     <Typography variant="h4">Xóa</Typography>
                   </Box>
                   <Box

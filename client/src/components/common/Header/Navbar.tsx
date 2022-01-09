@@ -20,7 +20,7 @@ import { logout } from "../../../redux/actions/userAction";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "../../../assets/css/popup.css";
-import { RootState } from "../../../redux/store/userStore";
+import { RootState } from "../../../redux/store";
 import { userState } from "../../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>

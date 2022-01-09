@@ -16,7 +16,7 @@ import googleIcon from "../../assets/images/auth/google-logo.png";
 import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/userStore";
+import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 import { register } from "../../redux/actions/userAction";
 

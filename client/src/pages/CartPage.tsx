@@ -10,16 +10,31 @@ import {
   BottomCart,
   ListProduct,
 } from "../components";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { cartState } from "../redux/reducers/cartReducer";
+import { getCart } from "../redux/actions/cartAction";
 
 type options = {
-  [key: string]: boolean;
+  [key: number]: boolean;
 };
 
 const CartPage = () => {
+  const dispatch = useDispatch();
+
+  const cart = useSelector<RootState, cartState>((state) => state.cart);
+  const { cartInfo, isFetching, error } = cart;
+
+  console.log(cartInfo);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
+
   const checkOptions: options = {
-    id1: false,
-    id2: false,
-    id3: false,
+    1: false,
+    2: false,
+    3: false,
   };
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState(checkOptions);
@@ -63,9 +78,16 @@ const CartPage = () => {
       <HeaderCartPage />
       <TopCart />
       <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
-      <ItemCart idOption="id1" isChecked={checked} toggleCheck={toggleCheck} />
-      <ItemCart idOption="id2" isChecked={checked} toggleCheck={toggleCheck} />
-      <ItemCart idOption="id3" isChecked={checked} toggleCheck={toggleCheck} />
+      {cartInfo?.map((cartItem: any, index: any) => {
+        return (
+          <ItemCart
+            cartItem={cartItem}
+            idOption={index}
+            isChecked={checked}
+            toggleCheck={toggleCheck}
+          />
+        );
+      })}
       <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
       <Box height="40px"></Box>
       <ListProduct />

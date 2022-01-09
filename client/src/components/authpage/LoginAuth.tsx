@@ -20,7 +20,7 @@ import appleIcon from "../../assets/images/auth/apple-logo.png";
 import InputForm from "./InputForm";
 import { login } from "../../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/userStore";
+import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

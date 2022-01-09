@@ -4,7 +4,7 @@ import { renderRoutes } from "react-router-config";
 import { routesUser, routesSeller } from "./routes/routes";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "./redux/store/userStore";
+import { RootState } from "./redux/store";
 import { userState } from "./redux/reducers/userReducer";
 function App() {
   const userLogin = useSelector<RootState, userState>(
