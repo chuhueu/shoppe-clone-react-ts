@@ -25,6 +25,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import productModel from "../../models/productModel";
 import axios from "../../axios";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/actions/cartAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -225,6 +227,7 @@ const MainProduct = () => {
     };
     getProduct();
   }, [params?.infoID]);
+
   const toVND = (price: any) => {
     let vnd =
       typeof price === "undefined"
@@ -238,6 +241,7 @@ const MainProduct = () => {
   const priceDiscount = (price: any, discount: any) => {
     return toVND(price - price * (discount / 100));
   };
+
   const minusQuantity = () => {
     if (count === 1) {
       setCount(1);
@@ -245,7 +249,22 @@ const MainProduct = () => {
       setCount(count - 1);
     }
   };
-  const addCart = () => {};
+
+  const dispatch = useDispatch();
+
+  const addCart = () => {
+    dispatch(
+      addToCart(
+        product?._id,
+        product?.brand,
+        product?.name,
+        product?.image[0],
+        product?.price,
+        product?.discount,
+        count
+      )
+    );
+  };
 
   return (
     <Container>

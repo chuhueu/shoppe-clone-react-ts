@@ -3,13 +3,19 @@ const mongoose = require("mongoose");
 const asyncHandler = require("express-async-handler");
 const Cart = require("../../models/cart/cartModel");
 const CartItem = require("../../models/cart/cartItemModel");
+const User = require("../../models/auth/userModel");
 
 interface IUserReq extends Request {
   user?: any;
 }
-//CREATE
-const createCart = asyncHandler(async (req: IUserReq, res: Response) => {
-  const newCart = new Cart(req.body);
+
+//@desc    create cart
+//@router  POST /api/cart
+//@access  User
+const createCart = asyncHandler(async (req: Request, res: Response) => {
+  const { user } = req.body;
+
+  const newCart = new Cart({ user });
   try {
     const sendCart = await newCart.save();
     res.status(200).json(sendCart);
@@ -17,6 +23,7 @@ const createCart = asyncHandler(async (req: IUserReq, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //UPDATE
 const updateCart = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -53,10 +60,10 @@ const getCartById = asyncHandler(async (req: Request, res: Response) => {
 });
 
 //@desc    add cartItems to cart
-//@router  POST /api/cart/:id/add
+//@router  POST /api/cart/add/:id
 //@access  User
 const addToCart = asyncHandler(async (req: Request, res: Response) => {
-  const { product, brand, name, image, price, discount } = req.body;
+  const { product, brand, name, image, price, discount, quantity } = req.body;
 
   const newItemCart = new CartItem({
     cart: req.params.id,
@@ -66,6 +73,7 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
     image,
     price,
     discount,
+    quantity,
   });
   try {
     const data = await newItemCart.save();

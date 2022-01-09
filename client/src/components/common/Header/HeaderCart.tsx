@@ -128,6 +128,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const HeaderCart = () => {
   const classes = useStyles();
+
   return (
     <Box
       width="162px"

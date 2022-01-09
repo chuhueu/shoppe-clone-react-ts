@@ -4,7 +4,6 @@ import {
   updateCart,
   getCartById,
   addToCart,
-  getCartItems,
   removeCartItem,
 } from "../controllers/cart/cartController";
 const router = require("express").Router();
@@ -17,7 +16,5 @@ router.route("/add/:id").post(addToCart);
 router.route("/delete/:id").delete(removeCartItem);
 //GET BY ID AND DELETE
 router.route("/:id").get(getCartById).put(updateCart);
-//GET CART ITEMS
-router.route("/cartItems/:id").get(getCartItems);
 
 module.exports = router;

@@ -37,12 +37,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  idOption: string;
+  cartItem: any;
+  idOption: number;
   isChecked: any;
   toggleCheck: any;
 }
 
-const ItemCart = ({ idOption, isChecked, toggleCheck }: Props) => {
+const ItemCart = ({ cartItem, idOption, isChecked, toggleCheck }: Props) => {
   const classes = useStyles();
 
   return (
@@ -61,6 +62,7 @@ const ItemCart = ({ idOption, isChecked, toggleCheck }: Props) => {
       </Box>
       <Box padding="20px 0">
         <ProductCart
+          cartItem={cartItem}
           idOption={idOption}
           isChecked={isChecked[idOption]}
           toggleCheck={toggleCheck}
