@@ -83,8 +83,16 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
     discount,
     quantity,
   });
+
+  const cartExits = await CartItem.findOne({ product });
   try {
-    const data = await newItemCart.save();
+    let data;
+    if (cartExits) {
+      cartExits.quantity = quantity + cartExits.quantity;
+      data = await cartExits.save();
+    } else {
+      data = await newItemCart.save();
+    }
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json("Thêm vào giỏ hàng thất bại" + error);

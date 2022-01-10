@@ -100,7 +100,8 @@ export const getCart =
 export const removeCartItem =
   (itemID: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
-    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
   ): Promise<void> => {
     try {
       dispatch({ type: REMOVE_TO_CART_REQUEST });
@@ -114,6 +115,10 @@ export const removeCartItem =
         type: REMOVE_TO_CART_SUCCESS,
         payload: data,
       });
+      // localStorage.setItem(
+      //   "cartInfo",
+      //   JSON.stringify(getState().cart)
+      // );
     } catch (error) {
       dispatch({
         type: REMOVE_TO_CART_FAILURE,

@@ -23,7 +23,6 @@ interface cartInfo {
   price?: number;
   discount?: number;
   quantity?: number;
-  map?: any;
 }
 
 export interface cartState {
@@ -41,7 +40,8 @@ export const cartItemReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case ADD_TO_CART_REQUEST:
       return {
-        cartItemInfo: action.payload,
+        isFetching: true,
+        error: false,
       };
     case ADD_TO_CART_SUCCESS:
       return {
@@ -63,7 +63,8 @@ export const cartReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case GET_CART_REQUEST:
       return {
-        cartInfo: action.payload,
+        isFetching: true,
+        error: false,
       };
     case GET_CART_SUCCESS:
       return {

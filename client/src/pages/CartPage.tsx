@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Box } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Box, CircularProgress } from "@material-ui/core";
 import {
   NavbarCartPage,
   HeaderCartPage,
@@ -15,6 +15,7 @@ import { RootState } from "../redux/store";
 import { cartState } from "../redux/reducers/cartReducer";
 import { getCart } from "../redux/actions/cartAction";
 import { removeCartItem } from "../redux/actions/cartAction";
+import EmptyCart from "../components/cartpage/EmptyCart";
 
 type options = {
   [key: number]: boolean;
@@ -25,6 +26,7 @@ const CartPage = () => {
   const [reload, setReload] = useState(false);
   const cart = useSelector<RootState, cartState>((state) => state.cart);
   const { cartInfo, isFetching, error } = cart;
+
   const checkOptions: options = {
     1: false,
     2: false,
@@ -91,6 +93,31 @@ const CartPage = () => {
         );
       })}
       <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
+
+      {cartInfo?.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <>
+          <TopCart />
+          <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
+          {isFetching ? (
+            <CircularProgress />
+          ) : (
+            cartInfo?.map((cartItem: any, index: any) => {
+              return (
+                <ItemCart
+                  cartItem={cartItem}
+                  idOption={index}
+                  isChecked={checked}
+                  toggleCheck={toggleCheck}
+                  deleteCartItem={deleteCartItem}
+                />
+              );
+            })
+          )}
+          <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
+        </>
+      )}
       <Box height="40px"></Box>
       <ListProduct />
       <Footer show={false} />

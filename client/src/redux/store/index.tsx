@@ -18,6 +18,9 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
 // const cartInfoFromStorage = localStorage.getItem("cartInfo")
 //   ? JSON.parse(localStorage.getItem("cartInfo")!)
 //   : null;
+const cartInfoFromStorage = localStorage.getItem("cartInfo")
+  ? JSON.parse(localStorage.getItem("cartInfo")!)
+  : null;
 
 const initialState = {
   userLogin: {
