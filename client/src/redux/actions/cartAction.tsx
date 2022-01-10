@@ -6,6 +6,9 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   LOAD_CURRENT_ITEM,
+  CREATE_CART_REQUEST,
+  CREATE_CART_SUCCESS,
+  CREATE_CART_FAILURE,
   ADD_TO_CART_REQUEST,
   ADD_TO_CART_SUCCESS,
   ADD_TO_CART_FAILURE,
@@ -16,6 +19,30 @@ import {
   REMOVE_TO_CART_SUCCESS,
   REMOVE_TO_CART_FAILURE,
 } from "../constants/cartConstants";
+
+export const createCart =
+  (userId: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      dispatch({ type: CREATE_CART_REQUEST });
+      const { data } = await axios.post("/cart", {
+        user: userId,
+      });
+
+      dispatch({
+        type: CREATE_CART_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CREATE_CART_FAILURE,
+        payload: error,
+      });
+    }
+  };
 
 export const addToCart =
   (
