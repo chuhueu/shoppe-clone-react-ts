@@ -27,6 +27,7 @@ import productModel from "../../models/productModel";
 import axios from "../../axios";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/actions/cartAction";
+import ModalAddCart from "../cartpage/ModalAddCart";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -213,6 +214,7 @@ const MainProduct = () => {
   const [count, setCount] = useState<number>(1);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const [product, setProduct] = useState<productModel>();
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const params: Params = useParams();
   //console.log(params?.name);
   useEffect(() => {
@@ -264,10 +266,15 @@ const MainProduct = () => {
         count
       )
     );
+    setOpenModal(!openModal);
+    setTimeout(() => {
+      setOpenModal(false);
+    }, 2000);
   };
 
   return (
     <Container>
+      <ModalAddCart openModal={openModal} />
       <Box mt={2} className={classes.styleBox}>
         <Grid container spacing={2} className={classes.styleGrid}>
           <Grid item xs={12} sm={6} md={5}>

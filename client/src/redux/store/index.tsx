@@ -15,10 +15,6 @@ const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo")!)
   : null;
 
-// const cartInfoFromStorage = localStorage.getItem("cartInfo")
-//   ? JSON.parse(localStorage.getItem("cartInfo")!)
-//   : null;
-
 const cartInfoFromStorage = localStorage.getItem("cartInfo")
   ? JSON.parse(localStorage.getItem("cartInfo")!)
   : null;
