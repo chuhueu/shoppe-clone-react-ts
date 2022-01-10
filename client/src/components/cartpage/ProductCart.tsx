@@ -10,7 +10,6 @@ import {
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { removeCartItem } from "../../redux/actions/cartAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,13 +104,17 @@ interface Props {
   idOption: number;
   isChecked: any;
   toggleCheck: any;
+  deleteCartItem: any;
 }
 
-const ProductCart = ({ cartItem, idOption, isChecked, toggleCheck }: Props) => {
+const ProductCart = ({
+  cartItem,
+  idOption,
+  isChecked,
+  toggleCheck,
+  deleteCartItem,
+}: Props) => {
   const classes = useStyles();
-
-  const dispatch = useDispatch();
-
   const toVND = (price: any) => {
     let vnd =
       typeof price === "undefined"
@@ -124,10 +127,6 @@ const ProductCart = ({ cartItem, idOption, isChecked, toggleCheck }: Props) => {
 
   const priceDiscount = (price: any, discount: any) => {
     return toVND(price - price * (discount / 100));
-  };
-
-  const deleteCartItem = () => {
-    dispatch(removeCartItem(cartItem._id));
   };
 
   return (
@@ -246,8 +245,14 @@ const ProductCart = ({ cartItem, idOption, isChecked, toggleCheck }: Props) => {
                   flexDirection="column"
                   height="100%"
                 >
-                  <Box className={classes.styleDelete} onClick={deleteCartItem}>
-                    <Typography variant="h4">Xóa</Typography>
+                  <Box className={classes.styleDelete}>
+                    <Typography
+                      variant="h4"
+                      onClick={() => deleteCartItem(cartItem._id)}
+                      //onClick={() => console.log(cartItem._id)}
+                    >
+                      Xóa
+                    </Typography>
                   </Box>
                   <Box
                     display="flex"

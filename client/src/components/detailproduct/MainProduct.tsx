@@ -264,6 +264,7 @@ const MainProduct = () => {
         count
       )
     );
+    alert("Thêm thành công");
   };
 
   return (

@@ -2,6 +2,7 @@ import {
   createCart,
   getCart,
   updateCart,
+  getCartByUserId,
   getCartById,
   addToCart,
   removeCartItem,
@@ -16,5 +17,7 @@ router.route("/add/:id").post(addToCart);
 router.route("/delete/:id").delete(removeCartItem);
 //GET BY ID AND DELETE
 router.route("/:id").get(getCartById).put(updateCart);
+//GET CART BY USER ID
+router.route("/user/:id").get(getCartByUserId);
 
 module.exports = router;

@@ -27,7 +27,7 @@ interface cartInfo {
 }
 
 export interface cartState {
-  cartInfo?: cartInfo | Array<cartInfo>;
+  cartInfo?: Array<cartInfo>;
   isFetching?: boolean;
   error?: boolean;
 }
@@ -85,16 +85,19 @@ export const removeCartReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case REMOVE_TO_CART_REQUEST:
       return {
-        cartInfo: action.payload,
+        ...state,
+        isFetching: true,
+        error: false,
       };
     case REMOVE_TO_CART_SUCCESS:
       return {
-        cartInfo: action.payload,
+        cartInfo: state.cartInfo?.filter((cart) => cart._id !== action.payload),
         isFetching: false,
         error: false,
       };
     case REMOVE_TO_CART_FAILURE:
       return {
+        ...state,
         isFetching: false,
         error: true,
       };

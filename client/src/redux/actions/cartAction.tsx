@@ -41,8 +41,8 @@ export const addToCart =
       const userInfo = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo")!)
         : null;
-
-      const { data } = await axios.post(`/cart/add/${userInfo._id}`, {
+      const cartId = await axios.get(`/cart/user/${userInfo?._id}`);
+      const { data } = await axios.post(`/cart/add/${cartId.data?._id}`, {
         product,
         brand,
         name,
@@ -51,6 +51,8 @@ export const addToCart =
         discount,
         quantity,
       });
+      //console.log(data);
+
       dispatch({
         type: ADD_TO_CART_SUCCESS,
         payload: data,
@@ -79,14 +81,14 @@ export const getCart =
       const userInfo = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo")!)
         : null;
-
-      const { data } = await axios.get(`/cart/${userInfo._id}`);
+      const cartId = await axios.get(`/cart/user/${userInfo._id}`);
+      const { data } = await axios.get(`/cart/${cartId.data?._id}`);
       dispatch({
         type: GET_CART_SUCCESS,
         payload: data,
       });
 
-      localStorage.setItem("cartInfo", JSON.stringify(data));
+      //localStorage.setItem("cartInfo", JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: GET_CART_FAILURE,
