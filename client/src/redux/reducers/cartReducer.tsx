@@ -2,6 +2,9 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   LOAD_CURRENT_ITEM,
+  CREATE_CART_REQUEST,
+  CREATE_CART_SUCCESS,
+  CREATE_CART_FAILURE,
   ADD_TO_CART_REQUEST,
   ADD_TO_CART_FAILURE,
   ADD_TO_CART_SUCCESS,
@@ -36,6 +39,34 @@ interface Action {
   payload: string;
 }
 
+interface cart {
+  userId?: string;
+  isFetching?: boolean;
+  error?: boolean;
+}
+export const createCartReducer = (state: cart, action: Action) => {
+  switch (action.type) {
+    case CREATE_CART_REQUEST:
+      return {
+        isFetching: true,
+        error: false,
+      };
+    case CREATE_CART_SUCCESS:
+      return {
+        cart: action.payload,
+        isFetching: false,
+        error: false,
+      };
+    case CREATE_CART_FAILURE:
+      return {
+        isFetching: false,
+        error: true,
+      };
+    default:
+      return { ...state };
+  }
+};
+
 export const cartItemReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case ADD_TO_CART_REQUEST:
@@ -59,7 +90,7 @@ export const cartItemReducer = (state: cartState, action: Action) => {
   }
 };
 
-export const cartReducer = (state: cartState, action: Action) => {
+export const getCartReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case GET_CART_REQUEST:
       return {

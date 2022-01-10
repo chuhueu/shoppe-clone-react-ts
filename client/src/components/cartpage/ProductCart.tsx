@@ -9,7 +9,6 @@ import {
 } from "@material-ui/icons";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -150,6 +149,7 @@ const ProductCart = ({
                       checked={isChecked}
                       name={isChecked}
                       onChange={() => toggleCheck(idOption)}
+                      //onClick={() => console.log(cartItem._id)}
                     />
                     <Link to="/">
                       <img
