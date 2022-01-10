@@ -9,6 +9,7 @@ import product2 from "../../../assets/images/products/product-2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { cartState } from "../../../redux/reducers/cartReducer";
+import { userState } from "../../../redux/reducers/userReducer";
 import { getCart } from "../../../redux/actions/cartAction";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -136,8 +137,11 @@ const HeaderCart = () => {
   const dispatch = useDispatch();
 
   const cart = useSelector<RootState, cartState>((state) => state.cart);
+  const userLogin = useSelector<RootState, userState>(
+    (state) => state.userLogin
+  );
   const { cartInfo, isFetching, error } = cart;
-
+  const { userInfo } = userLogin;
   useEffect(() => {
     dispatch(getCart());
   }, [dispatch]);
@@ -160,9 +164,16 @@ const HeaderCart = () => {
       justifyContent="center"
     >
       <Box className={classes.styleCart}>
-        <Link to="/cart">
-          <ShoppingCartOutlined className={classes.styleIcon} />
-        </Link>
+        {userInfo ? (
+          <Link to="/cart">
+            <ShoppingCartOutlined className={classes.styleIcon} />
+          </Link>
+        ) : (
+          <Link to="/login">
+            <ShoppingCartOutlined className={classes.styleIcon} />
+          </Link>
+        )}
+
         {cartInfo?.length !== 0 && (
           <Box className={classes.styleQty}>{cartInfo?.length}</Box>
         )}
