@@ -39,7 +39,7 @@ interface Action {
   payload: string;
 }
 
-interface cart {
+export interface cart {
   userId?: string;
   isFetching?: boolean;
   error?: boolean;

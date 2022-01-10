@@ -1,11 +1,4 @@
-import {
-  Container,
-  Box,
-  Hidden,
-  Button,
-  Grid,
-  TextField,
-} from "@material-ui/core";
+import { Container, Box, Button, Grid } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import {
   FavoriteBorderOutlined,
@@ -22,10 +15,12 @@ import SwiperCore, { Navigation, Thumbs } from "swiper";
 import "swiper/swiper-bundle.min.css";
 import "../../assets/css/navigation.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import productModel from "../../models/productModel";
 import axios from "../../axios";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { userState } from "../../redux/reducers/userReducer";
 import { addToCart } from "../../redux/actions/cartAction";
 import ModalAddCart from "../cartpage/ModalAddCart";
 
@@ -216,7 +211,12 @@ const MainProduct = () => {
   const [product, setProduct] = useState<productModel>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const params: Params = useParams();
+  const history = useHistory();
   //console.log(params?.name);
+  const userLogin = useSelector<RootState, userState>(
+    (state) => state.userLogin
+  );
+  const { userInfo } = userLogin;
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -271,7 +271,6 @@ const MainProduct = () => {
       setOpenModal(false);
     }, 2000);
   };
-
   return (
     <Container>
       <ModalAddCart openModal={openModal} />
@@ -469,9 +468,19 @@ const MainProduct = () => {
                 </Box>
               </Box>
               <Box display="flex" className={classes.styleButtonCart}>
-                <Button variant="outlined" onClick={addCart}>
-                  <AddShoppingCart /> Add To Cart
-                </Button>
+                {userInfo ? (
+                  <Button variant="outlined" onClick={addCart}>
+                    <AddShoppingCart /> Add To Cart
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outlined"
+                    onClick={() => history.push("/login")}
+                  >
+                    <AddShoppingCart /> Add To Cart
+                  </Button>
+                )}
+
                 <Button variant="outlined">Buy Now</Button>
               </Box>
               <Box mt={4} borderTop="1px solid rgba(0, 0, 0, 0.05)">
