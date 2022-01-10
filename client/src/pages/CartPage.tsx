@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import {
   NavbarCartPage,
   HeaderCartPage,
@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { cartState } from "../redux/reducers/cartReducer";
 import { getCart } from "../redux/actions/cartAction";
+import EmptyCart from "../components/cartpage/EmptyCart";
 
 type options = {
   [key: number]: boolean;
@@ -24,8 +25,6 @@ const CartPage = () => {
 
   const cart = useSelector<RootState, cartState>((state) => state.cart);
   const { cartInfo, isFetching, error } = cart;
-
-  console.log(cartInfo);
 
   useEffect(() => {
     dispatch(getCart());
@@ -76,19 +75,30 @@ const CartPage = () => {
     <>
       <NavbarCartPage />
       <HeaderCartPage />
-      <TopCart />
-      <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
-      {cartInfo?.map((cartItem: any, index: any) => {
-        return (
-          <ItemCart
-            cartItem={cartItem}
-            idOption={index}
-            isChecked={checked}
-            toggleCheck={toggleCheck}
-          />
-        );
-      })}
-      <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
+
+      {cartInfo?.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <>
+          <TopCart />
+          <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
+          {isFetching ? (
+            <CircularProgress />
+          ) : (
+            cartInfo?.map((cartItem: any, index: any) => {
+              return (
+                <ItemCart
+                  cartItem={cartItem}
+                  idOption={index}
+                  isChecked={checked}
+                  toggleCheck={toggleCheck}
+                />
+              );
+            })
+          )}
+          <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
+        </>
+      )}
       <Box height="40px"></Box>
       <ListProduct />
       <Footer show={false} />
