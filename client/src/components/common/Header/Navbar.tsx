@@ -246,6 +246,7 @@ const Navbar = () => {
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logout());
+    window.location.reload();
   };
 
   return (
