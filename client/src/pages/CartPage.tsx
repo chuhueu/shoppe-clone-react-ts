@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { cartState } from "../redux/reducers/cartReducer";
 import { getCart } from "../redux/actions/cartAction";
+import { removeCartItem } from "../redux/actions/cartAction";
 import EmptyCart from "../components/cartpage/EmptyCart";
 
 type options = {
@@ -22,13 +23,9 @@ type options = {
 
 const CartPage = () => {
   const dispatch = useDispatch();
-
+  const [reload, setReload] = useState(false);
   const cart = useSelector<RootState, cartState>((state) => state.cart);
   const { cartInfo, isFetching, error } = cart;
-
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dispatch]);
 
   const checkOptions: options = {
     1: false,
@@ -70,11 +67,32 @@ const CartPage = () => {
       setCheckedAll(false);
     }
   }, [checked]);
+  const deleteCartItem = (id: string) => {
+    dispatch(removeCartItem(id));
+    setReload((prevCheck) => !prevCheck);
+  };
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch, reload]);
 
   return (
     <>
       <NavbarCartPage />
       <HeaderCartPage />
+      <TopCart />
+      <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
+      {cartInfo?.map((cartItem: any, index: any) => {
+        return (
+          <ItemCart
+            cartItem={cartItem}
+            idOption={index}
+            isChecked={checked}
+            toggleCheck={toggleCheck}
+            deleteCartItem={deleteCartItem}
+          />
+        );
+      })}
+      <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
 
       {cartInfo?.length === 0 ? (
         <EmptyCart />
@@ -92,6 +110,7 @@ const CartPage = () => {
                   idOption={index}
                   isChecked={checked}
                   toggleCheck={toggleCheck}
+                  deleteCartItem={deleteCartItem}
                 />
               );
             })

@@ -86,6 +86,7 @@ export const removeCartReducer = (state: cartState, action: Action) => {
   switch (action.type) {
     case REMOVE_TO_CART_REQUEST:
       return {
+        ...state,
         isFetching: true,
         error: false,
       };
@@ -97,6 +98,7 @@ export const removeCartReducer = (state: cartState, action: Action) => {
       };
     case REMOVE_TO_CART_FAILURE:
       return {
+        ...state,
         isFetching: false,
         error: true,
       };

@@ -46,7 +46,15 @@ const getCart = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
-
+//GET CART ID BY USER ID
+const getCartByUserId = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    const get = await Cart.findOne({ user: req.params.id });
+    res.status(200).json(get);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //@desc    get all cart item
 //@router  GET /api/cart/:id
 //@access  User
@@ -95,7 +103,7 @@ const addToCart = asyncHandler(async (req: Request, res: Response) => {
 //@router  DELETE /api/cart/delete/:id
 //@access  User
 const removeCartItem = asyncHandler(async (req: Request, res: Response) => {
-  const cartItem = await CartItem.findById(req.params.id);
+  const cartItem = await CartItem.findByIdAndDelete(req.params.id);
 
   if (cartItem) {
     await cartItem.remove();
@@ -110,6 +118,7 @@ export {
   createCart,
   getCart,
   updateCart,
+  getCartByUserId,
   getCartById,
   addToCart,
   removeCartItem,
