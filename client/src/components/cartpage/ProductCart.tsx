@@ -114,6 +114,7 @@ const ProductCart = ({
   deleteCartItem,
 }: Props) => {
   const classes = useStyles();
+
   const toVND = (price: any) => {
     let vnd =
       typeof price === "undefined"
@@ -126,6 +127,10 @@ const ProductCart = ({
 
   const priceDiscount = (price: any, discount: any) => {
     return toVND(price - price * (discount / 100));
+  };
+
+  const totalPrice = (price: any, discount: any, qty: any) => {
+    return toVND((price - price * (discount / 100)) * qty);
   };
 
   return (
@@ -200,10 +205,10 @@ const ProductCart = ({
                   className={classes.stylePrice}
                 >
                   <p className={classes.stylePriceOld}>
-                    ₫{priceDiscount(cartItem.price, cartItem.discount)}
+                    ₫{toVND(cartItem.price)}
                   </p>
                   <p className={classes.stylePriceNew}>
-                    ₫{toVND(cartItem.price)}
+                    ₫{priceDiscount(cartItem.price, cartItem.discount)}
                   </p>
                 </Box>
               </Grid>
@@ -234,7 +239,14 @@ const ProductCart = ({
                   justifyContent="center"
                   height="100%"
                 >
-                  <Typography variant="h5">₫{cartItem.price}</Typography>
+                  <Typography variant="h5">
+                    ₫
+                    {totalPrice(
+                      cartItem.price,
+                      cartItem.discount,
+                      cartItem.quantity
+                    )}
+                  </Typography>
                 </Box>
               </Grid>
               <Grid item lg={3} md={3} sm={3} xs={6}>

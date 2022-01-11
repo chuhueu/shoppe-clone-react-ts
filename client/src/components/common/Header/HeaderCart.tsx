@@ -131,7 +131,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const HeaderCart = () => {
+interface Props {
+  reload?: boolean;
+}
+
+const HeaderCart = ({ reload }: Props) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -144,7 +148,7 @@ const HeaderCart = () => {
   const { userInfo } = userLogin;
   useEffect(() => {
     dispatch(getCart());
-  }, [dispatch]);
+  }, [dispatch, reload]);
 
   const toVND = (price: any) => {
     let vnd =

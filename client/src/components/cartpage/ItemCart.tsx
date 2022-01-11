@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Container, Typography } from "@material-ui/core";
 import ProductCart from "./ProductCart";
 import voucherIcon from "../../assets/images/icons/cheap.png";
 import shipIcon from "../../assets/images/icons/ship.png";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { brandState } from "../../redux/reducers/productReducer";
+import { getBrand } from "../../redux/actions/productAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,6 +57,15 @@ const ItemCart = ({
 }: Props) => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+
+  const brand = useSelector<RootState, brandState>((state) => state.brand);
+  const { brandInfo, isFetching, error } = brand;
+
+  useEffect(() => {
+    dispatch(getBrand(cartItem.brand));
+  }, [dispatch, cartItem]);
+
   return (
     <Container className={classes.styleContainer}>
       <Box display="flex" alignItems="center" className={classes.styleTop}>
@@ -64,7 +77,7 @@ const ItemCart = ({
           <Typography variant="h3">Yêu thích</Typography>
         </Box>
         <Box className={classes.styleText}>
-          <Typography variant="h4">ỐP LƯNG IPHONE - SHIN CASE</Typography>
+          <Typography variant="h4">{brandInfo?.name}</Typography>
         </Box>
       </Box>
       <Box padding="20px 0">

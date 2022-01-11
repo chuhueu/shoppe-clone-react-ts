@@ -202,7 +202,12 @@ export interface Params {
   infoID?: string;
 }
 
-const MainProduct = () => {
+interface Props {
+  reload?: boolean;
+  setReload?: any;
+}
+
+const MainProduct = ({ reload, setReload }: Props) => {
   //styles
   const classes = useStyles();
   //state
@@ -266,6 +271,7 @@ const MainProduct = () => {
         count
       )
     );
+    setReload(!reload);
     setOpenModal(!openModal);
     setTimeout(() => {
       setOpenModal(false);
