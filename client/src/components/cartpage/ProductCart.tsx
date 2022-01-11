@@ -154,6 +154,7 @@ const ProductCart = ({
                       checked={isChecked}
                       name={isChecked}
                       onChange={() => toggleCheck(idOption)}
+                      //onClick={() => console.log(cartItem._id)}
                     />
                     <Link to="/">
                       <img
