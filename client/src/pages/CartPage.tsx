@@ -24,13 +24,22 @@ type options = {
 const CartPage = () => {
   const dispatch = useDispatch();
   const [reload, setReload] = useState(false);
+
   const cart = useSelector<RootState, cartState>((state) => state.cart);
   const { cartInfo, isFetching, error } = cart;
 
   const checkOptions: options = {
+    0: false,
     1: false,
     2: false,
     3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+    8: false,
+    9: false,
+    10: false,
   };
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState(checkOptions);
@@ -69,7 +78,7 @@ const CartPage = () => {
   }, [checked]);
   const deleteCartItem = (id: string) => {
     dispatch(removeCartItem(id));
-    setReload((prevCheck) => !prevCheck);
+    setReload(!reload);
   };
   useEffect(() => {
     dispatch(getCart());
@@ -79,21 +88,6 @@ const CartPage = () => {
     <>
       <NavbarCartPage />
       <HeaderCartPage />
-      <TopCart />
-      <HeadingCart checkedAll={checkedAll} selectAll={selectAll} />
-      {cartInfo?.map((cartItem: any, index: any) => {
-        return (
-          <ItemCart
-            cartItem={cartItem}
-            idOption={index}
-            isChecked={checked}
-            toggleCheck={toggleCheck}
-            deleteCartItem={deleteCartItem}
-          />
-        );
-      })}
-      <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
-
       {cartInfo?.length === 0 ? (
         <EmptyCart />
       ) : (

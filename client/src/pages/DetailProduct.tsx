@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Header,
   Footer,
@@ -8,11 +8,13 @@ import {
   ListProduct,
 } from "../components/index";
 const DetailProduct = () => {
+  const [reload, setReload] = useState<boolean>(false);
+
   return (
     <>
-      <Header />
+      <Header reload={reload} />
       <DirectoryProduct />
-      <MainProduct />
+      <MainProduct reload={reload} setReload={setReload} />
       <ShopProduct />
       <ListProduct />
       <Footer show={false} />

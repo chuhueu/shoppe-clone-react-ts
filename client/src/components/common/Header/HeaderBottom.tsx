@@ -5,7 +5,11 @@ import logo from "../../../assets/images/shopee-logo.png";
 import SearchBox from "./SearchBox";
 import HeaderCart from "./HeaderCart";
 
-const HeaderBottom = () => {
+interface Props {
+  reload?: boolean;
+}
+
+const HeaderBottom = ({ reload }: Props) => {
   return (
     <Box display="flex" justifyContent="space-between" alignItems="center">
       <Box width="162px">
@@ -16,7 +20,7 @@ const HeaderBottom = () => {
       <Hidden smDown>
         <SearchBox />
       </Hidden>
-      <HeaderCart />
+      <HeaderCart reload={reload} />
     </Box>
   );
 };
