@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Grid, Typography } from "@material-ui/core";
 import {
@@ -9,6 +9,7 @@ import {
 } from "@material-ui/icons";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
+import axios from "../../axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -132,6 +133,20 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
+  const [orderItems, setOrderItems] = useState<any>();
+
+  const getOrderItems = async (id: string) => {
+    try {
+      const res = await axios.get(`/cart/cartItem/${id}`);
+      //setOrderItems([...orderItems, res.data]);
+      console.log(res.data);
+
+      setOrderItems(res.data);
+      //console.log(orderItems);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Box className={classes.styleWrapper}>
@@ -154,9 +169,14 @@ const ProductCart = ({
                       checked={isChecked}
                       name={isChecked}
                       onChange={() => toggleCheck(idOption)}
-                      //onClick={() => console.log(cartItem._id)}
+                      onClick={() => getOrderItems(cartItem._id)}
                     />
-                    <Link to="/">
+                    <Link
+                      to={{
+                        pathname:
+                          "/info/" + cartItem?.name + "/" + cartItem?._id,
+                      }}
+                    >
                       <img
                         src={cartItem.image}
                         alt=""
@@ -164,7 +184,13 @@ const ProductCart = ({
                       />
                     </Link>
                     <Box maxWidth="220px">
-                      <Link to="/" className={classes.styleLink}>
+                      <Link
+                        to={{
+                          pathname:
+                            "/info/" + cartItem?.name + "/" + cartItem?._id,
+                        }}
+                        className={classes.styleLink}
+                      >
                         <p className="custom-p-2">{cartItem.name}</p>
                       </Link>
                       <img
@@ -261,7 +287,6 @@ const ProductCart = ({
                     <Typography
                       variant="h4"
                       onClick={() => deleteCartItem(cartItem._id)}
-                      //onClick={() => console.log(cartItem._id)}
                     >
                       Xóa
                     </Typography>

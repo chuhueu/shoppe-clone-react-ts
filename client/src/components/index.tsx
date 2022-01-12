@@ -27,3 +27,8 @@ export { default as TopCart } from "./cartpage/TopCart";
 export { default as HeadingCart } from "./cartpage/HeadingCart";
 export { default as ItemCart } from "./cartpage/ItemCart";
 export { default as BottomCart } from "./cartpage/BottomCart";
+
+//Order page
+export { default as HeaderOrderPage } from "./orderpage/HeaderOrderPage";
+export { default as AddressOrderPage } from "./orderpage/AddressOrderPage";
+export { default as ProductOrder } from "./orderpage/ProductOrder";

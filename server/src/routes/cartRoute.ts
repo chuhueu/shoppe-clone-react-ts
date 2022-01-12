@@ -3,7 +3,8 @@ import {
   getCart,
   updateCart,
   getCartByUserId,
-  getCartById,
+  getCartItemByCartId,
+  getCartItemById,
   addToCart,
   removeCartItem,
 } from "../controllers/cart/cartController";
@@ -16,8 +17,9 @@ router.route("/add/:id").post(addToCart);
 //DELETE FROM CART
 router.route("/delete/:id").delete(removeCartItem);
 //GET BY ID AND DELETE
-router.route("/:id").get(getCartById).put(updateCart);
+router.route("/:id").get(getCartItemByCartId).put(updateCart);
 //GET CART BY USER ID
 router.route("/user/:id").get(getCartByUserId);
-
+//GET CART ITEM BY ID
+router.route("/cartItem/:id").get(getCartItemById);
 module.exports = router;

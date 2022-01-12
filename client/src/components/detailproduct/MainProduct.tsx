@@ -259,8 +259,8 @@ const MainProduct = ({ reload, setReload }: Props) => {
 
   const dispatch = useDispatch();
 
-  const addCart = () => {
-    dispatch(
+  const addCart = async () => {
+    await dispatch(
       addToCart(
         product?._id,
         product?.brand,
