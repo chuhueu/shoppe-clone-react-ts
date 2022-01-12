@@ -38,7 +38,6 @@ const CartPage = () => {
   };
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState(checkOptions);
-  const [price, setPrice] = useState<number>(0);
 
   const toggleCheck = (inputName: any) => {
     setChecked((prevState: any) => {
@@ -100,8 +99,7 @@ const CartPage = () => {
                 <ItemCart
                   cartItem={cartItem}
                   idOption={index}
-                  isChecked={checked}
-                  setPrice={setPrice}
+                  checked={checked}
                   toggleCheck={toggleCheck}
                   deleteCartItem={deleteCartItem}
                   reload={reload}
@@ -110,11 +108,7 @@ const CartPage = () => {
               );
             })
           )}
-          <BottomCart
-            checkedAll={checkedAll}
-            selectAll={selectAll}
-            price={price}
-          />
+          <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
         </>
       )}
       <Box height="40px"></Box>
