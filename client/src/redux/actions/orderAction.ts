@@ -1,7 +1,7 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 import { RootState } from "../store";
-import { ORDER_ADD_ITEM } from "../constants/orderConstants";
+import { ORDER_ADD_ITEM, ORDER_REMOVE_ITEM } from "../constants/orderConstants";
 
 export const addOrderItem =
   (
@@ -41,7 +41,7 @@ export const removeOrderItem =
     getState: () => RootState
   ): Promise<void> => {
     dispatch({
-      type: ORDER_ADD_ITEM,
+      type: ORDER_REMOVE_ITEM,
       payload: id,
     });
     localStorage.setItem("orderItems", JSON.stringify(getState().orderItems));

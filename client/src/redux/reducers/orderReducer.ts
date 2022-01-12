@@ -20,7 +20,10 @@ export interface orderItemsState {
   orderItems: Array<orderItems>;
 }
 
-export const orderItemsReducer = (state: orderItemsState, action: Action) => {
+export const orderItemsReducer = (
+  state = { orderItems: [] },
+  action: Action
+) => {
   switch (action.type) {
     case ORDER_ADD_ITEM:
       return {
@@ -28,10 +31,12 @@ export const orderItemsReducer = (state: orderItemsState, action: Action) => {
         orderItems: [...state.orderItems, action.payload],
       };
     case ORDER_REMOVE_ITEM:
+      const item = action.payload;
+
       return {
         ...state,
         orderItems: state.orderItems?.filter(
-          (order) => order._id !== action.payload
+          (order: any) => order._id !== item
         ),
       };
     default:

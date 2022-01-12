@@ -259,8 +259,8 @@ const MainProduct = ({ reload, setReload }: Props) => {
 
   const dispatch = useDispatch();
 
-  const addCart = () => {
-    dispatch(
+  const addCart = async () => {
+    await dispatch(
       addToCart(
         product?._id,
         product?.brand,
@@ -271,10 +271,10 @@ const MainProduct = ({ reload, setReload }: Props) => {
         count
       )
     );
+    setReload(!reload);
     setOpenModal(!openModal);
     setTimeout(() => {
       setOpenModal(false);
-      setReload(!reload);
     }, 3000);
   };
   return (

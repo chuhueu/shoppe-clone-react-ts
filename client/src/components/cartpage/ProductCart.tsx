@@ -104,10 +104,9 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   cartItem: any;
   idOption: number;
-  isChecked: any;
+  checked: any;
   toggleCheck: any;
   deleteCartItem: any;
-  setPrice: any;
   reload?: boolean;
   setReload?: any;
 }
@@ -115,20 +114,18 @@ interface Props {
 const ProductCart = ({
   cartItem,
   idOption,
-  isChecked,
+  checked,
   toggleCheck,
   deleteCartItem,
-  setPrice,
   reload,
   setReload,
 }: Props) => {
   const classes = useStyles();
 
-  const [check, setCheck] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleCheck = () => {
-    setCheck(!check);
-    if (check) {
+  useEffect(() => {
+    if (checked) {
       dispatch(
         addOrderItem(
           cartItem._id,
@@ -144,7 +141,7 @@ const ProductCart = ({
     } else {
       dispatch(removeOrderItem(cartItem._id));
     }
-  };
+  }, [checked, dispatch, cartItem]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -164,14 +161,6 @@ const ProductCart = ({
     return toVND((price - price * (discount / 100)) * qty);
   };
 
-  const itemTotalPrice = totalPrice(
-    cartItem.price,
-    cartItem.discount,
-    cartItem.quantity
-  );
-
-  const dispatch = useDispatch();
-
   const minusQuantity = () => {
     if (cartItem.quantity > 1) {
       dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
@@ -183,25 +172,6 @@ const ProductCart = ({
     dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
     setReload(!reload);
   };
-
-  // useEffect(() => {
-  //   if (check) {
-  //     dispatch(
-  //       addOrderItem(
-  //         cartItem._id,
-  //         cartItem.product,
-  //         cartItem.brand,
-  //         cartItem.name,
-  //         cartItem.image,
-  //         cartItem.price,
-  //         cartItem.discount,
-  //         cartItem.quantity
-  //       )
-  //     );
-  //   } else {
-  //     dispatch(removeOrderItem(cartItem._id));
-  //   }
-  // }, [check, dispatch, cartItem]);
 
   return (
     <Box className={classes.styleWrapper}>
@@ -221,10 +191,8 @@ const ProductCart = ({
                 <Grid item lg={8} md={12} xs={12}>
                   <Box display="flex" alignItems="center" overflow="hidden">
                     <Checkbox
-                      checked={isChecked}
-                      name={isChecked}
+                      checked={checked}
                       onChange={() => toggleCheck(idOption)}
-                      onClick={handleCheck}
                     />
                     <Link to="/">
                       <img
@@ -337,7 +305,6 @@ const ProductCart = ({
                     <Typography
                       variant="h4"
                       onClick={() => deleteCartItem(cartItem._id)}
-                      //onClick={() => console.log(cartItem._id)}
                     >
                       Xóa
                     </Typography>

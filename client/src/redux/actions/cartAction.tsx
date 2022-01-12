@@ -78,7 +78,6 @@ export const addToCart =
         discount,
         quantity,
       });
-      //console.log(data);
 
       dispatch({
         type: ADD_TO_CART_SUCCESS,
@@ -110,6 +109,7 @@ export const getCart =
         : null;
       const cartId = await axios.get(`/cart/user/${userInfo._id}`);
       const { data } = await axios.get(`/cart/${cartId.data?._id}`);
+
       dispatch({
         type: GET_CART_SUCCESS,
         payload: data,
