@@ -46,6 +46,9 @@ interface Props {
   isChecked: any;
   toggleCheck: any;
   deleteCartItem: any;
+  setPrice: any;
+  reload?: boolean;
+  setReload?: any;
 }
 
 const ItemCart = ({
@@ -54,6 +57,9 @@ const ItemCart = ({
   isChecked,
   toggleCheck,
   deleteCartItem,
+  setPrice,
+  reload,
+  setReload,
 }: Props) => {
   const classes = useStyles();
 
@@ -87,6 +93,9 @@ const ItemCart = ({
           isChecked={isChecked[idOption]}
           toggleCheck={toggleCheck}
           deleteCartItem={deleteCartItem}
+          setPrice={setPrice}
+          reload={reload}
+          setReload={setReload}
         />
       </Box>
       <Box display="flex" alignItems="center" className={classes.styleVoucher}>

@@ -35,14 +35,10 @@ const CartPage = () => {
     3: false,
     4: false,
     5: false,
-    6: false,
-    7: false,
-    8: false,
-    9: false,
-    10: false,
   };
   const [checkedAll, setCheckedAll] = useState(false);
   const [checked, setChecked] = useState(checkOptions);
+  const [price, setPrice] = useState<number>(0);
 
   const toggleCheck = (inputName: any) => {
     setChecked((prevState: any) => {
@@ -76,10 +72,12 @@ const CartPage = () => {
       setCheckedAll(false);
     }
   }, [checked]);
+
   const deleteCartItem = (id: string) => {
     dispatch(removeCartItem(id));
     setReload(!reload);
   };
+
   useEffect(() => {
     dispatch(getCart());
   }, [dispatch, reload]);
@@ -103,13 +101,20 @@ const CartPage = () => {
                   cartItem={cartItem}
                   idOption={index}
                   isChecked={checked}
+                  setPrice={setPrice}
                   toggleCheck={toggleCheck}
                   deleteCartItem={deleteCartItem}
+                  reload={reload}
+                  setReload={setReload}
                 />
               );
             })
           )}
-          <BottomCart checkedAll={checkedAll} selectAll={selectAll} />
+          <BottomCart
+            checkedAll={checkedAll}
+            selectAll={selectAll}
+            price={price}
+          />
         </>
       )}
       <Box height="40px"></Box>

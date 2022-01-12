@@ -271,11 +271,11 @@ const MainProduct = ({ reload, setReload }: Props) => {
         count
       )
     );
-    setReload(!reload);
     setOpenModal(!openModal);
     setTimeout(() => {
       setOpenModal(false);
-    }, 2000);
+      setReload(!reload);
+    }, 3000);
   };
   return (
     <Container>
