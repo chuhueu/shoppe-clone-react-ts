@@ -60,9 +60,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   checkedAll: boolean;
   selectAll: any;
+  price: number;
 }
 
-const BottomCart = ({ checkedAll, selectAll }: Props) => {
+const BottomCart = ({ checkedAll, selectAll, price }: Props) => {
   const classes = useStyles();
 
   const [onScroll, setOnScroll] = useState(true);
@@ -162,7 +163,7 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
                 variant="subtitle1"
                 className={classes.styleTotalPrice}
               >
-                ₫0
+                ₫{price}
               </Typography>
               <Button className={classes.styleButton}>Mua Hàng</Button>
             </Box>

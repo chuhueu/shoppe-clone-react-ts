@@ -1,7 +1,4 @@
 import {
-  INCREASE_QUANTITY,
-  DECREASE_QUANTITY,
-  LOAD_CURRENT_ITEM,
   CREATE_CART_REQUEST,
   CREATE_CART_SUCCESS,
   CREATE_CART_FAILURE,
@@ -14,6 +11,9 @@ import {
   REMOVE_TO_CART_REQUEST,
   REMOVE_TO_CART_SUCCESS,
   REMOVE_TO_CART_FAILURE,
+  UPDATE_QUANTITY_REQUEST,
+  UPDATE_QUANTITY_SUCCESS,
+  UPDATE_QUANTITY_FAILURE,
 } from "../constants/cartConstants";
 
 interface cartInfo {
@@ -128,6 +128,31 @@ export const removeCartReducer = (state: cartState, action: Action) => {
         error: false,
       };
     case REMOVE_TO_CART_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        error: true,
+      };
+    default:
+      return { ...state };
+  }
+};
+
+export const updateQtyCartReducer = (state: cartState, action: Action) => {
+  switch (action.type) {
+    case UPDATE_QUANTITY_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        error: false,
+      };
+    case UPDATE_QUANTITY_SUCCESS:
+      return {
+        cartInfo: action.payload,
+        isFetching: false,
+        error: false,
+      };
+    case UPDATE_QUANTITY_FAILURE:
       return {
         ...state,
         isFetching: false,
