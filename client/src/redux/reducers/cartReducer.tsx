@@ -15,7 +15,7 @@ import {
   UPDATE_QUANTITY_SUCCESS,
   UPDATE_QUANTITY_FAILURE,
 } from "../constants/cartConstants";
-
+import { AnyAction } from "redux";
 interface cartInfo {
   _id?: string;
   cart?: string;
@@ -34,17 +34,17 @@ export interface cartState {
   error?: boolean;
 }
 
-interface Action {
-  type: string;
-  payload: string;
-}
+// interface Action {
+//   type: string;
+//   payload: string;
+// }
 
 export interface cart {
   userId?: string;
   isFetching?: boolean;
   error?: boolean;
 }
-export const createCartReducer = (state: cart, action: Action) => {
+export const createCartReducer = (state: cart, action: AnyAction) => {
   switch (action.type) {
     case CREATE_CART_REQUEST:
       return {
@@ -67,7 +67,7 @@ export const createCartReducer = (state: cart, action: Action) => {
   }
 };
 
-export const cartItemReducer = (state: cartState, action: Action) => {
+export const cartItemReducer = (state: cartState, action: AnyAction) => {
   switch (action.type) {
     case ADD_TO_CART_REQUEST:
       return {
@@ -90,7 +90,7 @@ export const cartItemReducer = (state: cartState, action: Action) => {
   }
 };
 
-export const getCartReducer = (state: cartState, action: Action) => {
+export const getCartReducer = (state: cartState, action: AnyAction) => {
   switch (action.type) {
     case GET_CART_REQUEST:
       return {
@@ -113,7 +113,7 @@ export const getCartReducer = (state: cartState, action: Action) => {
   }
 };
 
-export const removeCartReducer = (state: cartState, action: Action) => {
+export const removeCartReducer = (state: cartState, action: AnyAction) => {
   switch (action.type) {
     case REMOVE_TO_CART_REQUEST:
       return {
@@ -123,7 +123,9 @@ export const removeCartReducer = (state: cartState, action: Action) => {
       };
     case REMOVE_TO_CART_SUCCESS:
       return {
-        cartInfo: state.cartInfo?.filter((cart) => cart._id !== action.payload),
+        cartInfo: state.cartInfo?.filter(
+          (cart) => cart._id !== action.payload.id
+        ),
         isFetching: false,
         error: false,
       };
@@ -138,7 +140,7 @@ export const removeCartReducer = (state: cartState, action: Action) => {
   }
 };
 
-export const updateQtyCartReducer = (state: cartState, action: Action) => {
+export const updateQtyCartReducer = (state: cartState, action: AnyAction) => {
   switch (action.type) {
     case UPDATE_QUANTITY_REQUEST:
       return {
@@ -148,7 +150,12 @@ export const updateQtyCartReducer = (state: cartState, action: Action) => {
       };
     case UPDATE_QUANTITY_SUCCESS:
       return {
-        cartInfo: action.payload,
+        //cartInfo: action.payload,
+        cartInfo: state.cartInfo?.map((cart) =>
+          cart._id === action.payload.id
+            ? { ...cart, quantity: action.payload.quantity }
+            : cart
+        ),
         isFetching: false,
         error: false,
       };

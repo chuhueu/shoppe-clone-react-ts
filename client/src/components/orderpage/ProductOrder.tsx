@@ -114,7 +114,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     styleTotal: {
       backgroundColor: "#fafdff",
-      padding: "0 30px",
       height: "73px",
       "& div:nth-child(2)": {
         marginLeft: "20px",
@@ -124,8 +123,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+interface orderItem {
+  _id?: string;
+  name?: string;
+  image?: string;
+  brand?: string;
+  price?: number;
+  quantity?: number;
+  discount?: number;
+}
 const ProductOrder = () => {
+  //style
   const classes = useStyles();
+  //state
+  const index = localStorage.getItem("orderItems")
+    ? JSON.parse(localStorage.getItem("orderItems")!)
+    : null;
+  const toVND = (price: any) => {
+    let vnd =
+      typeof price === "undefined"
+        ? 0
+        : price.toLocaleString("vi-VN", {
+            currency: "VND",
+          });
+    return vnd;
+  };
+
+  const priceDiscount = (price: any, discount: any) => {
+    return toVND(price - price * (discount / 100));
+  };
+
+  const totalPrice = (price: any, discount: any, qty: any, ship: any) => {
+    return toVND((price - price * (discount / 100)) * qty + ship);
+  };
   return (
     <Container className={classes.styleContainer}>
       <Box mt={2} className={classes.styleBox}>
@@ -151,124 +181,138 @@ const ProductOrder = () => {
             </Hidden>
           </Grid>
         </Box>
-        <Box className={classes.styleProduct}>
-          <Grid container spacing={5} className={classes.styleGrid}>
-            <Grid item md={12}>
-              <Box
-                display="flex"
-                alignItems="center"
-                className={classes.styleShop}
-              >
-                <Box>Yêu thích</Box>
-                <Box>CHANH XẢ SHOP - ỐP CHỐNG SỐC</Box>
-                <Box display="flex" alignItems="center">
-                  <Forum /> Chat ngay
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item sm={12} md={5}>
-              <Box display="flex" alignItems="center">
-                <img
-                  src="https://cf.shopee.vn/file/f719daa03bd991295185c077ef624ca1_tn"
-                  alt=""
-                  className={classes.styleImg}
-                />
-                <Box component="span">
-                  Miếng Dán Linh Phù Tài Lộc Bình An May Mắn Dán điện thoại máy
-                  tỉnh bảng đồ dùng [LP]
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item sm={3} md={3}>
-              <Box display="flex" alignItems="center">
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h4" style={{ color: "#bbb" }}>
-                    Loại: TIỀN VÀO NHƯ NƯỚC
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item sm={3} md={1}>
-              <Box textAlign="center">₫5.999</Box>
-            </Grid>
-            <Grid item sm={3} md={1}>
-              <Box textAlign="center">1</Box>
-            </Grid>
-            <Grid item sm={3} md={2}>
-              <Box display="flex" justifyContent="flex-end">
-                ₫5.999
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box mt={2} className={classes.styleVoucher}>
-          <Box display="flex" alignItems="center">
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              flex="6"
-            >
-              <ReceiptOutlined />
-              <Box>Voucher của Shop</Box>
-            </Box>
-            <Box display="flex" justifyContent="flex-end" flex="4" color="#05a">
-              Chọn Voucher
-            </Box>
-          </Box>
-        </Box>
-        <Box className={classes.styleMess}>
-          <Grid container style={{ alignItems: "center" }}>
-            <Grid item xs={12} sm={6} md={5}>
-              <Box
-                display="flex"
-                alignItems="center"
-                borderRight="1px dashed rgba(0,0,0,.09)"
-              >
-                <Box mr={2}>Lời nhắn: </Box>
-                <input type="text" placeholder="Lưu ý cho Người bán..." />
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={7}>
-              <Grid
-                container
-                style={{ alignItems: "center", marginLeft: "10px" }}
-              >
-                <Grid item md={3}>
-                  <Box color="#00bfa5">Đơn vị vận chuyển: </Box>
+        {index.orderItems?.map((item: orderItem) => {
+          return (
+            <>
+              <Box className={classes.styleProduct}>
+                <Grid container spacing={5} className={classes.styleGrid}>
+                  <Grid item md={12}>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      className={classes.styleShop}
+                    >
+                      <Box>Yêu thích</Box>
+                      <Box>CHANH XẢ SHOP - ỐP CHỐNG SỐC</Box>
+                      <Box display="flex" alignItems="center">
+                        <Forum /> Chat ngay
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item sm={12} md={5}>
+                    <Box display="flex" alignItems="center">
+                      <img
+                        src={item.image}
+                        alt=""
+                        className={classes.styleImg}
+                      />
+                      <Box component="span">{item?.name}</Box>
+                    </Box>
+                  </Grid>
+                  <Grid item sm={3} md={3}>
+                    <Box display="flex" alignItems="center">
+                      <Box display="flex" alignItems="center">
+                        <Typography variant="h4" style={{ color: "#bbb" }}>
+                          Loại: TIỀN VÀO NHƯ NƯỚC
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                  <Grid item sm={3} md={1}>
+                    <Box textAlign="center">
+                      ₫{priceDiscount(item.price, item.discount)}
+                    </Box>
+                  </Grid>
+                  <Grid item sm={3} md={1}>
+                    <Box textAlign="center">{item.quantity}</Box>
+                  </Grid>
+                  <Grid item sm={3} md={2}>
+                    <Box display="flex" justifyContent="flex-end">
+                      ₫{totalPrice(item.price, item.discount, item.quantity, 0)}
+                    </Box>
+                  </Grid>
                 </Grid>
-                <Grid item md={5}>
+              </Box>
+              <Box mt={2} className={classes.styleVoucher}>
+                <Box display="flex" alignItems="center">
                   <Box
                     display="flex"
-                    flexDirection="column"
-                    className={classes.styleAddress}
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    flex="6"
                   >
-                    <Box>Vận chuyển nhanh quốc tế</Box>
-                    <Box>Standard Express</Box>
-                    <Box>Nhận hàng vào 25 Th01 - 15 Th02</Box>
+                    <ReceiptOutlined />
+                    <Box>Voucher của Shop</Box>
                   </Box>
-                </Grid>
-                <Grid item md={2}>
-                  <Box color="#05a">THAY ĐỔI</Box>
-                </Grid>
-                <Grid item md={2}>
-                  <Box display="flex" justifyContent="flex-end">
-                    ₫17.000
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    flex="4"
+                    color="#05a"
+                  >
+                    Chọn Voucher
                   </Box>
+                </Box>
+              </Box>
+              <Box className={classes.styleMess}>
+                <Grid container style={{ alignItems: "center" }}>
+                  <Grid item xs={12} sm={6} md={5}>
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      borderRight="1px dashed rgba(0,0,0,.09)"
+                    >
+                      <Box mr={2}>Lời nhắn: </Box>
+                      <input type="text" placeholder="Lưu ý cho Người bán..." />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={7}>
+                    <Grid
+                      container
+                      style={{ alignItems: "center", marginLeft: "10px" }}
+                    >
+                      <Grid item md={3}>
+                        <Box color="#00bfa5">Đơn vị vận chuyển: </Box>
+                      </Grid>
+                      <Grid item md={5}>
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          className={classes.styleAddress}
+                        >
+                          <Box>Vận chuyển nhanh quốc tế</Box>
+                          <Box>Standard Express</Box>
+                          <Box>Nhận hàng vào 25 Th01 - 15 Th02</Box>
+                        </Box>
+                      </Grid>
+                      <Grid item md={2}>
+                        <Box color="#05a">THAY ĐỔI</Box>
+                      </Grid>
+                      <Grid item md={2}>
+                        <Box display="flex" justifyContent="flex-end">
+                          ₫17.000
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-          className={classes.styleTotal}
-        >
-          <Box color="#929292">Tổng số tiền (1 sản phẩm):</Box>
-          <Box>₫39.000</Box>
-        </Box>
+              </Box>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                className={classes.styleTotal}
+              >
+                <Box color="#929292">
+                  Tổng số tiền ({item.quantity} sản phẩm):
+                </Box>
+                <Box>
+                  ₫{totalPrice(item.price, item.discount, item.quantity, 17000)}
+                </Box>
+              </Box>
+            </>
+          );
+        })}
       </Box>
     </Container>
   );

@@ -160,17 +160,21 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
-
+  //const [input, setInput] = useState(cartItem.quantity);
   const minusQuantity = () => {
     if (cartItem.quantity > 1) {
       dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
       setReload(!reload);
     }
+    // if (input > 1) {
+    //   setInput(input - 1);
+    // }
   };
 
   const plusQuantity = () => {
     dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
     setReload(!reload);
+    //setInput(input + 1);
   };
 
   return (
@@ -275,9 +279,11 @@ const ProductCart = ({
                     <Remove />
                   </button>
                   <input
+                    min="1"
                     type="text"
                     className={classes.styleInputQty}
                     value={cartItem.quantity}
+                    //value={input}
                   />
                   <button
                     className={classes.styleButtonQty}

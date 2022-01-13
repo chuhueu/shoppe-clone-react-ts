@@ -189,7 +189,7 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
               </Typography>
               <Button
                 className={classes.styleButton}
-                onClick={() => history.push("/checkout")}
+                onClick={() => window.open("/checkout", "_self")}
               >
                 Mua Hàng
               </Button>
