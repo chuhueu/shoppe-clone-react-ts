@@ -13,7 +13,7 @@ import {
 } from "@material-ui/icons";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import voucherIcon from "../../assets/images/icons/cheap.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { orderItemsState } from "../../redux/reducers/orderReducer";
@@ -68,7 +68,7 @@ interface Props {
 
 const BottomCart = ({ checkedAll, selectAll }: Props) => {
   const classes = useStyles();
-
+  const history = useHistory();
   const [onScroll, setOnScroll] = useState(true);
 
   const numLocation = useRef<HTMLDivElement>(null);
@@ -187,7 +187,12 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
               >
                 ₫{totalPrice}
               </Typography>
-              <Button className={classes.styleButton}>Mua Hàng</Button>
+              <Button
+                className={classes.styleButton}
+                onClick={() => history.push("/checkout")}
+              >
+                Mua Hàng
+              </Button>
             </Box>
           </Grid>
         </Grid>

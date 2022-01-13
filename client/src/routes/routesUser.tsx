@@ -5,6 +5,7 @@ import {
   SignUpPage,
   CartPage,
   StorePage,
+  OrderPage,
 } from "../pages/index";
 
 const routesUser = [
@@ -32,6 +33,10 @@ const routesUser = [
   {
     path: "/store/:name",
     component: StorePage,
+  },
+  {
+    path: "/checkout",
+    component: OrderPage,
   },
 ];
 

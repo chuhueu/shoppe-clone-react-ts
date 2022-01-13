@@ -194,7 +194,12 @@ const ProductCart = ({
                       checked={checked}
                       onChange={() => toggleCheck(idOption)}
                     />
-                    <Link to="/">
+                    <Link
+                      to={{
+                        pathname:
+                          "/info/" + cartItem?.name + "/" + cartItem?._id,
+                      }}
+                    >
                       <img
                         src={cartItem.image}
                         alt=""
@@ -202,7 +207,13 @@ const ProductCart = ({
                       />
                     </Link>
                     <Box maxWidth="220px">
-                      <Link to="/" className={classes.styleLink}>
+                      <Link
+                        to={{
+                          pathname:
+                            "/info/" + cartItem?.name + "/" + cartItem?._id,
+                        }}
+                        className={classes.styleLink}
+                      >
                         <p className="custom-p-2">{cartItem.name}</p>
                       </Link>
                       <img
