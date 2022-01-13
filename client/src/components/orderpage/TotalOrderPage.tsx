@@ -2,6 +2,9 @@ import React from "react";
 import { Box, Button, Container, Grid, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { orderItemsState } from "../../redux/reducers/orderReducer";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
@@ -43,7 +46,30 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 const TotalOrderPage = () => {
+  //styles
   const classes = useStyles();
+  //state
+  const index = localStorage.getItem("orderItems")
+    ? JSON.parse(localStorage.getItem("orderItems")!)
+    : null;
+
+  const totalPrice = index.orderItems
+    .reduce(
+      (acc: any, item: any) =>
+        acc +
+        (item.price! - item.price! * (item.discount! / 100)) * item.quantity!,
+      0
+    )
+    .toLocaleString("vi-VN", { currency: "VND" });
+  const totalPriceAndShip = index.orderItems
+    .reduce(
+      (acc: any, item: any) =>
+        acc +
+        (item.price! - item.price! * (item.discount! / 100)) * item.quantity! +
+        17000,
+      0
+    )
+    .toLocaleString("vi-VN", { currency: "VND" });
   return (
     <Container className={classes.styleContainer}>
       <Box>
@@ -68,7 +94,7 @@ const TotalOrderPage = () => {
                 </Grid>
                 <Grid item md={4}>
                   <Box display="flex" justifyContent="flex-end">
-                    ₫66.000
+                    ₫{totalPrice}
                   </Box>
                 </Grid>
                 <Grid item md={8}>
@@ -76,7 +102,7 @@ const TotalOrderPage = () => {
                 </Grid>
                 <Grid item md={4}>
                   <Box display="flex" justifyContent="flex-end">
-                    ₫49.800
+                    ₫17.000
                   </Box>
                 </Grid>
                 <Grid item md={8}>
@@ -97,7 +123,7 @@ const TotalOrderPage = () => {
                     display="flex"
                     justifyContent="flex-end"
                   >
-                    ₫115.360
+                    ₫{totalPriceAndShip}
                   </Box>
                 </Grid>
               </Grid>

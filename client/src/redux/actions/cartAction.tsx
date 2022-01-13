@@ -166,10 +166,6 @@ export const updateQtyCartItem =
     try {
       dispatch({ type: UPDATE_QUANTITY_REQUEST });
 
-      // const {
-      //   userLogin: { userInfo },
-      // } = getState();
-
       const { data } = await axios.put(`/cart/update/${itemID}`, {
         quantity,
       });

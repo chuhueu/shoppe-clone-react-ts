@@ -1,9 +1,5 @@
+import { AnyAction } from "redux";
 import { ORDER_ADD_ITEM, ORDER_REMOVE_ITEM } from "../constants/orderConstants";
-
-interface Action {
-  type: string;
-  payload: string;
-}
 
 export interface orderItems {
   _id?: string;
@@ -22,7 +18,7 @@ export interface orderItemsState {
 
 export const orderItemsReducer = (
   state = { orderItems: [] },
-  action: Action
+  action: AnyAction
 ) => {
   switch (action.type) {
     case ORDER_ADD_ITEM:
