@@ -9,7 +9,6 @@ import {
 } from "@material-ui/icons";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
-import axios from "../../axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -133,20 +132,6 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
-  const [orderItems, setOrderItems] = useState<any>();
-
-  const getOrderItems = async (id: string) => {
-    try {
-      const res = await axios.get(`/cart/cartItem/${id}`);
-      //setOrderItems([...orderItems, res.data]);
-      console.log(res.data);
-
-      setOrderItems(res.data);
-      //console.log(orderItems);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Box className={classes.styleWrapper}>
@@ -169,7 +154,6 @@ const ProductCart = ({
                       checked={isChecked}
                       name={isChecked}
                       onChange={() => toggleCheck(idOption)}
-                      onClick={() => getOrderItems(cartItem._id)}
                     />
                     <Link
                       to={{
