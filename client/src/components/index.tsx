@@ -32,3 +32,5 @@ export { default as BottomCart } from "./cartpage/BottomCart";
 export { default as HeaderOrderPage } from "./orderpage/HeaderOrderPage";
 export { default as AddressOrderPage } from "./orderpage/AddressOrderPage";
 export { default as ProductOrder } from "./orderpage/ProductOrder";
+export { default as VoucherOrderPage } from "./orderpage/VoucherOrderPage";
+export { default as TotalOrderPage } from "./orderpage/TotalOrderPage";

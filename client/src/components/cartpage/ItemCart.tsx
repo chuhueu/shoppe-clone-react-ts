@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { brandState } from "../../redux/reducers/productReducer";
 import { getBrand } from "../../redux/actions/productAction";
+import { addOrderItem, removeOrderItem } from "../../redux/actions/orderAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,17 +44,21 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   cartItem: any;
   idOption: number;
-  isChecked: any;
+  checked: any;
   toggleCheck: any;
   deleteCartItem: any;
+  reload?: boolean;
+  setReload?: any;
 }
 
 const ItemCart = ({
   cartItem,
   idOption,
-  isChecked,
+  checked,
   toggleCheck,
   deleteCartItem,
+  reload,
+  setReload,
 }: Props) => {
   const classes = useStyles();
 
@@ -70,7 +75,7 @@ const ItemCart = ({
     <Container className={classes.styleContainer}>
       <Box display="flex" alignItems="center" className={classes.styleTop}>
         <Checkbox
-          checked={isChecked[idOption]}
+          checked={checked[idOption]}
           onChange={() => toggleCheck(idOption)}
         />
         <Box className={classes.styleLike}>
@@ -84,9 +89,11 @@ const ItemCart = ({
         <ProductCart
           cartItem={cartItem}
           idOption={idOption}
-          isChecked={isChecked[idOption]}
+          checked={checked[idOption]}
           toggleCheck={toggleCheck}
           deleteCartItem={deleteCartItem}
+          reload={reload}
+          setReload={setReload}
         />
       </Box>
       <Box display="flex" alignItems="center" className={classes.styleVoucher}>

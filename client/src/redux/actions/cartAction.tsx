@@ -3,9 +3,6 @@ import { AnyAction } from "redux";
 import { RootState } from "../store";
 import axios from "../../axios";
 import {
-  INCREASE_QUANTITY,
-  DECREASE_QUANTITY,
-  LOAD_CURRENT_ITEM,
   CREATE_CART_REQUEST,
   CREATE_CART_SUCCESS,
   CREATE_CART_FAILURE,
@@ -18,6 +15,9 @@ import {
   REMOVE_TO_CART_REQUEST,
   REMOVE_TO_CART_SUCCESS,
   REMOVE_TO_CART_FAILURE,
+  UPDATE_QUANTITY_REQUEST,
+  UPDATE_QUANTITY_FAILURE,
+  UPDATE_QUANTITY_SUCCESS,
 } from "../constants/cartConstants";
 
 export const createCart =
@@ -78,7 +78,6 @@ export const addToCart =
         discount,
         quantity,
       });
-      //console.log(data);
 
       dispatch({
         type: ADD_TO_CART_SUCCESS,
@@ -110,6 +109,7 @@ export const getCart =
         : null;
       const cartId = await axios.get(`/cart/user/${userInfo._id}`);
       const { data } = await axios.get(`/cart/${cartId.data?._id}`);
+
       dispatch({
         type: GET_CART_SUCCESS,
         payload: data,
@@ -149,6 +149,37 @@ export const removeCartItem =
     } catch (error) {
       dispatch({
         type: REMOVE_TO_CART_FAILURE,
+        payload: error,
+      });
+    }
+  };
+
+export const updateQtyCartItem =
+  (
+    itemID: string,
+    quantity: number
+  ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      dispatch({ type: UPDATE_QUANTITY_REQUEST });
+
+      // const {
+      //   userLogin: { userInfo },
+      // } = getState();
+
+      const { data } = await axios.put(`/cart/update/${itemID}`, {
+        quantity,
+      });
+      dispatch({
+        type: UPDATE_QUANTITY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_QUANTITY_FAILURE,
         payload: error,
       });
     }

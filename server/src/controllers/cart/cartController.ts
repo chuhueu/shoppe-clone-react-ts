@@ -55,6 +55,7 @@ const getCartByUserId = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
 //@desc    get all cart item
 //@router  GET /api/cart/:id
 //@access  User
@@ -119,8 +120,30 @@ const removeCartItem = asyncHandler(async (req: Request, res: Response) => {
     await cartItem.remove();
     res.json({ message: "Xóa 1 sản phẩm trong giỏ hàng thành công" });
   } else {
-    res.status(404);
+    res.status(500);
     throw new Error("Không tìm thấy sản phẩm trong giỏ cần xóa");
+  }
+});
+
+//@desc    update cart item
+//@router  PUT /api/cart/update/:id
+//@access  User
+const updateCartItem = asyncHandler(async (req: Request, res: Response) => {
+  const cartItemId = { _id: req.params.id };
+  const { quantity } = req.body;
+
+  try {
+    const data = await CartItem.findByIdAndUpdate(
+      cartItemId,
+      { quantity },
+      {
+        new: true,
+      }
+    );
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500);
+    throw new Error("Cập nhật giỏ hàng thất bại!" + error);
   }
 });
 
@@ -133,4 +156,5 @@ export {
   getCartItemById,
   addToCart,
   removeCartItem,
+  updateCartItem,
 };

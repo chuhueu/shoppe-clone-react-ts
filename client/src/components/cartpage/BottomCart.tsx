@@ -14,6 +14,10 @@ import {
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import voucherIcon from "../../assets/images/icons/cheap.png";
 import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { orderItemsState } from "../../redux/reducers/orderReducer";
+import { cartState } from "../../redux/reducers/cartReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,6 +83,23 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
     return () => (window.onscroll = null);
   };
 
+  const cart = useSelector<RootState, cartState>((state) => state.cart);
+  const { cartInfo } = cart;
+
+  const order = useSelector<RootState, orderItemsState>(
+    (state) => state.orderItems
+  );
+  const { orderItems } = order;
+
+  const totalPrice = orderItems
+    .reduce(
+      (acc, item) =>
+        acc +
+        (item.price! - item.price! * (item.discount! / 100)) * item.quantity!,
+      0
+    )
+    .toLocaleString("vi-VN", { currency: "VND" });
+
   return (
     <Container
       ref={numLocation}
@@ -138,7 +159,9 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
                 onChange={(e) => selectAll(e.target.checked)}
               />
               <Box className={classes.styleAction}>
-                <Typography variant="h6">Chọn Tất Cả (1)</Typography>
+                <Typography variant="h6">
+                  Chọn Tất Cả ({cartInfo?.length})
+                </Typography>
               </Box>
               <Box className={classes.styleAction}>
                 <Typography variant="h6">Xóa</Typography>
@@ -156,13 +179,13 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
               height="100%"
             >
               <Typography variant="h6">
-                Tổng thanh toán (0 Sản phẩm):
+                Tổng thanh toán ({orderItems.length} Sản phẩm):
               </Typography>
               <Typography
                 variant="subtitle1"
                 className={classes.styleTotalPrice}
               >
-                ₫0
+                ₫{totalPrice}
               </Typography>
               <Button
                 className={classes.styleButton}

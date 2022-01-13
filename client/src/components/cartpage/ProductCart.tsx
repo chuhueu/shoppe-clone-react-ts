@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Grid, Typography } from "@material-ui/core";
 import {
@@ -9,6 +9,9 @@ import {
 } from "@material-ui/icons";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateQtyCartItem } from "../../redux/actions/cartAction";
+import { addOrderItem, removeOrderItem } from "../../redux/actions/orderAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -101,19 +104,44 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   cartItem: any;
   idOption: number;
-  isChecked: any;
+  checked: any;
   toggleCheck: any;
   deleteCartItem: any;
+  reload?: boolean;
+  setReload?: any;
 }
 
 const ProductCart = ({
   cartItem,
   idOption,
-  isChecked,
+  checked,
   toggleCheck,
   deleteCartItem,
+  reload,
+  setReload,
 }: Props) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (checked) {
+      dispatch(
+        addOrderItem(
+          cartItem._id,
+          cartItem.product,
+          cartItem.brand,
+          cartItem.name,
+          cartItem.image,
+          cartItem.price,
+          cartItem.discount,
+          cartItem.quantity
+        )
+      );
+    } else {
+      dispatch(removeOrderItem(cartItem._id));
+    }
+  }, [checked, dispatch, cartItem]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -131,6 +159,18 @@ const ProductCart = ({
 
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
+  };
+
+  const minusQuantity = () => {
+    if (cartItem.quantity > 1) {
+      dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
+      setReload(!reload);
+    }
+  };
+
+  const plusQuantity = () => {
+    dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
+    setReload(!reload);
   };
 
   return (
@@ -151,8 +191,7 @@ const ProductCart = ({
                 <Grid item lg={8} md={12} xs={12}>
                   <Box display="flex" alignItems="center" overflow="hidden">
                     <Checkbox
-                      checked={isChecked}
-                      name={isChecked}
+                      checked={checked}
                       onChange={() => toggleCheck(idOption)}
                     />
                     <Link
@@ -229,7 +268,10 @@ const ProductCart = ({
                   justifyContent="center"
                   height="100%"
                 >
-                  <button className={classes.styleButtonQty}>
+                  <button
+                    className={classes.styleButtonQty}
+                    onClick={minusQuantity}
+                  >
                     <Remove />
                   </button>
                   <input
@@ -237,7 +279,10 @@ const ProductCart = ({
                     className={classes.styleInputQty}
                     value={cartItem.quantity}
                   />
-                  <button className={classes.styleButtonQty}>
+                  <button
+                    className={classes.styleButtonQty}
+                    onClick={plusQuantity}
+                  >
                     <Add />
                   </button>
                 </Box>

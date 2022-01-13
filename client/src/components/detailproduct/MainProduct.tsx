@@ -275,7 +275,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
     setOpenModal(!openModal);
     setTimeout(() => {
       setOpenModal(false);
-    }, 2000);
+    }, 3000);
   };
   return (
     <Container>

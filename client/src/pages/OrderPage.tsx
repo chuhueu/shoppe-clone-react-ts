@@ -4,6 +4,8 @@ import {
   HeaderOrderPage,
   AddressOrderPage,
   ProductOrder,
+  VoucherOrderPage,
+  TotalOrderPage,
   Footer,
 } from "../components";
 const OrderPage = () => {
@@ -13,6 +15,8 @@ const OrderPage = () => {
       <HeaderOrderPage />
       <AddressOrderPage />
       <ProductOrder />
+      <VoucherOrderPage />
+      <TotalOrderPage />
       <Footer show={false} />
     </>
   );
