@@ -23,6 +23,11 @@ import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 import { addToCart } from "../../redux/actions/cartAction";
 import ModalAddCart from "../cartpage/ModalAddCart";
+import {
+  detailProductReducer,
+  detailProductState,
+} from "../../redux/reducers/productReducer";
+import { getDetailProduct } from "../../redux/actions/productAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -199,7 +204,7 @@ SwiperCore.use([Navigation, Thumbs]);
 
 export interface Params {
   name?: string;
-  infoID?: string;
+  infoID: string;
 }
 
 interface Props {
@@ -210,30 +215,28 @@ interface Props {
 const MainProduct = ({ reload, setReload }: Props) => {
   //styles
   const classes = useStyles();
+
   //state
   const [count, setCount] = useState<number>(1);
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
-  const [product, setProduct] = useState<productModel>();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const params: Params = useParams();
   const history = useHistory();
-  //console.log(params?.name);
+  const dispatch = useDispatch();
+
   const userLogin = useSelector<RootState, userState>(
     (state) => state.userLogin
   );
   const { userInfo } = userLogin;
+
+  const detailProduct = useSelector<RootState, detailProductState>(
+    (state) => state.detailProduct
+  );
+  const { productInfo, isFetching, error } = detailProduct;
+
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await axios.get("/product/" + params?.infoID);
-        //console.log(res.data);
-        setProduct(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProduct();
-  }, [params?.infoID]);
+    dispatch(getDetailProduct(params.infoID));
+  }, [dispatch, params?.infoID]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -257,17 +260,15 @@ const MainProduct = ({ reload, setReload }: Props) => {
     }
   };
 
-  const dispatch = useDispatch();
-
   const addCart = async () => {
     await dispatch(
       addToCart(
-        product?._id,
-        product?.brand,
-        product?.name,
-        product?.image[0],
-        product?.price,
-        product?.discount,
+        productInfo?._id,
+        productInfo?.brand,
+        productInfo?.name,
+        productInfo?.image[0],
+        productInfo?.price,
+        productInfo?.discount,
         count
       )
     );
@@ -291,7 +292,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 slidesPerColumn={1}
                 thumbs={{ swiper: thumbsSwiper }}
               >
-                {product?.image.map((img) => {
+                {productInfo?.image.map((img) => {
                   return (
                     <SwiperSlide tag="li">
                       <img src={img} alt="" />
@@ -309,7 +310,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 navigation
                 className={classes.styleThumbs}
               >
-                {product?.image.map((img) => {
+                {productInfo?.image.map((img) => {
                   return (
                     <SwiperSlide tag="li">
                       <img src={img} alt="" />
@@ -343,7 +344,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 className={classes.styleHead}
               >
                 <Box>Yêu Thích</Box>
-                <Box component="span">{product?.name}</Box>
+                <Box component="span">{productInfo?.name}</Box>
               </Box>
             </Box>
             <Box display="flex" mt={1}>
@@ -380,7 +381,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 className={classes.styleStatistic}
                 style={{ border: 0 }}
               >
-                <Box style={{ border: 0 }}>{product?.sold}</Box>
+                <Box style={{ border: 0 }}>{productInfo?.sold}</Box>
                 <Box>Đã Bán</Box>
               </Box>
             </Box>
@@ -390,14 +391,16 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 alignItems="center"
                 className={classes.stylePrice}
               >
-                <Box>đ{toVND(product?.price)}</Box>
+                <Box>đ{toVND(productInfo?.price)}</Box>
                 <Box
                   display="flex"
                   alignItems="center"
                   className={classes.stylePriceDis}
                 >
-                  <Box>đ{priceDiscount(product?.price, product?.discount)}</Box>
-                  <Box>{product?.discount}% Giảm</Box>
+                  <Box>
+                    đ{priceDiscount(productInfo?.price, productInfo?.discount)}
+                  </Box>
+                  <Box>{productInfo?.discount}% Giảm</Box>
                 </Box>
               </Box>
             </Box>
