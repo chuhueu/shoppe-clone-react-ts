@@ -1,5 +1,6 @@
 export { default as Header } from "./common/Header";
 export { default as Footer } from "./common/Footer";
+export { default as CustomLink } from "./common/CustomLink";
 
 //Homepage
 export { default as Banner } from "./homepage/Banner/index";
@@ -27,6 +28,11 @@ export { default as TopCart } from "./cartpage/TopCart";
 export { default as HeadingCart } from "./cartpage/HeadingCart";
 export { default as ItemCart } from "./cartpage/ItemCart";
 export { default as BottomCart } from "./cartpage/BottomCart";
+
+//List product page
+export { default as BannerLP } from "./listproductpage/Banner";
+export { default as ShopeeMallLP } from "./listproductpage/ShopeeMall";
+export { default as ProductLP } from "./listproductpage/Product";
 
 //Order page
 export { default as HeaderOrderPage } from "./orderpage/HeaderOrderPage";
