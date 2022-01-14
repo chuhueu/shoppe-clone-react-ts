@@ -3,7 +3,8 @@ import {
   getCart,
   updateCart,
   getCartByUserId,
-  getCartById,
+  getCartItemByCartId,
+  getCartItemById,
   addToCart,
   removeCartItem,
   updateCartItem,
@@ -19,8 +20,9 @@ router.route("/delete/:id").delete(removeCartItem);
 //UPDATE CART ITEM
 router.route("/update/:id").put(updateCartItem);
 //GET BY ID AND DELETE
-router.route("/:id").get(getCartById).put(updateCart);
+router.route("/:id").get(getCartItemByCartId).put(updateCart);
 //GET CART BY USER ID
 router.route("/user/:id").get(getCartByUserId);
-
+//GET CART ITEM BY ID
+router.route("/cartItem/:id").get(getCartItemById);
 module.exports = router;

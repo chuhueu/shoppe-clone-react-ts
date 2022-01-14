@@ -5,6 +5,7 @@ import {
   SignUpPage,
   CartPage,
   StorePage,
+  OrderPage,
 } from "../pages/index";
 import ListProductPage from "../pages/ListProductPage";
 
@@ -37,6 +38,10 @@ const routesUser = [
   {
     path: "/product-list",
     component: ListProductPage,
+  },
+  {
+    path: "/checkout",
+    component: OrderPage,
   },
 ];
 

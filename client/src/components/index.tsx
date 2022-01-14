@@ -33,3 +33,10 @@ export { default as BottomCart } from "./cartpage/BottomCart";
 export { default as BannerLP } from "./listproductpage/Banner";
 export { default as ShopeeMallLP } from "./listproductpage/ShopeeMall";
 export { default as ProductLP } from "./listproductpage/Product";
+
+//Order page
+export { default as HeaderOrderPage } from "./orderpage/HeaderOrderPage";
+export { default as AddressOrderPage } from "./orderpage/AddressOrderPage";
+export { default as ProductOrder } from "./orderpage/ProductOrder";
+export { default as VoucherOrderPage } from "./orderpage/VoucherOrderPage";
+export { default as TotalOrderPage } from "./orderpage/TotalOrderPage";

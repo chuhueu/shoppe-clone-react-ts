@@ -160,17 +160,21 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
-
+  //const [input, setInput] = useState(cartItem.quantity);
   const minusQuantity = () => {
     if (cartItem.quantity > 1) {
       dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
       setReload(!reload);
     }
+    // if (input > 1) {
+    //   setInput(input - 1);
+    // }
   };
 
   const plusQuantity = () => {
     dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
     setReload(!reload);
+    //setInput(input + 1);
   };
 
   return (
@@ -194,7 +198,12 @@ const ProductCart = ({
                       checked={checked}
                       onChange={() => toggleCheck(idOption)}
                     />
-                    <Link to="/">
+                    <Link
+                      to={{
+                        pathname:
+                          "/info/" + cartItem?.name + "/" + cartItem?._id,
+                      }}
+                    >
                       <img
                         src={cartItem.image}
                         alt=""
@@ -202,7 +211,13 @@ const ProductCart = ({
                       />
                     </Link>
                     <Box maxWidth="220px">
-                      <Link to="/" className={classes.styleLink}>
+                      <Link
+                        to={{
+                          pathname:
+                            "/info/" + cartItem?.name + "/" + cartItem?._id,
+                        }}
+                        className={classes.styleLink}
+                      >
                         <p className="custom-p-2">{cartItem.name}</p>
                       </Link>
                       <img
@@ -264,9 +279,11 @@ const ProductCart = ({
                     <Remove />
                   </button>
                   <input
+                    min="1"
                     type="text"
                     className={classes.styleInputQty}
                     value={cartItem.quantity}
+                    //value={input}
                   />
                   <button
                     className={classes.styleButtonQty}

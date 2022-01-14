@@ -5,3 +5,4 @@ export { default as DetailProductPage } from "./DetailProduct";
 export { default as SellerPage } from "./SellerPage";
 export { default as CartPage } from "./CartPage";
 export { default as StorePage } from "./StorePage";
+export { default as OrderPage } from "./OrderPage";
