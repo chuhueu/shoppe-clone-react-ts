@@ -68,7 +68,6 @@ interface Props {
 
 const BottomCart = ({ checkedAll, selectAll }: Props) => {
   const classes = useStyles();
-  const history = useHistory();
   const [onScroll, setOnScroll] = useState(true);
 
   const numLocation = useRef<HTMLDivElement>(null);
@@ -100,6 +99,13 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
     )
     .toLocaleString("vi-VN", { currency: "VND" });
 
+  const checkOut = () => {
+    if (orderItems.length > 0) {
+      window.open("/checkout", "_self");
+    } else {
+      alert("Bạn chưa chọn sản phẩm để mua");
+    }
+  };
   return (
     <Container
       ref={numLocation}
@@ -187,10 +193,7 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
               >
                 ₫{totalPrice}
               </Typography>
-              <Button
-                className={classes.styleButton}
-                onClick={() => window.open("/checkout", "_self")}
-              >
+              <Button className={classes.styleButton} onClick={checkOut}>
                 Mua Hàng
               </Button>
             </Box>
