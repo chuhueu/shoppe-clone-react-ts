@@ -16,7 +16,6 @@ import "swiper/swiper-bundle.min.css";
 import "../../assets/css/navigation.css";
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import productModel from "../../models/productModel";
 import axios from "../../axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
