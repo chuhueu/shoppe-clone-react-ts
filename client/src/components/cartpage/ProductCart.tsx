@@ -123,7 +123,6 @@ const ProductCart = ({
   const classes = useStyles();
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     if (checked) {
       dispatch(
@@ -137,6 +136,7 @@ const ProductCart = ({
           cartItem.discount,
           cartItem.quantity
         )
+        //addOrderItem(cartItem)
       );
     } else {
       dispatch(removeOrderItem(cartItem._id));
@@ -160,22 +160,21 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
-  //const [input, setInput] = useState(cartItem.quantity);
-  const minusQuantity = () => {
-    if (cartItem.quantity > 1) {
-      dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
-      setReload(!reload);
+  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const handleQuantity = (type: string) => {
+    if (type === "dec") {
+      quantity > 0 && setQuantity(quantity - 1);
+      dispatch(updateQtyCartItem(cartItem._id, quantity - 1));
+      //dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
+    } else {
+      setQuantity(quantity + 1);
+      dispatch(updateQtyCartItem(cartItem._id, quantity + 1));
+      //dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
     }
-    // if (input > 1) {
-    //   setInput(input - 1);
-    // }
   };
-
-  const plusQuantity = () => {
-    dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
-    setReload(!reload);
-    //setInput(input + 1);
-  };
+  useEffect(() => {
+    setQuantity(cartItem.quantity);
+  }, [cartItem.quantity]);
 
   return (
     <Box className={classes.styleWrapper}>
@@ -274,7 +273,7 @@ const ProductCart = ({
                 >
                   <button
                     className={classes.styleButtonQty}
-                    onClick={minusQuantity}
+                    onClick={() => handleQuantity("dec")}
                   >
                     <Remove />
                   </button>
@@ -282,12 +281,12 @@ const ProductCart = ({
                     min="1"
                     type="text"
                     className={classes.styleInputQty}
-                    value={cartItem.quantity}
-                    //value={input}
+                    //value={cartItem.quantity}
+                    value={quantity}
                   />
                   <button
                     className={classes.styleButtonQty}
-                    onClick={plusQuantity}
+                    onClick={() => handleQuantity("inc")}
                   >
                     <Add />
                   </button>

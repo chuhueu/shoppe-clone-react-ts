@@ -150,12 +150,12 @@ export const updateQtyCartReducer = (state: cartState, action: AnyAction) => {
       };
     case UPDATE_QUANTITY_SUCCESS:
       return {
-        //cartInfo: action.payload,
-        cartInfo: state.cartInfo?.map((cart) =>
-          cart._id === action.payload.id
-            ? { ...cart, quantity: action.payload.quantity }
-            : cart
-        ),
+        cartInfo: action.payload,
+        // cartInfo: state.cartInfo?.map((cart) =>
+        //   cart._id === action.payload.id
+        //     ? { ...cart, quantity: action.payload.quantity }
+        //     : cart
+        // ),
         isFetching: false,
         error: false,
       };

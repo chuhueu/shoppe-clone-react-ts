@@ -17,7 +17,7 @@ export interface orderItemsState {
 }
 
 export const orderItemsReducer = (
-  state = { orderItems: [] },
+  state = { orderItems: [], quantity: 0, total: 0 },
   action: AnyAction
 ) => {
   switch (action.type) {
@@ -25,6 +25,8 @@ export const orderItemsReducer = (
       return {
         ...state,
         orderItems: [...state.orderItems, action.payload],
+        quantity: ++state.quantity,
+        total: state.total + action.payload.price * action.payload.quantity,
       };
     case ORDER_REMOVE_ITEM:
       const item = action.payload;

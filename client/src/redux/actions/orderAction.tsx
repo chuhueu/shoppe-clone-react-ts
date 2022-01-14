@@ -13,6 +13,7 @@ export const addOrderItem =
     price: any,
     discount: any,
     quantity: any
+    //orderItems: any
   ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
@@ -29,6 +30,7 @@ export const addOrderItem =
         price: price,
         discount: discount,
         quantity: quantity,
+        //orderItems: orderItems,
       },
     });
     localStorage.setItem("orderItems", JSON.stringify(getState().orderItems));
