@@ -1,12 +1,6 @@
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Hidden,
-  Typography,
-} from "@material-ui/core";
+import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getListProduct } from "../../../redux/actions/productAction";
@@ -16,8 +10,6 @@ import { RootState } from "../../../redux/store";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
-      position: "relative",
-      margin: "-24px",
       "& img": {
         width: "100%",
       },
@@ -35,9 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     styleText: {
+      fontFamily: "Roboto",
       background: "#fff",
+      transition: "transform 0.3s ease",
       "&:hover": {
-        border: "1px solid #ee4d2d",
+        transform: "translateY(-3px)",
+        transition: "transform 0.3s ease",
       },
       "& p": {
         color: "rgba(0,0,0,.87)",
@@ -57,20 +52,12 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: ".75rem",
       },
     },
-    styleFind: {
-      visibility: "hidden",
-      height: "1.875rem",
-      backgroundColor: "#ee4d2d",
-      position: "absolute",
-      width: "192px",
-      borderRadius: "0px 0px 3px 3px",
-    },
   })
 );
+
 const ListProduct = () => {
-  //styles
   const classes = useStyles();
-  //state
+
   const dispatch = useDispatch();
 
   const listProduct = useSelector<RootState, productState>(
@@ -91,6 +78,7 @@ const ListProduct = () => {
           });
     return vnd;
   };
+
   return (
     <Box mb={10} pt={1} className={classes.styleBox}>
       <Grid
@@ -104,7 +92,7 @@ const ListProduct = () => {
         ) : (
           productInfo?.map((product) => {
             return (
-              <Grid item xs={6} sm={4} md={2}>
+              <Grid item xs={6} sm={4} md={3} key={product._id}>
                 <Link
                   to={{
                     pathname: "/info/" + product?.name + "/" + product?._id,
@@ -133,11 +121,6 @@ const ListProduct = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Hidden mdDown>
-                    <Box textAlign="center" className={classes.styleFind}>
-                      Find Similar
-                    </Box>
-                  </Hidden>
                 </Link>
               </Grid>
             );

@@ -9,6 +9,8 @@ import bannerRight2 from "../../../assets/images/banner/bannerRight2.png";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
+      marginTop: "30px",
+      marginBottom: "10px",
       "& img": {
         width: "100%",
       },
