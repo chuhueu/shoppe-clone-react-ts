@@ -27,12 +27,10 @@ export const orderItemsReducer = (
         orderItems: [...state.orderItems, action.payload],
       };
     case ORDER_REMOVE_ITEM:
-      const item = action.payload;
-
       return {
         ...state,
         orderItems: state.orderItems?.filter(
-          (order: any) => order._id !== item
+          (order: any) => order._id !== action.payload
         ),
       };
     default:

@@ -11,7 +11,7 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
   ) {
     let userToken = req.headers.authorization.split(" ")[1];
     let decode = jwt.decode(userToken);
-    let userInfo = await User.findById(decode._id);
+    let userInfo = await User.findById(decode.id);
     if (userInfo) {
       const roleInfo = await Role.findById(userInfo.roleId);
       if (roleInfo) {
@@ -39,17 +39,14 @@ const checkSeller = async (req: Request, res: Response, next: NextFunction) => {
   ) {
     let userToken = req.headers.authorization.split(" ")[1];
     let decode = jwt.decode(userToken);
-    let userInfo = await User.findById(decode._id);
+    //console.log(decode);
+    let userInfo = await User.findById(decode.id);
+    //console.log(userInfo);
     if (userInfo) {
-      const roleInfo = await Role.findById(userInfo.roleId);
-      if (roleInfo) {
-        if (roleInfo.roleName === "seller") {
-          await next();
-        } else {
-          return res.status(401).json("Bạn không có quyền thực hiện");
-        }
+      if (userInfo.role === "ROLE_SELLER") {
+        await next();
       } else {
-        return res.status(401).json("Không tìm thấy role tương ứng");
+        return res.status(401).json("Bạn không có quyền thực hiện");
       }
     } else {
       return res.status(401).json("Không tìm thấy user");
