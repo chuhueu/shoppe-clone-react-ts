@@ -4,13 +4,13 @@ import {
   getProductById,
   deleteProduct,
   searchProduct,
-} from "../controllers/product/productController";
-import { verify } from "../middleware/tokenMiddleware";
+} from "../../controllers/product/productController";
+import { verify } from "../../middleware/tokenMiddleware";
 const {
   checkUser,
   checkSeller,
   checkAdmin,
-} = require("../middleware/authMiddleware");
+} = require("../../middleware/authMiddleware");
 const router = require("express").Router();
 
 //CREATE AND GET

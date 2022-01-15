@@ -2,7 +2,7 @@ import {
   createCategory,
   getCategory,
   getCategoryById,
-} from "../controllers/product/categoryController";
+} from "../../controllers/product/categoryController";
 const router = require("express").Router();
 
 //CREATE AND GET

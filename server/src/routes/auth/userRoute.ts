@@ -6,13 +6,13 @@ import {
   deleteUser,
   getUserProfile,
   updateUserProfile,
-} from "../controllers/auth/userController";
-import { verify } from "../middleware/tokenMiddleware";
+} from "../../controllers/auth/userController";
+import { verify } from "../../middleware/tokenMiddleware";
 const {
   checkUser,
   checkSeller,
   checkAdmin,
-} = require("../middleware/authMiddleware");
+} = require("../../middleware/authMiddleware");
 
 //admin
 router.route("/").get(verify, getUsers);

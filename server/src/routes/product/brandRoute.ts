@@ -2,7 +2,7 @@ import {
   createBrand,
   getBrand,
   getBrandById,
-} from "../controllers/product/brandController";
+} from "../../controllers/product/brandController";
 const router = require("express").Router();
 
 //CREATE AND GET

@@ -3,7 +3,7 @@ import {
   getRole,
   getRoleById,
   deleteRole,
-} from "../controllers/auth/roleController";
+} from "../../controllers/auth/roleController";
 const router = require("express").Router();
 
 //CREATE AND GET
