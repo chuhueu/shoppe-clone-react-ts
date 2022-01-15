@@ -85,26 +85,15 @@ const getUserById = asyncHandler(async (req: Request, res: Response) => {
 //@router  PUT /api/user/:id
 //@access  Admin
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
-  const user = await User.findById(req.params.id);
-
-  if (user) {
-    user.username = req.body.username || user.username;
-    user.email = req.body.email || user.email;
-    user.avatar = req.body.avatar || user.avatar;
-    user.roleId = req.body.roleId || user.roleId;
-
-    const updateUser = await user.save();
-
-    res.json({
-      _id: updateUser._id,
-      username: updateUser.username,
-      email: updateUser.email,
-      avatar: updateUser.avatar,
-      roleId: updateUser.roleId,
-    });
-  } else {
-    res.status(404);
-    throw new Error("Không tìm thấy người dùng");
+  try {
+    const update = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(500).json(error);
   }
 });
 

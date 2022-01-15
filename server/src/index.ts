@@ -6,15 +6,16 @@ import connectDB from "./config/db";
 import cors = require("cors");
 var colors = require("colors");
 
-const userRoutes = require("./routes/userRoute");
-const authRoute = require("./routes/authRoute");
-const roleRoute = require("./routes/roleRoute");
-const permissionRoute = require("./routes/permissionRoute");
-const productRoute = require("./routes/productRoute");
-const brandRoute = require("./routes/brandRoute");
-const categoryRoute = require("./routes/categoryRoute");
-const productTypeRoute = require("./routes/productTypeRoute");
-const cartRoute = require("./routes/cartRoute");
+const userRoutes = require("./routes/auth/userRoute");
+const addressRoute = require("./routes/auth/addressRoute");
+const authRoute = require("./routes/auth/authRoute");
+const roleRoute = require("./routes/auth/roleRoute");
+const permissionRoute = require("./routes/auth/permissionRoute");
+const productRoute = require("./routes/product/productRoute");
+const brandRoute = require("./routes/product/brandRoute");
+const categoryRoute = require("./routes/product/categoryRoute");
+const productTypeRoute = require("./routes/product/productTypeRoute");
+const cartRoute = require("./routes/cart/cartRoute");
 const app: Application = express();
 
 connectDB();
@@ -27,6 +28,7 @@ app.use(cors());
 app.set("trust proxy", 1);
 
 app.use("/api/user", userRoutes);
+app.use("/api/address", addressRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/role", roleRoute);
 app.use("/api/permission", permissionRoute);
