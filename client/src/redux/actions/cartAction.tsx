@@ -132,20 +132,11 @@ export const removeCartItem =
   ): Promise<void> => {
     try {
       dispatch({ type: REMOVE_TO_CART_REQUEST });
-
-      // const {
-      //   userLogin: { userInfo },
-      // } = getState();
-
       const { data } = await axios.delete(`/cart/delete/${itemID}`);
       dispatch({
         type: REMOVE_TO_CART_SUCCESS,
         payload: data,
       });
-      // localStorage.setItem(
-      //   "cartInfo",
-      //   JSON.stringify(getState().cart)
-      // );
     } catch (error) {
       dispatch({
         type: REMOVE_TO_CART_FAILURE,

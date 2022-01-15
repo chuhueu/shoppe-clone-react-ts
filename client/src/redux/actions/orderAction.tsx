@@ -30,7 +30,6 @@ export const addOrderItem =
         price: price,
         discount: discount,
         quantity: quantity,
-        //orderItems: orderItems,
       },
     });
     localStorage.setItem("orderItems", JSON.stringify(getState().orderItems));

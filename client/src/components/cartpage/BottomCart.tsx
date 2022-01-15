@@ -14,10 +14,11 @@ import {
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import voucherIcon from "../../assets/images/icons/cheap.png";
 import { Link, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { orderItemsState } from "../../redux/reducers/orderReducer";
 import { cartState } from "../../redux/reducers/cartReducer";
+import { addOrderItem, removeOrderItem } from "../../redux/actions/orderAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,6 +69,7 @@ interface Props {
 
 const BottomCart = ({ checkedAll, selectAll }: Props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [onScroll, setOnScroll] = useState(true);
 
   const numLocation = useRef<HTMLDivElement>(null);
@@ -89,7 +91,6 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
     (state) => state.orderItems
   );
   const { orderItems } = order;
-
   const totalPrice = orderItems
     .reduce(
       (acc, item) =>
@@ -163,6 +164,7 @@ const BottomCart = ({ checkedAll, selectAll }: Props) => {
               <Checkbox
                 checked={checkedAll}
                 onChange={(e) => selectAll(e.target.checked)}
+                //onClick={(e) => console.log(e.target.check)}
               />
               <Box className={classes.styleAction}>
                 <Typography variant="h6">

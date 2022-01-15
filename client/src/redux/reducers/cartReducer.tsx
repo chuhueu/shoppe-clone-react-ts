@@ -16,7 +16,7 @@ import {
   UPDATE_QUANTITY_FAILURE,
 } from "../constants/cartConstants";
 import { AnyAction } from "redux";
-interface cartInfo {
+export interface cartInfo {
   _id?: string;
   cart?: string;
   product?: string;
@@ -29,15 +29,10 @@ interface cartInfo {
 }
 
 export interface cartState {
-  cartInfo?: Array<cartInfo>;
+  cartInfo: Array<cartInfo>;
   isFetching?: boolean;
   error?: boolean;
 }
-
-// interface Action {
-//   type: string;
-//   payload: string;
-// }
 
 export interface cart {
   userId?: string;
@@ -151,11 +146,6 @@ export const updateQtyCartReducer = (state: cartState, action: AnyAction) => {
     case UPDATE_QUANTITY_SUCCESS:
       return {
         cartInfo: action.payload,
-        // cartInfo: state.cartInfo?.map((cart) =>
-        //   cart._id === action.payload.id
-        //     ? { ...cart, quantity: action.payload.quantity }
-        //     : cart
-        // ),
         isFetching: false,
         error: false,
       };
