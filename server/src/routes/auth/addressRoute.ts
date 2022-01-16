@@ -5,18 +5,20 @@ import {
   deleteAddress,
   updateAddress,
   getAddressByUserId,
+  getOneAddressByUserId,
 } from "../../controllers/auth/addressController";
-import { verify } from "../../middleware/tokenMiddleware";
 const router = require("express").Router();
 
 //CREATE AND GET
-router.route("/").post(verify, createAddress).get(verify, getAddress);
+router.route("/").post(createAddress).get(getAddress);
 
 //GET BY ID AND DELETE
 router
   .route("/:id")
-  .get(verify, getAddressByUserId)
-  .put(verify, updateAddress)
-  .delete(verify, deleteAddress);
+  .get(getAddressByUserId)
+  .put(updateAddress)
+  .delete(deleteAddress);
 
+//GET ONE ADDRESS
+router.route("/one/:id").get(getOneAddressByUserId);
 module.exports = router;

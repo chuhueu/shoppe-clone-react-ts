@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Container, Typography, Grid } from "@material-ui/core";
 import { LocationOn } from "@material-ui/icons";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addressState } from "../../redux/reducers/userReducer";
+import { RootState } from "../../redux/store";
+import { getOneAddress } from "../../redux/actions/userAction";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
@@ -67,8 +70,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+interface address {
+  address?: any;
+  user?: string;
+  fullName?: string;
+  phoneNumber?: number;
+  street?: string;
+  town?: string;
+  district?: string;
+  province?: string;
+}
 const AddressOrderPage = () => {
+  //styles
   const classes = useStyles();
+  //state
+  const dispatch = useDispatch();
+  const address = useSelector<RootState, address>((state) => state.userAddress);
+  useEffect(() => {
+    dispatch(getOneAddress());
+  }, [dispatch]);
+  //console.log(address?.address);
+  // const { fullName, phoneNumber, street, town, district, province } =
+  //   address?.address;
+
   return (
     <Container className={classes.styleContainer}>
       <Box mt={2} className={classes.styleBoxFirst}></Box>
@@ -91,9 +115,13 @@ const AddressOrderPage = () => {
             fontSize="18px"
             className={classes.styleDetailAddress}
           >
-            <Box>Chu Văn Hiếu (+84) 339818714</Box>
             <Box>
-              160 Tran Binh Trong, Quang Ha Town, Hai Ha District, Quang Ninh
+              {/* {fullName} (+84) {phoneNumber} */}
+              {address?.address?.fullName} (+84) {address?.address?.phoneNumber}
+            </Box>
+            <Box>
+              {address?.address?.street}, {address?.address?.town},{" "}
+              {address?.address?.district}, {address?.address?.province}
             </Box>
             <Box>Mặc Định</Box>
             <Box>Change</Box>

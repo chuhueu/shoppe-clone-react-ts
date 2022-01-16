@@ -10,6 +10,11 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILED,
+  USER_GET_ADDRESS,
+  USER_GET_ONE_ADDRESS,
+  USER_ADD_ADDRESS,
+  USER_UPDATE_ADDRESS,
+  USER_REMOVE_ADDRESS,
 } from "../constants/userConstants";
 
 export const login =
@@ -102,4 +107,70 @@ export const logout =
       type: USER_LOGOUT,
     });
     localStorage.removeItem("userInfo");
+  };
+
+export const getAddress =
+  (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    const userInfo = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo")!)
+      : null;
+    const { data } = await axios.get(`/address/${userInfo._id}`);
+    dispatch({
+      type: USER_GET_ADDRESS,
+      payload: data,
+    });
+  };
+export const getOneAddress =
+  (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    const userInfo = localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo")!)
+      : null;
+    const { data } = await axios.get(`/address/one/${userInfo._id}`);
+    dispatch({
+      type: USER_GET_ONE_ADDRESS,
+      payload: data,
+    });
+  };
+export const addAddress =
+  (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    const postAddress = await axios.post("/address");
+    dispatch({
+      type: USER_ADD_ADDRESS,
+      payload: postAddress.data,
+    });
+  };
+export const updateAddress =
+  (
+    id: string,
+    address: any
+  ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    const updateAddress = await axios.put(`/address/${id}`, { address });
+    dispatch({
+      type: USER_UPDATE_ADDRESS,
+      payload: updateAddress.data,
+    });
+  };
+
+export const removeAddress =
+  (id: string): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  ): Promise<void> => {
+    const deleteAddress = await axios.delete(`/address/${id}`);
+    dispatch({
+      type: USER_REMOVE_ADDRESS,
+      payload: deleteAddress.data,
+    });
   };

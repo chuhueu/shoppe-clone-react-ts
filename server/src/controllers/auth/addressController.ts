@@ -39,6 +39,17 @@ const getAddressByUserId = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+//GET ONE ADDRESS USER
+const getOneAddressByUserId = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const getAddress = await Address.findOne({ user: req.params.id });
+      res.status(200).json(getAddress);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+);
 //UPDATE
 const updateAddress = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -70,4 +81,5 @@ export {
   deleteAddress,
   updateAddress,
   getAddressByUserId,
+  getOneAddressByUserId,
 };
