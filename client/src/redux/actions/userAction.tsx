@@ -131,7 +131,15 @@ export const getOneAddress =
     const userInfo = localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo")!)
       : null;
-    const { data } = await axios.get(`/address/one/${userInfo._id}`);
+
+    const addressId = await axios.get(`/user/${userInfo._id}`, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    const { data } = await axios.get(
+      `/address/default/${addressId.data.addressDefault}`
+    );
     dispatch({
       type: USER_GET_ONE_ADDRESS,
       payload: data,

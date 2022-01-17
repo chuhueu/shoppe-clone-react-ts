@@ -1,11 +1,10 @@
 import {
   createAddress,
   getAddress,
-  getAddressById,
+  getDefaultAddressById,
   deleteAddress,
   updateAddress,
   getAddressByUserId,
-  getOneAddressByUserId,
 } from "../../controllers/auth/addressController";
 const router = require("express").Router();
 
@@ -19,6 +18,6 @@ router
   .put(updateAddress)
   .delete(deleteAddress);
 
-//GET ONE ADDRESS
-router.route("/one/:id").get(getOneAddressByUserId);
+//GET DEFAULT ADDRESS
+router.route("/default/:id").get(getDefaultAddressById);
 module.exports = router;
