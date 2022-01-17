@@ -22,14 +22,16 @@ const getAddress = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 //GET FIND ID
-const getAddressById = asyncHandler(async (req: Request, res: Response) => {
-  try {
-    const getAddress = await Address.findById(req.params.id);
-    res.status(200).json(getAddress);
-  } catch (error) {
-    res.status(500).json(error);
+const getDefaultAddressById = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const getAddress = await Address.findById(req.params.id);
+      res.status(200).json(getAddress);
+    } catch (error) {
+      res.status(500).json(error);
+    }
   }
-});
+);
 //GET ADDRESS USER
 const getAddressByUserId = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -39,17 +41,6 @@ const getAddressByUserId = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
-//GET ONE ADDRESS USER
-const getOneAddressByUserId = asyncHandler(
-  async (req: Request, res: Response) => {
-    try {
-      const getAddress = await Address.findOne({ user: req.params.id });
-      res.status(200).json(getAddress);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }
-);
 //UPDATE
 const updateAddress = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -77,9 +68,8 @@ const deleteAddress = asyncHandler(async (req: Request, res: Response) => {
 export {
   createAddress,
   getAddress,
-  getAddressById,
+  getDefaultAddressById,
   deleteAddress,
   updateAddress,
   getAddressByUserId,
-  getOneAddressByUserId,
 };
