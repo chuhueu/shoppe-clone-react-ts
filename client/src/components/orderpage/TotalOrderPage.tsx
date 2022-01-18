@@ -3,8 +3,8 @@ import { Box, Button, Container, Grid, Hidden } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import { orderItemsState } from "../../redux/reducers/orderReducer";
+import { RootState } from "../../redux/store";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
@@ -49,11 +49,11 @@ const TotalOrderPage = () => {
   //styles
   const classes = useStyles();
   //state
-  const index = localStorage.getItem("orderItems")
-    ? JSON.parse(localStorage.getItem("orderItems")!)
-    : null;
-
-  const totalPrice = index.orderItems
+  const order = useSelector<RootState, orderItemsState>(
+    (state) => state.orderItems
+  );
+  const { orderItems } = order;
+  const totalPrice = orderItems
     .reduce(
       (acc: any, item: any) =>
         acc +
@@ -61,7 +61,7 @@ const TotalOrderPage = () => {
       0
     )
     .toLocaleString("vi-VN", { currency: "VND" });
-  const totalPriceAndShip = index.orderItems
+  const totalPriceAndShip = orderItems
     .reduce(
       (acc: any, item: any) =>
         acc +

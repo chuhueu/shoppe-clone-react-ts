@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Checkbox, Grid, Typography } from "@material-ui/core";
 import {
@@ -9,8 +9,10 @@ import {
 } from "@material-ui/icons";
 import shipExtra from "../../assets/images/products/ship-extra.png";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateQtyCartItem } from "../../redux/actions/cartAction";
+import { orderItemsState } from "../../redux/reducers/orderReducer";
+import { RootState } from "../../redux/store";
 import { addOrderItem, removeOrderItem } from "../../redux/actions/orderAction";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -121,27 +123,10 @@ const ProductCart = ({
   setReload,
 }: Props) => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (checked) {
-      dispatch(
-        addOrderItem(
-          cartItem._id,
-          cartItem.product,
-          cartItem.brand,
-          cartItem.name,
-          cartItem.image,
-          cartItem.price,
-          cartItem.discount,
-          cartItem.quantity
-        )
-      );
-    } else {
-      dispatch(removeOrderItem(cartItem._id));
-    }
-  }, [checked, dispatch, cartItem]);
+  const order = useSelector<RootState, orderItemsState>(
+    (state) => state.orderItems
+  );
 
   const toVND = (price: any) => {
     let vnd =
@@ -160,22 +145,38 @@ const ProductCart = ({
   const totalPrice = (price: any, discount: any, qty: any) => {
     return toVND((price - price * (discount / 100)) * qty);
   };
-  //const [input, setInput] = useState(cartItem.quantity);
-  const minusQuantity = () => {
-    if (cartItem.quantity > 1) {
-      dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity - 1));
-      setReload(!reload);
+  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const handleQuantity = (type: string) => {
+    if (type === "dec") {
+      quantity > 0 && setQuantity(quantity - 1);
+      dispatch(updateQtyCartItem(cartItem._id, quantity - 1));
+    } else {
+      setQuantity(quantity + 1);
+      dispatch(updateQtyCartItem(cartItem._id, quantity + 1));
     }
-    // if (input > 1) {
-    //   setInput(input - 1);
-    // }
   };
+  useEffect(() => {
+    setQuantity(cartItem.quantity);
+  }, [cartItem.quantity]);
 
-  const plusQuantity = () => {
-    dispatch(updateQtyCartItem(cartItem._id, cartItem.quantity + 1));
-    setReload(!reload);
-    //setInput(input + 1);
-  };
+  useEffect(() => {
+    if (checked) {
+      dispatch(
+        addOrderItem(
+          cartItem._id,
+          cartItem.product,
+          cartItem.brand,
+          cartItem.name,
+          cartItem.image,
+          cartItem.price,
+          cartItem.discount,
+          quantity
+        )
+      );
+    } else {
+      dispatch(removeOrderItem(cartItem._id));
+    }
+  }, [checked, dispatch, cartItem, quantity]);
 
   return (
     <Box className={classes.styleWrapper}>
@@ -197,6 +198,7 @@ const ProductCart = ({
                     <Checkbox
                       checked={checked}
                       onChange={() => toggleCheck(idOption)}
+                      //onClick={handleCheckBox}
                     />
                     <Link
                       to={{
@@ -274,7 +276,7 @@ const ProductCart = ({
                 >
                   <button
                     className={classes.styleButtonQty}
-                    onClick={minusQuantity}
+                    onClick={() => handleQuantity("dec")}
                   >
                     <Remove />
                   </button>
@@ -282,12 +284,12 @@ const ProductCart = ({
                     min="1"
                     type="text"
                     className={classes.styleInputQty}
-                    value={cartItem.quantity}
-                    //value={input}
+                    //value={cartItem.quantity}
+                    value={quantity}
                   />
                   <button
                     className={classes.styleButtonQty}
-                    onClick={plusQuantity}
+                    onClick={() => handleQuantity("inc")}
                   >
                     <Add />
                   </button>
@@ -301,12 +303,7 @@ const ProductCart = ({
                   height="100%"
                 >
                   <Typography variant="h5">
-                    ₫
-                    {totalPrice(
-                      cartItem.price,
-                      cartItem.discount,
-                      cartItem.quantity
-                    )}
+                    ₫{totalPrice(cartItem.price, cartItem.discount, quantity)}
                   </Typography>
                 </Box>
               </Grid>

@@ -34,6 +34,7 @@ const checkSeller = async (req: Request, res: Response, next: NextFunction) => {
     let userToken = req.headers.authorization.split(" ")[1];
     let decode = jwt.decode(userToken);
     let userInfo = await User.findById(decode.id);
+
     if (userInfo) {
       if (userInfo.role === "ROLE_SELLER") {
         await next();

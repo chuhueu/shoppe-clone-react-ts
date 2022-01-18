@@ -6,13 +6,13 @@ import {
   searchProductByName,
   getProductsByBrand,
   getProductsByFilter,
-} from "../controllers/product/productController";
+} from "../../controllers/product/productController";
 const verify = require("../middleware/tokenMiddleware");
 const {
   checkUser,
   checkSeller,
   checkAdmin,
-} = require("../middleware/authMiddleware");
+} = require("../../middleware/authMiddleware");
 const router = require("express").Router();
 
 //CREATE AND GET

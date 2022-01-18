@@ -8,7 +8,7 @@ import {
   addToCart,
   removeCartItem,
   updateCartItem,
-} from "../controllers/cart/cartController";
+} from "../../controllers/cart/cartController";
 const router = require("express").Router();
 
 //CREATE AND GET

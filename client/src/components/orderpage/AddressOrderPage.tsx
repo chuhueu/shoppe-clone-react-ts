@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Container, Typography, Grid } from "@material-ui/core";
-import { LocationOn } from "@material-ui/icons";
-
+import { Box, Container, Button, Grid } from "@material-ui/core";
+import Radio, { RadioProps } from "@material-ui/core/Radio";
+import { LocationOn, Add } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addressState } from "../../redux/reducers/userReducer";
+import { RootState } from "../../redux/store";
+import { getAddress, getOneAddress } from "../../redux/actions/userAction";
+import ChangeAddress from "./ChangeAddress";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
@@ -21,8 +26,15 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "1.125rem",
       color: "#ee4d2d",
       textTransform: "capitalize",
-      "& svg": {
-        marginRight: theme.spacing(1),
+      "& button": {
+        border: "1px solid rgba(0,0,0,.09)",
+        background: "#fff",
+        boxShadow: "0 1px 1px 0 rgb(0 0 0 / 3%)",
+        textTransform: "capitalize",
+        color: "#555",
+      },
+      "& button:nth-child(1)": {
+        marginRight: theme.spacing(2),
       },
     },
     styleDetailAddress: {
@@ -67,38 +79,73 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+interface address {
+  address?: any;
+  user?: string;
+  fullName?: string;
+  phoneNumber?: number;
+  street?: string;
+  town?: string;
+  district?: string;
+  province?: string;
+}
 const AddressOrderPage = () => {
+  //styles
   const classes = useStyles();
+  //state
+  // const [selectedValue, setSelectedValue] = useState("a");
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedValue(event.target.value);
+  // };
+  const [changeAddress, setChangeAddress] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const address = useSelector<RootState, address>((state) => state.userAddress);
+  useEffect(() => {
+    dispatch(getOneAddress());
+  }, [dispatch]);
+
   return (
     <Container className={classes.styleContainer}>
       <Box mt={2} className={classes.styleBoxFirst}></Box>
       <Box padding="28px 30px 24px">
-        <Box display="flex" alignItems="center">
-          <Box
-            mb={3}
-            display="flex"
-            alignItems="center"
-            className={classes.styleAddress}
-          >
-            <LocationOn />
-            <Box fontFamily="Roboto">Địa Chỉ Nhận Hàng</Box>
-          </Box>
-        </Box>
-        <Box display="flex" alignItems="center">
-          <Box
-            display="flex"
-            alignItems="center"
-            fontSize="18px"
-            className={classes.styleDetailAddress}
-          >
-            <Box>Chu Văn Hiếu (+84) 339818714</Box>
-            <Box>
-              160 Tran Binh Trong, Quang Ha Town, Hai Ha District, Quang Ninh
+        {!changeAddress ? (
+          <>
+            <Box display="flex" alignItems="center">
+              <Box
+                mb={3}
+                display="flex"
+                alignItems="center"
+                className={classes.styleAddress}
+              >
+                <LocationOn />
+                <Box ml={1} fontFamily="Roboto">
+                  Địa Chỉ Nhận Hàng
+                </Box>
+              </Box>
             </Box>
-            <Box>Mặc Định</Box>
-            <Box>Change</Box>
-          </Box>
-        </Box>
+            <Box display="flex" alignItems="center">
+              <Box
+                display="flex"
+                alignItems="center"
+                fontSize="18px"
+                className={classes.styleDetailAddress}
+              >
+                <Box>
+                  {address?.address?.fullName} (+84){" "}
+                  {address?.address?.phoneNumber}
+                </Box>
+                <Box>
+                  {address?.address?.street}, {address?.address?.town},{" "}
+                  {address?.address?.district}, {address?.address?.province}
+                </Box>
+                <Box>Mặc Định</Box>
+                <Box onClick={() => setChangeAddress(true)}>THAY ĐỔI</Box>
+              </Box>
+            </Box>
+          </>
+        ) : (
+          <ChangeAddress setChangeAddress={setChangeAddress} />
+        )}
       </Box>
     </Container>
   );

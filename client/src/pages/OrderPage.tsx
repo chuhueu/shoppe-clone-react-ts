@@ -3,7 +3,7 @@ import {
   NavbarCartPage,
   HeaderOrderPage,
   AddressOrderPage,
-  ProductOrder,
+  ProductOrderPage,
   VoucherOrderPage,
   TotalOrderPage,
   Footer,
@@ -14,7 +14,7 @@ const OrderPage = () => {
       <NavbarCartPage />
       <HeaderOrderPage />
       <AddressOrderPage />
-      <ProductOrder />
+      <ProductOrderPage />
       <VoucherOrderPage />
       <TotalOrderPage />
       <Footer show={false} />

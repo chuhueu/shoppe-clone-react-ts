@@ -37,6 +37,6 @@ export { default as ProductLP } from "./listproductpage/Product";
 //Order page
 export { default as HeaderOrderPage } from "./orderpage/HeaderOrderPage";
 export { default as AddressOrderPage } from "./orderpage/AddressOrderPage";
-export { default as ProductOrder } from "./orderpage/ProductOrder";
+export { default as ProductOrderPage } from "./orderpage/ProductOrderPage";
 export { default as VoucherOrderPage } from "./orderpage/VoucherOrderPage";
 export { default as TotalOrderPage } from "./orderpage/TotalOrderPage";
