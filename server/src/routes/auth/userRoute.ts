@@ -7,7 +7,7 @@ import {
   getUserProfile,
   updateUserProfile,
 } from "../../controllers/auth/userController";
-import { verify } from "../../middleware/tokenMiddleware";
+const verify = require("../middleware/tokenMiddleware");
 const {
   checkUser,
   checkSeller,

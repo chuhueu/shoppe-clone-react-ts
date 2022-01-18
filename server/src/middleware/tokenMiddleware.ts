@@ -36,4 +36,4 @@ const verify = asyncHandler(
   }
 );
 
-export { verify };
+module.exports = verify;
