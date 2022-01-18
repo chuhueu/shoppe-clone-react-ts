@@ -3,9 +3,11 @@ import {
   getProduct,
   getProductById,
   deleteProduct,
-  searchProduct,
+  searchProductByName,
+  getProductsByBrand,
+  getProductsByFilter,
 } from "../controllers/product/productController";
-import { verify } from "../middleware/tokenMiddleware";
+const verify = require("../middleware/tokenMiddleware");
 const {
   checkUser,
   checkSeller,
@@ -22,7 +24,13 @@ router
   .get(getProductById)
   .delete(verify, checkSeller, deleteProduct);
 
-//SEARCH
-router.route("/search").get(searchProduct);
+//Get list product by filter
+router.route("/list").post(getProductsByFilter);
+
+//Search product by name
+router.route("/search/:name").get(searchProductByName);
+
+//List product by brand
+router.route("/brand/:id").get(getProductsByBrand);
 
 module.exports = router;

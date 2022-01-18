@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 const jwt = require("jsonwebtoken");
 const User = require("../models/auth/userModel");
-const Role = require("../models/auth/roleModel");
 
 //CHECK USER
 const checkUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -11,17 +10,12 @@ const checkUser = async (req: Request, res: Response, next: NextFunction) => {
   ) {
     let userToken = req.headers.authorization.split(" ")[1];
     let decode = jwt.decode(userToken);
-    let userInfo = await User.findById(decode._id);
+    let userInfo = await User.findById(decode.id);
     if (userInfo) {
-      const roleInfo = await Role.findById(userInfo.roleId);
-      if (roleInfo) {
-        if (roleInfo.roleName === "user") {
-          await next();
-        } else {
-          return res.status(401).json("Bạn không có quyền xem dữ liệu này");
-        }
+      if (userInfo.role === "ROLE_MEMBER") {
+        await next();
       } else {
-        return res.status(401).json("Không tìm thấy role tương ứng");
+        return res.status(401).json("Bạn không có quyền thực hiện");
       }
     } else {
       return res.status(401).json("Không tìm thấy user");
@@ -39,17 +33,12 @@ const checkSeller = async (req: Request, res: Response, next: NextFunction) => {
   ) {
     let userToken = req.headers.authorization.split(" ")[1];
     let decode = jwt.decode(userToken);
-    let userInfo = await User.findById(decode._id);
+    let userInfo = await User.findById(decode.id);
     if (userInfo) {
-      const roleInfo = await Role.findById(userInfo.roleId);
-      if (roleInfo) {
-        if (roleInfo.roleName === "seller") {
-          await next();
-        } else {
-          return res.status(401).json("Bạn không có quyền thực hiện");
-        }
+      if (userInfo.role === "ROLE_SELLER") {
+        await next();
       } else {
-        return res.status(401).json("Không tìm thấy role tương ứng");
+        return res.status(401).json("Bạn không có quyền thực hiện");
       }
     } else {
       return res.status(401).json("Không tìm thấy user");
