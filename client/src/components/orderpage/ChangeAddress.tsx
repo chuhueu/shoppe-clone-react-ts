@@ -10,10 +10,6 @@ import {
 } from "@material-ui/core";
 import Radio, { RadioProps } from "@material-ui/core/Radio";
 import { LocationOn, Add } from "@material-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { addressState } from "../../redux/reducers/userReducer";
-import { RootState } from "../../redux/store";
-import { getAddress } from "../../redux/actions/userAction";
 import axios from "../../axios";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -94,27 +90,26 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
   //styles
   const classes = useStyles();
   //state
-  // const [selectedValue, setSelectedValue] = useState("a");
+  const userInfo = localStorage.getItem("userInfo")
+    ? JSON.parse(localStorage.getItem("userInfo")!)
+    : null;
+  const [selectedValue, setSelectedValue] = useState(userInfo.addressDefault);
   const [address, setAddress] = useState([]);
-  const [choose, setChoose] = useState("best");
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChoose(event.target.value);
+    setSelectedValue(event.target.value);
   };
   useEffect(() => {
     const getAddress = async () => {
       try {
-        const userInfo = localStorage.getItem("userInfo")
-          ? JSON.parse(localStorage.getItem("userInfo")!)
-          : null;
         const res = await axios.get(`/address/${userInfo._id}`);
+        //setSelectedValue(userInfo.addressDefault);
         setAddress(res.data);
       } catch (error) {
         console.log(error);
       }
     };
     getAddress();
-  }, []);
-
+  }, [userInfo]);
   return (
     <Box className={classes.styleBox}>
       <Box
@@ -152,14 +147,18 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
               fontSize="18px"
               className={classes.styleDetailAddress}
             >
-              <Radio />
+              <Radio
+                checked={selectedValue === item._id}
+                onChange={handleRadioChange}
+                value={item._id}
+              />
               <Box fontWeight="700">
                 {item?.fullName} (+84) {item?.phoneNumber}
               </Box>
               <Box className={classes.styleStreet}>
                 {item?.street}, {item?.town}, {item?.district}, {item?.province}
               </Box>
-              <Box className={classes.styleDefault}>Mặc Định</Box>
+              {/* <Box className={classes.styleDefault}>Mặc Định</Box> */}
             </Box>
           </Box>
         );

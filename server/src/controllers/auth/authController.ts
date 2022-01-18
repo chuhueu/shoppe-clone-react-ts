@@ -17,6 +17,7 @@ const loginUser = asyncHandler(async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       avatar: user.avatar,
+      addressDefault: user.addressDefault,
       roleId: user.roleId,
       role: user.role,
       token: generateToken(user._id),
