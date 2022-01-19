@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import {
-  Box,
-  Container,
-  Button,
-  Grid,
-  RadioGroup,
-  FormControlLabel,
-} from "@material-ui/core";
+import { Box, Container, Button } from "@material-ui/core";
 import Radio, { RadioProps } from "@material-ui/core/Radio";
 import { LocationOn, Add } from "@material-ui/icons";
 import axios from "../../axios";
+import Popup from "./Popup";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
@@ -75,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
       border: "1px solid rgba(0,0,0,.09)",
       boxShadow: "0 1px 1px 0 rgb(0 0 0 / 3%)",
       borderRadius: "2px!important",
-      marginRight: theme.spacing(1),
+      marginRight: theme.spacing(2),
       height: "40px",
       textTransform: "capitalize",
       "&:hover": {
@@ -95,6 +89,7 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
     : null;
   const [selectedValue, setSelectedValue] = useState(userInfo.addressDefault);
   const [address, setAddress] = useState([]);
+  const [openPopup, setOpenPopup] = useState(false);
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
   };
@@ -130,6 +125,7 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
             className={classes.styleButtonOutlined}
             variant="outlined"
             startIcon={<Add />}
+            onClick={() => setOpenPopup(true)}
           >
             Thêm địa chỉ mới
           </Button>
@@ -175,6 +171,7 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
           Trở lại
         </Button>
       </Box>
+      <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} />
     </Box>
   );
 };

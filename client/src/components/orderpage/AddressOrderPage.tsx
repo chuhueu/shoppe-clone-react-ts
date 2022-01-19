@@ -4,7 +4,6 @@ import { Box, Container, Button, Grid } from "@material-ui/core";
 import Radio, { RadioProps } from "@material-ui/core/Radio";
 import { LocationOn, Add } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addressState } from "../../redux/reducers/userReducer";
 import { RootState } from "../../redux/store";
 import { getAddress, getOneAddress } from "../../redux/actions/userAction";
 import ChangeAddress from "./ChangeAddress";
