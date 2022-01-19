@@ -49,11 +49,10 @@ const TotalOrderPage = () => {
   //styles
   const classes = useStyles();
   //state
-  const order = useSelector<RootState, orderItemsState>(
-    (state) => state.orderItems
-  );
-  const { orderItems } = order;
-  const totalPrice = orderItems
+  const data = localStorage.getItem("orderItems")
+    ? JSON.parse(localStorage.getItem("orderItems")!)
+    : null;
+  const totalPrice = data.orderItems
     .reduce(
       (acc: any, item: any) =>
         acc +
@@ -61,7 +60,7 @@ const TotalOrderPage = () => {
       0
     )
     .toLocaleString("vi-VN", { currency: "VND" });
-  const totalPriceAndShip = orderItems
+  const totalPriceAndShip = data.orderItems
     .reduce(
       (acc: any, item: any) =>
         acc +

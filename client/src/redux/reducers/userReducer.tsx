@@ -29,7 +29,7 @@ export interface userState {
   error?: boolean;
 }
 
-interface addressInfo {
+export interface addressInfo {
   user: string;
   fullName: string;
   phoneNumber: number;
@@ -103,7 +103,7 @@ export const userRegisterReducer = (state: userState, action: AnyAction) => {
   }
 };
 
-export const userAddressReducer = (state: addressState, action: AnyAction) => {
+export const userAddressReducer = (state: addressInfo, action: AnyAction) => {
   switch (action.type) {
     case USER_GET_ADDRESS: {
       return {
@@ -117,8 +117,7 @@ export const userAddressReducer = (state: addressState, action: AnyAction) => {
     }
     case USER_ADD_ADDRESS: {
       return {
-        ...state,
-        address: [...state.address, action.payload],
+        address: action.payload,
       };
     }
     default:

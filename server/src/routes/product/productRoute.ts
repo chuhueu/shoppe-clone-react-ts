@@ -7,7 +7,7 @@ import {
   getProductsByBrand,
   getProductsByFilter,
 } from "../../controllers/product/productController";
-const verify = require("../middleware/tokenMiddleware");
+const verify = require("../../middleware/tokenMiddleware");
 const {
   checkUser,
   checkSeller,
