@@ -40,3 +40,8 @@ export { default as AddressOrderPage } from "./orderpage/AddressOrderPage";
 export { default as ProductOrderPage } from "./orderpage/ProductOrderPage";
 export { default as VoucherOrderPage } from "./orderpage/VoucherOrderPage";
 export { default as TotalOrderPage } from "./orderpage/TotalOrderPage";
+
+//Account page
+export { default as SideBarAccount } from "./accountpage/SideBarAccount";
+export { default as ProfileAccount } from "./accountpage/ProfileAccount";
+export { default as AddressAccount } from "./accountpage/AddressAccount";

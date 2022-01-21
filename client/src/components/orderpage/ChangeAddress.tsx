@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { Box, Container, Button } from "@material-ui/core";
 import Radio, { RadioProps } from "@material-ui/core/Radio";
+import { Link } from "react-router-dom";
 import { LocationOn, Add } from "@material-ui/icons";
 import axios from "../../axios";
 import Popup from "./Popup";
@@ -129,9 +130,11 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
           >
             Thêm địa chỉ mới
           </Button>
-          <Button className={classes.styleButtonOutlined} variant="outlined">
-            Thiết lập địa chỉ
-          </Button>
+          <Link to="/account/address" style={{ textDecoration: "none" }}>
+            <Button className={classes.styleButtonOutlined} variant="outlined">
+              Thiết lập địa chỉ
+            </Button>
+          </Link>
         </Box>
       </Box>
       {address.map((item: any) => {
