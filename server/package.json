@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "mongoose-findorcreate": "^3.0.0",
+    "mongoose-slug-generator": "^1.0.4",
     "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "ts-node": "^10.4.0",

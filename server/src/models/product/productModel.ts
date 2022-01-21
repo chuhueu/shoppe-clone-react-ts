@@ -1,23 +1,18 @@
 import mongoose from "mongoose";
+const slug = require("mongoose-slug-generator");
 
-const ReviewSchema = new mongoose.Schema(
-  {
-    rating: { type: Number },
-    comment: { type: String },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+const options = {
+  separator: "-",
+  lang: "en",
+  truncate: 120,
+};
+
+mongoose.plugin(slug, options);
 
 const ProductSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    slug: { type: String, slug: "name", unique: true },
     image: { type: Array, required: true },
     price: { type: Number, required: true },
     sold: { type: Number, required: true, default: 0 },
@@ -39,7 +34,6 @@ const ProductSchema = new mongoose.Schema(
       required: true,
       ref: "Brand",
     },
-    reviews: [ReviewSchema],
     numReviews: {
       type: Number,
       default: 0,

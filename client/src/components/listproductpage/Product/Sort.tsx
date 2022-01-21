@@ -6,6 +6,7 @@ import {
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -90,10 +91,59 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Sort = () => {
+interface Props {
+  filterProductInfo: any;
+  isFetching: any;
+  error: any;
+  getFilterUrl: any;
+  category?: string;
+  type?: string;
+  min?: number;
+  max?: number;
+  rating?: number;
+  pageNumber?: number;
+}
+
+const Sort = ({
+  filterProductInfo,
+  isFetching,
+  error,
+  getFilterUrl,
+  category,
+  type,
+  min,
+  max,
+  rating,
+  pageNumber,
+}: Props) => {
   const classes = useStyles();
 
   const [hover, setHover] = useState(false);
+
+  const history = useHistory();
+
+  const pagePrev = () => {
+    history.push(
+      getFilterUrl({ page: Number(filterProductInfo?.pageNumber) - 1 })
+    );
+  };
+
+  const pageNext = () => {
+    history.push(
+      getFilterUrl({ page: Number(filterProductInfo?.pageNumber) + 1 })
+    );
+  };
+
+  const sortPriceUp = () => {
+    filterProductInfo?.products?.sort((a: any, b: any) => {
+      return a.price - b.price;
+    });
+  };
+  const sortPriceDown = () => {
+    filterProductInfo?.products?.sort((a: any, b: any) => {
+      return b.price - a.price;
+    });
+  };
 
   return (
     <Box
@@ -115,7 +165,7 @@ const Sort = () => {
         </Box>
         <Box
           className={classes.styleSortPrice}
-          onMouseDown={() => setHover(!hover)}
+          onClick={() => setHover(!hover)}
         >
           <Box
             display="flex"
@@ -127,22 +177,29 @@ const Sort = () => {
             <KeyboardArrowDown />
           </Box>
           <Box className={`${classes.styleDrop} ${hover ? "active" : ""}`}>
-            <Box className={classes.styleDropItem}>Giá: Từ Thấp đến Cao</Box>
-            <Box className={classes.styleDropItem}>Giá: Từ Cao đến Thấp</Box>
+            <Box className={classes.styleDropItem} onClick={sortPriceUp}>
+              Giá: Từ Thấp đến Cao
+            </Box>
+            <Box className={classes.styleDropItem} onClick={sortPriceDown}>
+              Giá: Từ Cao đến Thấp
+            </Box>
           </Box>
         </Box>
       </Box>
       <Box display="flex" alignItems="center" className={classes.styleRight}>
         <Box display="flex" alignItems="center">
-          <Typography variant="h5">1</Typography>
-          <Typography variant="h4">/100</Typography>
+          <Typography variant="h5">{filterProductInfo?.pageNumber}</Typography>
+          <Typography variant="h4">/{filterProductInfo?.pages}</Typography>
         </Box>
         <Box display="flex" alignItems="center" marginLeft="10px">
           <Box
             display="flex"
             alignItems="center"
             justifyContent="center"
-            className={`${classes.stylePagiButton} disable`}
+            className={`${classes.stylePagiButton} ${
+              filterProductInfo?.pageNumber !== pageNumber ? "disable" : ""
+            }`}
+            onClick={pagePrev}
           >
             <KeyboardArrowLeft className={classes.styleIcon} />
           </Box>
@@ -150,7 +207,10 @@ const Sort = () => {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            className={classes.stylePagiButton}
+            className={`${classes.stylePagiButton} ${
+              filterProductInfo?.pageNumber === pageNumber ? "disable" : ""
+            }`}
+            onClick={pageNext}
           >
             <KeyboardArrowRight className={classes.styleIcon} />
           </Box>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CustomLink } from "../../index";
 import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   Typography,
@@ -16,7 +17,13 @@ import {
   Star,
   StarBorder,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
+import { categoryState } from "../../../redux/reducers/categoryReducer";
+import { getListCategory } from "../../../redux/actions/categoryAction";
+import { proTypeState } from "../../../redux/reducers/productReducer";
+import { getListProType } from "../../../redux/actions/productAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,7 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
       borderBottom: "1px solid rgba(0,0,0,.12)",
     },
     styleIconCat: { marginRight: "10px", fontSize: "18px" },
-    styleMore: { padding: ".5rem .625rem .5rem 0", cursor: "pointer" },
+    styleMore: {
+      padding: ".5rem .625rem .5rem 0",
+      cursor: "pointer",
+      "&.disable": { display: "none" },
+    },
     styleMoreIcon: { fontSize: "16px", marginLeft: "5px" },
     styleFilter: {},
     styleFilterList: {
@@ -74,22 +85,97 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: "#f1674c",
       },
     },
-    styleRate: { padding: "10px 0" },
+    styleRate: { padding: "10px 0", cursor: "pointer" },
     styleRateIcon: {
       fontSize: "16px",
       color: "rgb(255,167,39)",
       marginRight: "3px",
     },
+    styleHiddenList: {
+      height: "0",
+      opacity: 0,
+      transition:
+        "height .4s cubic-bezier(.4,0,.2,1),opacity .4s cubic-bezier(.4,0,.2,1)",
+      overflow: "hidden",
+      "&.active": {
+        height: "auto",
+        opacity: 1,
+      },
+    },
   })
 );
 
-const Category = () => {
+interface Props {
+  getFilterUrl: any;
+  category?: string;
+  type?: string;
+  min?: number;
+  max?: number;
+  rating?: number;
+  pageNumber?: number;
+}
+
+const Category = ({
+  getFilterUrl,
+  category,
+  type,
+  min,
+  max,
+  rating,
+  pageNumber,
+}: Props) => {
   const classes = useStyles();
+
+  const history = useHistory();
+
+  const [priceMin, setPriceMin] = useState<number>();
+  const [priceMax, setPriceMax] = useState<number>();
+  const [toggle, setToggle] = useState<number>(0);
+
+  const dispatch = useDispatch();
+
+  const listCategory = useSelector<RootState, categoryState>(
+    (state) => state.listCategory
+  );
+  const { categoryInfo, isFetching, error } = listCategory;
+
+  const listProType = useSelector<RootState, proTypeState>(
+    (state) => state.listProType
+  );
+  const {
+    proTypeInfo,
+    isFetching: isFetchingProType,
+    error: errorProType,
+  } = listProType;
+
+  useEffect(() => {
+    dispatch(getListCategory());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getListProType());
+  }, [dispatch]);
+
+  const handleChangeFilter = (type: any) => {
+    history.push(getFilterUrl({ category: category, type: type }));
+  };
+
+  const handleChangePrice = () => {
+    history.push(getFilterUrl({ min: priceMin, max: priceMax }));
+  };
+
+  const handleChangeStar = (star: any) => {
+    history.push(getFilterUrl({ rating: star }));
+  };
+
+  const handleToggle = (index: number) => {
+    setToggle(index);
+  };
 
   return (
     <Box className={classes.styleWrapper}>
       <Box className={classes.styleCategory}>
-        <Link to="/" className={classes.styleLink}>
+        <Link to="/product/category/all" className={classes.styleLink}>
           <Box
             display="flex"
             alignItems="center"
@@ -100,13 +186,39 @@ const Category = () => {
           </Box>
         </Link>
         <Box padding="10px 0">
-          <CustomLink to="/product-list" label="Điện thoại & Phụ kiện" />
-          <CustomLink to="/1" label="Điện thoại" />
-          <CustomLink to="/2" label="Máy tính bảng" />
-          <CustomLink to="/3" label="Pin Dự Phòng" />
-          <CustomLink to="/4" label="Pin Gắn Trong, Cáp và Bộ Sạc" />
-          <CustomLink to="/5" label="Ốp lưng, bao da, Miếng dán điện thoại" />
-          <Box display="flex" alignItems="center" className={classes.styleMore}>
+          {isFetching ? (
+            <CircularProgress />
+          ) : (
+            categoryInfo?.map((item, index) => (
+              <>
+                {index < 5 ? (
+                  <CustomLink
+                    key={item._id}
+                    to={`/product/category/${item.slug}`}
+                    label={item.category}
+                  />
+                ) : (
+                  <Box
+                    className={`${classes.styleHiddenList} ${
+                      toggle === 1 ? "active" : ""
+                    }`}
+                  >
+                    <CustomLink
+                      key={item._id}
+                      to={`/product/category/${item.slug}`}
+                      label={item.category}
+                    />
+                  </Box>
+                )}
+              </>
+            ))
+          )}
+          <Box
+            display="flex"
+            alignItems="center"
+            className={`${classes.styleMore} ${toggle === 1 ? "disable" : ""}`}
+            onClick={() => handleToggle(1)}
+          >
             <Typography variant="h4">Thêm</Typography>
             <KeyboardArrowDown className={classes.styleMoreIcon} />
           </Box>
@@ -122,28 +234,44 @@ const Category = () => {
           <Typography variant="caption">BỘ LỌC TÌM KIẾM</Typography>
         </Box>
         <FormControl className={classes.styleFilterList}>
-          <Typography variant="h4">Theo Danh Mục</Typography>
-          <FormControlLabel
-            className={classes.styleFilterItem}
-            control={<Checkbox size="small" />}
-            label="Vỏ bao, Ốp lưng & Miếng dán điện thoại (21tr+)"
-          />
-          <FormControlLabel
-            className={classes.styleFilterItem}
-            control={<Checkbox size="small" />}
-            label="Cáp sạc & bộ chuyển đổi (456k+)"
-          />
-          <FormControlLabel
-            className={classes.styleFilterItem}
-            control={<Checkbox size="small" />}
-            label="Miếng dán màn hình (354k+)"
-          />
-          <FormControlLabel
-            className={classes.styleFilterItem}
-            control={<Checkbox size="small" />}
-            label="Sạc dự phòng & Pin (162k+)"
-          />
-          <Box display="flex" alignItems="center" className={classes.styleMore}>
+          <Typography variant="h4">Theo Loại Sản Phẩm</Typography>
+          {isFetchingProType ? (
+            <CircularProgress />
+          ) : (
+            proTypeInfo?.map((item, index) => (
+              <>
+                {index < 5 ? (
+                  <FormControlLabel
+                    key={item._id}
+                    className={classes.styleFilterItem}
+                    control={<Checkbox size="small" />}
+                    label={item.productType}
+                    onClick={() => handleChangeFilter(item.slug)}
+                  />
+                ) : (
+                  <Box
+                    className={`${classes.styleHiddenList} ${
+                      toggle === 2 ? "active" : ""
+                    }`}
+                  >
+                    <FormControlLabel
+                      key={item._id}
+                      className={classes.styleFilterItem}
+                      control={<Checkbox size="small" />}
+                      label={item.productType}
+                      onClick={() => handleChangeFilter(item.slug)}
+                    />
+                  </Box>
+                )}
+              </>
+            ))
+          )}
+          <Box
+            display="flex"
+            alignItems="center"
+            className={`${classes.styleMore} ${toggle === 2 ? "disable" : ""}`}
+            onClick={() => handleToggle(2)}
+          >
             <Typography variant="h4">Thêm</Typography>
             <KeyboardArrowDown className={classes.styleMoreIcon} />
           </Box>
@@ -232,15 +360,24 @@ const Category = () => {
               type="text"
               className={classes.styleFilterPriceInput}
               placeholder="₫TỪ"
+              value={priceMin}
+              onChange={(e: any) => setPriceMin(e.target.value)}
             />
             <Box className={classes.styleFilterPriceBox}></Box>
             <input
               type="text"
               className={classes.styleFilterPriceInput}
               placeholder="₫ĐẾN"
+              value={priceMax}
+              onChange={(e: any) => setPriceMax(e.target.value)}
             />
           </Box>
-          <Button className={classes.styleFilterButton}>Áp dụng</Button>
+          <Button
+            className={classes.styleFilterButton}
+            onClick={handleChangePrice}
+          >
+            Áp dụng
+          </Button>
         </Box>
         <FormControl className={classes.styleFilterList}>
           <Typography variant="h4">Loại Shop</Typography>
@@ -283,14 +420,24 @@ const Category = () => {
         </FormControl>
         <Box className={classes.styleFilterList}>
           <Typography variant="h4">Đánh Giá</Typography>
-          <Box display="flex" alignItems="center" className={classes.styleRate}>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleRate}
+            onClick={() => handleChangeStar(5)}
+          >
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
           </Box>
-          <Box display="flex" alignItems="center" className={classes.styleRate}>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleRate}
+            onClick={() => handleChangeStar(4)}
+          >
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
@@ -298,7 +445,12 @@ const Category = () => {
             <StarBorder className={classes.styleRateIcon} />
             <Typography variant="h4">trở lên</Typography>
           </Box>
-          <Box display="flex" alignItems="center" className={classes.styleRate}>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleRate}
+            onClick={() => handleChangeStar(3)}
+          >
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
@@ -306,7 +458,12 @@ const Category = () => {
             <StarBorder className={classes.styleRateIcon} />
             <Typography variant="h4">trở lên</Typography>
           </Box>
-          <Box display="flex" alignItems="center" className={classes.styleRate}>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleRate}
+            onClick={() => handleChangeStar(2)}
+          >
             <Star className={classes.styleRateIcon} />
             <Star className={classes.styleRateIcon} />
             <StarBorder className={classes.styleRateIcon} />
@@ -314,7 +471,12 @@ const Category = () => {
             <StarBorder className={classes.styleRateIcon} />
             <Typography variant="h4">trở lên</Typography>
           </Box>
-          <Box display="flex" alignItems="center" className={classes.styleRate}>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleRate}
+            onClick={() => handleChangeStar(1)}
+          >
             <Star className={classes.styleRateIcon} />
             <StarBorder className={classes.styleRateIcon} />
             <StarBorder className={classes.styleRateIcon} />
