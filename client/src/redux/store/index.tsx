@@ -9,7 +9,9 @@ import {
 import {
   brandReducer,
   detailProductReducer,
+  listFilterProductReducer,
   listProductReducer,
+  listProTypeReducer,
 } from "../reducers/productReducer";
 import {
   createCartReducer,
@@ -18,6 +20,7 @@ import {
   updateQtyCartReducer,
 } from "../reducers/cartReducer";
 import { orderItemsReducer } from "../reducers/orderReducer";
+import { listCategoryReducer } from "../reducers/categoryReducer";
 
 const reducers = combineReducers({
   userLogin: userLoginReducer,
@@ -31,6 +34,9 @@ const reducers = combineReducers({
   orderItems: orderItemsReducer,
   listProduct: listProductReducer,
   detailProduct: detailProductReducer,
+  listCategory: listCategoryReducer,
+  listProType: listProTypeReducer,
+  listFilterProduct: listFilterProductReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

@@ -2,9 +2,9 @@ import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { getListProduct } from "../../../redux/actions/productAction";
-import { productState } from "../../../redux/reducers/productReducer";
+import { Link, useParams } from "react-router-dom";
+import { getFilterProduct } from "../../../redux/actions/productAction";
+import { filterProductState } from "../../../redux/reducers/productReducer";
 import { RootState } from "../../../redux/store";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,19 +55,45 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ListProduct = () => {
+interface Props {
+  filterProductInfo: any;
+  isFetching: any;
+  error: any;
+  category?: string;
+  type?: string;
+  min?: number;
+  max?: number;
+  rating?: number;
+  pageNumber?: number;
+}
+
+const ListProduct = ({
+  filterProductInfo,
+  isFetching,
+  error,
+  category,
+  type,
+  min,
+  max,
+  rating,
+  pageNumber,
+}: Props) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
-  const listProduct = useSelector<RootState, productState>(
-    (state) => state.listProduct
-  );
-  const { productInfo, isFetching, error } = listProduct;
-
   useEffect(() => {
-    dispatch(getListProduct());
-  }, [dispatch]);
+    dispatch(
+      getFilterProduct({
+        category: category !== "all" ? category : "all",
+        type: type !== "all" ? type : "all",
+        min,
+        max,
+        rating,
+        pageNumber,
+      })
+    );
+  }, [category, dispatch, type, min, max, rating, pageNumber]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -90,7 +116,7 @@ const ListProduct = () => {
         {isFetching ? (
           <CircularProgress />
         ) : (
-          productInfo?.map((product) => {
+          filterProductInfo?.products?.map((product: any) => {
             return (
               <Grid item xs={6} sm={4} md={3} key={product._id}>
                 <Link

@@ -36,7 +36,13 @@ const routesUser = [
     component: StorePage,
   },
   {
-    path: "/product-list",
+    path: "/product/category/:category",
+    exact: true,
+    component: ListProductPage,
+  },
+  {
+    path: "/product/category/:category/type/:type/min/:min/max/:max/rating/:rating/page/:pageNumber",
+    exact: true,
     component: ListProductPage,
   },
   {

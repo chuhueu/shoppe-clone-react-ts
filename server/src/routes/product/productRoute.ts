@@ -7,13 +7,16 @@ import {
   getProductsByBrand,
   getProductsByFilter,
 } from "../../controllers/product/productController";
-const verify = require("../middleware/tokenMiddleware");
+const verify = require("../../middleware/tokenMiddleware");
 const {
   checkUser,
   checkSeller,
   checkAdmin,
 } = require("../../middleware/authMiddleware");
 const router = require("express").Router();
+
+//Get list product by filter
+router.route("/list").get(getProductsByFilter);
 
 //CREATE AND GET
 router.route("/").post(verify, checkSeller, createProduct).get(getProduct);
@@ -23,9 +26,6 @@ router
   .route("/:id")
   .get(getProductById)
   .delete(verify, checkSeller, deleteProduct);
-
-//Get list product by filter
-router.route("/list").post(getProductsByFilter);
 
 //Search product by name
 router.route("/search/:name").get(searchProductByName);

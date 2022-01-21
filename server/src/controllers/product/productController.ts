@@ -71,22 +71,26 @@ const searchProductByName = asyncHandler(
 );
 
 //@desc    get list product by filter
-//@router  GET /api/product/search/:name
+//@router  GET /api/product/list
 //@access  User
 const getProductsByFilter = asyncHandler(
   async (req: Request, res: Response) => {
     try {
-      let {
-        sortOrder,
-        rating,
-        max,
-        min,
-        category,
-        type,
-        pageNumber: page = 1,
-      } = req.body;
+      // let { rating, max, min, category, type,pageNumber } = req.body;
+      let category = req.query.category || "";
+      let type = req.query.type || "";
+      let rating = Number(req.query.rating) || 0;
+      let min =
+        req.query.min && Number(req.query.min) !== 0
+          ? Number(req.query.min)
+          : 0;
+      let max =
+        req.query.max && Number(req.query.max) !== 0
+          ? Number(req.query.max)
+          : 0;
+      let pageNumber = Number(req.query.pageNumber) || 1;
 
-      const pageSize = 8;
+      const pageSize = 16;
       const categoryFilter = category ? { category } : {};
       const typeFilter = type ? { type } : {};
       const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -114,9 +118,6 @@ const getProductsByFilter = asyncHandler(
             "brand.name": "$brands.name",
             "brand._id": "$brands._id",
           },
-        },
-        {
-          $match: {},
         },
         {
           $lookup: {
@@ -158,7 +159,7 @@ const getProductsByFilter = asyncHandler(
       ];
 
       const categoryDoc = await Category.findOne(
-        { _id: categoryFilter.category },
+        { slug: categoryFilter.category },
         "content -_id"
       );
 
@@ -172,8 +173,8 @@ const getProductsByFilter = asyncHandler(
         });
       }
 
-      const typeDoc = await Category.findOne(
-        { _id: typeFilter.type },
+      const typeDoc = await ProductType.findOne(
+        { slug: typeFilter.type },
         "content -_id"
       );
 
@@ -219,8 +220,9 @@ const getProductsByFilter = asyncHandler(
           ].concat(basicQuery)
         );
         const paginateQuery: any = [
-          { $sort: { sortOrder } },
-          { $skip: pageSize * (productsCount.length > 16 ? page - 1 : 0) },
+          {
+            $skip: pageSize * (productsCount.length > 16 ? pageNumber - 1 : 0),
+          },
           { $limit: pageSize },
         ];
         products = await Product.aggregate(
@@ -254,8 +256,9 @@ const getProductsByFilter = asyncHandler(
       } else {
         productsCount = await Product.aggregate(basicQuery);
         const paginateQuery = [
-          { $sort: { sortOrder } },
-          { $skip: pageSize * (productsCount.length > 16 ? page - 1 : 0) },
+          {
+            $skip: pageSize * (productsCount.length > 16 ? pageNumber - 1 : 0),
+          },
           { $limit: pageSize },
         ];
         products = await Product.aggregate(basicQuery.concat(paginateQuery));
@@ -263,7 +266,7 @@ const getProductsByFilter = asyncHandler(
 
       res.status(200).json({
         products,
-        page,
+        pageNumber,
         pages:
           productsCount.length > 0
             ? Math.ceil(productsCount.length / pageSize)

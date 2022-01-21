@@ -59,7 +59,7 @@ const Directory = () => {
   for (let i = 0; i < 26; i++) {
     slides.push(
       <SwiperSlide key={`directory-${i}`} tag="li">
-        <Link to="/product-list" className={classes.styleLink}>
+        <Link to={`/product/category/all`} className={classes.styleLink}>
           <img
             src={`/images/directory/directory-${i + 1}.png`}
             alt=""
