@@ -131,6 +131,7 @@ const Category = ({
   const [priceMin, setPriceMin] = useState<number>();
   const [priceMax, setPriceMax] = useState<number>();
   const [toggle, setToggle] = useState<number>(0);
+  const [checkType, setCheckType] = useState<number>(0);
 
   const dispatch = useDispatch();
 
@@ -170,6 +171,10 @@ const Category = ({
 
   const handleToggle = (index: number) => {
     setToggle(index);
+  };
+
+  const handleCheckType = (index: number) => {
+    setCheckType(index);
   };
 
   return (
