@@ -202,8 +202,7 @@ const ProductCart = ({
                     />
                     <Link
                       to={{
-                        pathname:
-                          "/info/" + cartItem?.name + "/" + cartItem?._id,
+                        pathname: "/info/" + cartItem?._id,
                       }}
                     >
                       <img
@@ -215,8 +214,7 @@ const ProductCart = ({
                     <Box maxWidth="220px">
                       <Link
                         to={{
-                          pathname:
-                            "/info/" + cartItem?.name + "/" + cartItem?._id,
+                          pathname: "/info/" + cartItem?._id,
                         }}
                         className={classes.styleLink}
                       >

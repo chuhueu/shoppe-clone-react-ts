@@ -107,7 +107,7 @@ const ListProduct = () => {
               <Grid item xs={6} sm={4} md={2}>
                 <Link
                   to={{
-                    pathname: "/info/" + product?.name + "/" + product?._id,
+                    pathname: "/info/" + product?._id,
                   }}
                   className={classes.styleLink}
                 >

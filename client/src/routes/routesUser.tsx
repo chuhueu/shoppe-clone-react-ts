@@ -20,7 +20,7 @@ export const routesUser = [
     component: HomePage,
   },
   {
-    path: "/info/:name/:infoID",
+    path: "/info/:infoID",
     component: DetailProductPage,
   },
   {

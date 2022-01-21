@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Container, Button } from "@material-ui/core";
-import Radio, { RadioProps } from "@material-ui/core/Radio";
+import { Box, Button } from "@material-ui/core";
+import Radio from "@material-ui/core/Radio";
 import { Link } from "react-router-dom";
 import { LocationOn, Add } from "@material-ui/icons";
 import axios from "../../axios";
@@ -78,6 +78,17 @@ const useStyles = makeStyles((theme: Theme) =>
         opacity: "0.9",
         transition: "0.1s",
       },
+    },
+    styleDefaultLabel: {
+      marginLeft: "16px",
+      background: "#00bfa5",
+      color: "#fff",
+      borderRadius: "3px",
+      padding: "3px 7px 2px",
+      textTransform: "capitalize",
+      fontSize: "13px",
+      fontWeight: 500,
+      fontFamily: "Roboto",
     },
   })
 );
@@ -157,7 +168,11 @@ const ChangeAddress = ({ setChangeAddress }: any) => {
               <Box className={classes.styleStreet}>
                 {item?.street}, {item?.town}, {item?.district}, {item?.province}
               </Box>
-              {/* <Box className={classes.styleDefault}>Mặc Định</Box> */}
+              {item?._id === userInfo.addressDefault ? (
+                <Box className={classes.styleDefaultLabel}>Mặc định</Box>
+              ) : (
+                <Box></Box>
+              )}
             </Box>
           </Box>
         );
