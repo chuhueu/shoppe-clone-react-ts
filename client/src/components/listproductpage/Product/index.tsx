@@ -25,6 +25,7 @@ interface ParamTypes {
   max?: any;
   rating?: any;
   pageNumber?: any;
+  sortOrder?: any;
 }
 
 const Product = () => {
@@ -37,6 +38,7 @@ const Product = () => {
     max = 1000000000,
     rating = 0,
     pageNumber = 1,
+    sortOrder = 0,
   } = useParams<ParamTypes>();
 
   const getFilterUrl = (filter: any) => {
@@ -50,7 +52,8 @@ const Product = () => {
       ? 0
       : rating;
     const filterPage = filter.page || pageNumber;
-    return `/product/category/${filterCategory}/type/${filterType}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/page/${filterPage}`;
+    const filterSort = filter.sortOrder || sortOrder;
+    return `/product/category/${filterCategory}/type/${filterType}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/page/${filterPage}/sort/${filterSort}`;
   };
 
   const listFilterProduct = useSelector<RootState, filterProductState>(
@@ -85,6 +88,7 @@ const Product = () => {
               max={max}
               rating={rating}
               pageNumber={pageNumber}
+              sortOrder={sortOrder}
             />
             <ListProduct
               filterProductInfo={filterProductInfo}
@@ -96,10 +100,12 @@ const Product = () => {
               max={max}
               rating={rating}
               pageNumber={pageNumber}
+              sortOrder={sortOrder}
             />
             <Pagination
               filterProductInfo={filterProductInfo}
               getFilterUrl={getFilterUrl}
+              isFetching={isFetching}
             />
           </Grid>
         </Grid>

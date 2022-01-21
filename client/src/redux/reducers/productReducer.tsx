@@ -59,6 +59,9 @@ interface productInfo {
   brand?: string;
   review: Array<ReviewType>;
   slug?: string;
+  size?: Array<string>;
+  colour?: Array<string>;
+  type?: Array<string>;
 }
 interface ReviewType {
   rateStar?: number;

@@ -106,6 +106,7 @@ export const getFilterProduct =
     max,
     rating,
     pageNumber,
+    sortOrder,
   }: any): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
@@ -115,7 +116,7 @@ export const getFilterProduct =
       dispatch({ type: GET_FILTER_PRODUCT_REQUEST });
 
       const { data } = await axios.get(
-        `/product/list?category=${category}&type=${type}&min=${min}&max=${max}&rating=${rating}&pageNumber=${pageNumber}`
+        `/product/list?category=${category}&type=${type}&min=${min}&max=${max}&rating=${rating}&pageNumber=${pageNumber}&sortOrder=${sortOrder}`
       );
       dispatch({
         type: GET_FILTER_PRODUCT_SUCCESS,

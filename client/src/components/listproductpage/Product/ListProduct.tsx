@@ -65,6 +65,7 @@ interface Props {
   max?: number;
   rating?: number;
   pageNumber?: number;
+  sortOrder?: number;
 }
 
 const ListProduct = ({
@@ -77,6 +78,7 @@ const ListProduct = ({
   max,
   rating,
   pageNumber,
+  sortOrder,
 }: Props) => {
   const classes = useStyles();
 
@@ -91,9 +93,10 @@ const ListProduct = ({
         max,
         rating,
         pageNumber,
+        sortOrder,
       })
     );
-  }, [category, dispatch, type, min, max, rating, pageNumber]);
+  }, [category, dispatch, type, min, max, rating, pageNumber, sortOrder]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -121,7 +124,7 @@ const ListProduct = ({
               <Grid item xs={6} sm={4} md={3} key={product._id}>
                 <Link
                   to={{
-                    pathname: "/info/" + product?.name + "/" + product?._id,
+                    pathname: "/info/" + product?._id,
                   }}
                   className={classes.styleLink}
                 >

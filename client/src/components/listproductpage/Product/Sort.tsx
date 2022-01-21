@@ -102,6 +102,7 @@ interface Props {
   max?: number;
   rating?: number;
   pageNumber?: number;
+  sortOrder?: number;
 }
 
 const Sort = ({
@@ -115,10 +116,12 @@ const Sort = ({
   max,
   rating,
   pageNumber,
+  sortOrder,
 }: Props) => {
   const classes = useStyles();
 
   const [hover, setHover] = useState(false);
+  const [toggle, setToggle] = useState<number>(0);
 
   const history = useHistory();
 
@@ -135,14 +138,15 @@ const Sort = ({
   };
 
   const sortPriceUp = () => {
-    filterProductInfo?.products?.sort((a: any, b: any) => {
-      return a.price - b.price;
-    });
+    history.push(getFilterUrl({ sortOrder: 3 }));
   };
   const sortPriceDown = () => {
-    filterProductInfo?.products?.sort((a: any, b: any) => {
-      return b.price - a.price;
-    });
+    history.push(getFilterUrl({ sortOrder: 4 }));
+  };
+
+  const handleToggleSort = (index: number) => {
+    setToggle(index);
+    history.push(getFilterUrl({ sortOrder: index }));
   };
 
   return (
@@ -154,13 +158,22 @@ const Sort = ({
     >
       <Box display="flex" alignItems="center" className={classes.styleLeft}>
         <Typography variant="h4">Sắp xếp theo</Typography>
-        <Box className={`${classes.styleButton} active`}>
+        <Box
+          className={`${classes.styleButton} ${toggle === 0 ? "active" : ""}`}
+          onClick={() => handleToggleSort(0)}
+        >
           <Typography>Phổ biến</Typography>
         </Box>
-        <Box className={classes.styleButton}>
+        <Box
+          className={`${classes.styleButton} ${toggle === 1 ? "active" : ""}`}
+          onClick={() => handleToggleSort(1)}
+        >
           <Typography>Mới nhất</Typography>
         </Box>
-        <Box className={classes.styleButton}>
+        <Box
+          className={`${classes.styleButton} ${toggle === 2 ? "active" : ""}`}
+          onClick={() => handleToggleSort(2)}
+        >
           <Typography>Bán chạy</Typography>
         </Box>
         <Box

@@ -20,7 +20,7 @@ export const routesUser = [
     component: HomePage,
   },
   {
-    path: "/info/:name/:infoID",
+    path: "/info/:infoID",
     component: DetailProductPage,
   },
   {
@@ -45,7 +45,7 @@ export const routesUser = [
     component: ListProductPage,
   },
   {
-    path: "/product/category/:category/type/:type/min/:min/max/:max/rating/:rating/page/:pageNumber",
+    path: "/product/category/:category/type/:type/min/:min/max/:max/rating/:rating/page/:pageNumber/sort/:sortOrder",
     exact: true,
     component: ListProductPage,
   },
