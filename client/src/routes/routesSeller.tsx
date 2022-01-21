@@ -6,7 +6,7 @@ import {
   SellerPage,
 } from "../pages/index";
 
-const routesSeller = [
+export const routesSeller = [
   {
     path: "/",
     exact: true,
@@ -29,5 +29,3 @@ const routesSeller = [
     component: SellerPage,
   },
 ];
-
-export default routesSeller;

@@ -6,10 +6,14 @@ import {
   CartPage,
   StorePage,
   OrderPage,
+  AccountPage,
+  ProfilePage,
+  AddressPage,
 } from "../pages/index";
 import ListProductPage from "../pages/ListProductPage";
-
-const routesUser = [
+const Payment = () => <h1>this is the payment page</h1>;
+const Password = () => <h1>this is the password page</h1>;
+export const routesUser = [
   {
     path: "/",
     exact: true,
@@ -43,6 +47,26 @@ const routesUser = [
     path: "/checkout",
     component: OrderPage,
   },
+  {
+    path: "/account",
+    component: AccountPage,
+    routes: [
+      {
+        path: "/account/profile",
+        component: ProfilePage,
+      },
+      {
+        path: "/account/address",
+        component: AddressPage,
+      },
+      {
+        path: "/account/payment",
+        component: Payment,
+      },
+      {
+        path: "/account/password",
+        component: Password,
+      },
+    ],
+  },
 ];
-
-export default routesUser;

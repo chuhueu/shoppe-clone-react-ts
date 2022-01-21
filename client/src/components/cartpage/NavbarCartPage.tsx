@@ -432,7 +432,12 @@ const NavbarCartPage = () => {
                   <Typography variant="h2">{userInfo.username}</Typography>
                   <Box className={classes.styleLanguage}>
                     <Box className={classes.styleLanguageBox}>
-                      <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                      <Link
+                        to="/account/profile"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                      </Link>
                     </Box>
                     <Box
                       className={classes.styleLanguageBox}
