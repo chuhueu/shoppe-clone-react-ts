@@ -76,7 +76,6 @@ const searchProductByName = asyncHandler(
 const getProductsByFilter = asyncHandler(
   async (req: Request, res: Response) => {
     try {
-      // let { rating, max, min, category, type,pageNumber } = req.body;
       let category = req.query.category || "";
       let type = req.query.type || "";
       let rating = Number(req.query.rating) || 0;
@@ -89,6 +88,7 @@ const getProductsByFilter = asyncHandler(
           ? Number(req.query.max)
           : 0;
       let pageNumber = Number(req.query.pageNumber) || 1;
+      let sortOrder = Number(req.query.sortOrder) || 0;
 
       const pageSize = 16;
       const categoryFilter = category ? { category } : {};
@@ -97,6 +97,35 @@ const getProductsByFilter = asyncHandler(
       const ratingFilter = rating
         ? { rating: { $gte: rating } }
         : { rating: { $gte: rating } };
+
+      const sortFilter = (sortOrder: any) => {
+        switch (sortOrder) {
+          case 0:
+            return {
+              name: 1,
+            };
+          case 1:
+            return {
+              createdAt: -1,
+            };
+          case 2:
+            return {
+              sold: -1,
+            };
+          case 3:
+            return {
+              price: 1,
+            };
+          case 4:
+            return {
+              price: -1,
+            };
+          default:
+            return {};
+        }
+      };
+
+      let sort = sortFilter(sortOrder);
 
       const basicQuery: any = [
         {
@@ -221,6 +250,9 @@ const getProductsByFilter = asyncHandler(
         );
         const paginateQuery: any = [
           {
+            $sort: sort,
+          },
+          {
             $skip: pageSize * (productsCount.length > 16 ? pageNumber - 1 : 0),
           },
           { $limit: pageSize },
@@ -256,6 +288,9 @@ const getProductsByFilter = asyncHandler(
       } else {
         productsCount = await Product.aggregate(basicQuery);
         const paginateQuery = [
+          {
+            $sort: sort,
+          },
           {
             $skip: pageSize * (productsCount.length > 16 ? pageNumber - 1 : 0),
           },

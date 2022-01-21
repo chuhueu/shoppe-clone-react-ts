@@ -18,9 +18,6 @@ const router = require("express").Router();
 //Get list product by filter
 router.route("/list").get(getProductsByFilter);
 
-//CREATE AND GET
-router.route("/").post(verify, checkSeller, createProduct).get(getProduct);
-
 //GET BY ID AND DELETE
 router
   .route("/:id")
@@ -32,5 +29,8 @@ router.route("/search/:name").get(searchProductByName);
 
 //List product by brand
 router.route("/brand/:id").get(getProductsByBrand);
+
+//CREATE AND GET
+router.route("/").post(verify, checkSeller, createProduct).get(getProduct);
 
 module.exports = router;

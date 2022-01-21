@@ -202,7 +202,6 @@ const useStyles = makeStyles((theme: Theme) =>
 SwiperCore.use([Navigation, Thumbs]);
 
 export interface Params {
-  name?: string;
   infoID: string;
 }
 
@@ -277,6 +276,7 @@ const MainProduct = ({ reload, setReload }: Props) => {
       setOpenModal(false);
     }, 3000);
   };
+
   return (
     <Container>
       <ModalAddCart openModal={openModal} />
@@ -434,28 +434,61 @@ const MainProduct = ({ reload, setReload }: Props) => {
                   </Box>
                 </Box>
                 <Box display="flex" flexDirection="column">
-                  <Box display="flex" alignItems="center" mb={4}>
-                    <Box
-                      component="label"
-                      pr={5}
-                      className={classes.styleLabel}
-                    >
-                      Colour
+                  {productInfo?.colour?.length !== 0 && (
+                    <Box display="flex" alignItems="center" mb={4}>
+                      <Box
+                        component="label"
+                        pr={5}
+                        className={classes.styleLabel}
+                      >
+                        Màu sắc:
+                      </Box>
+                      {productInfo?.colour?.map((item, index) => (
+                        <Box className={classes.styleChooseColor} key={index}>
+                          <Button variant="outlined">{item}</Button>
+                        </Box>
+                      ))}
                     </Box>
-                    <Box className={classes.styleChooseColor}>
-                      <Button variant="outlined" disabled>
-                        White
-                      </Button>
-                      <Button variant="outlined">Black</Button>
+                  )}
+                  {productInfo?.size?.length !== 0 && (
+                    <Box display="flex" alignItems="center" mb={4}>
+                      <Box
+                        component="label"
+                        pr={5}
+                        className={classes.styleLabel}
+                      >
+                        Kích cỡ:
+                      </Box>
+                      {productInfo?.size?.map((item, index) => (
+                        <Box className={classes.styleChooseColor} key={index}>
+                          <Button variant="outlined">{item}</Button>
+                        </Box>
+                      ))}
                     </Box>
-                  </Box>
+                  )}
+                  {productInfo?.type?.length !== 0 && (
+                    <Box display="flex" alignItems="center" mb={4}>
+                      <Box
+                        component="label"
+                        pr={5}
+                        className={classes.styleLabel}
+                      >
+                        Tùy chọn:
+                      </Box>
+                      {productInfo?.type?.map((item, index) => (
+                        <Box className={classes.styleChooseColor} key={index}>
+                          <Button variant="outlined">{item}</Button>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
                   <Box display="flex" alignItems="center" mb={2}>
                     <Box
                       component="label"
                       pr={5}
                       className={classes.styleLabel}
                     >
-                      Amount
+                      Số Lượng
                     </Box>
                     <Box display="flex" className={classes.styleCount}>
                       <button

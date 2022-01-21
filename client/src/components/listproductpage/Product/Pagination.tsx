@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import { Pagination as PaginationPro } from "@material-ui/lab";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
   filterProductInfo: any;
   getFilterUrl: any;
+  isFetching?: boolean;
 }
 
-const Pagination = ({ filterProductInfo, getFilterUrl }: Props) => {
+const Pagination = ({ filterProductInfo, getFilterUrl, isFetching }: Props) => {
   const classes = useStyles();
 
   const [pageNumber, setPageNumber] = useState<number>(
@@ -54,11 +55,15 @@ const Pagination = ({ filterProductInfo, getFilterUrl }: Props) => {
       justifyContent="center"
       className={classes.styleWrapper}
     >
-      <PaginationPro
-        count={filterProductInfo?.pages}
-        page={pageNumber}
-        onChange={handleChange}
-      />
+      {isFetching ? (
+        <CircularProgress />
+      ) : (
+        <PaginationPro
+          count={filterProductInfo?.pages}
+          page={pageNumber}
+          onChange={handleChange}
+        />
+      )}
     </Box>
   );
 };
