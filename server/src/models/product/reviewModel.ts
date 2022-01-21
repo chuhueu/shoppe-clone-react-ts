@@ -13,9 +13,7 @@ const ReviewSchema = new mongoose.Schema(
       ref: "User",
     },
     rating: { type: Number },
-    comment: { type: String },
-    title: { type: String },
-    isRecommended: { type: Boolean, default: true },
+    comment: { type: String, required: true },
   },
   {
     timestamps: true,

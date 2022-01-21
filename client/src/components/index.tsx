@@ -20,6 +20,7 @@ export { default as SignUpAuth } from "./authpage/SignUpAuth";
 export { default as DirectoryProduct } from "./detailproduct/DirectoryProduct";
 export { default as MainProduct } from "./detailproduct/MainProduct";
 export { default as ShopProduct } from "./detailproduct/ShopProduct";
+export { default as ReviewProduct } from "./detailproduct/ReviewProduct";
 
 //Cart page
 export { default as NavbarCartPage } from "./cartpage/NavbarCartPage";
