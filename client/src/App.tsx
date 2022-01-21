@@ -1,7 +1,8 @@
 import "./assets/css/app.css";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
-import { routesUser, routesSeller } from "./routes/routes";
+import { routesUser } from "./routes/routesUser";
+import { routesSeller } from "./routes/routesSeller";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./redux/store";

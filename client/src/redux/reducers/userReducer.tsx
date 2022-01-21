@@ -29,7 +29,8 @@ export interface userState {
   error?: boolean;
 }
 
-interface addressInfo {
+export interface addressInfo {
+  _id: string;
   user: string;
   fullName: string;
   phoneNumber: number;
@@ -117,8 +118,14 @@ export const userAddressReducer = (state: addressState, action: AnyAction) => {
     }
     case USER_ADD_ADDRESS: {
       return {
-        ...state,
-        address: [...state.address, action.payload],
+        address: action.payload,
+      };
+    }
+    case USER_REMOVE_ADDRESS: {
+      return {
+        address: state.address?.filter(
+          (item: any) => item._id !== action.payload.id
+        ),
       };
     }
     default:

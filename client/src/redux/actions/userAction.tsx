@@ -131,14 +131,8 @@ export const getOneAddress =
     const userInfo = localStorage.getItem("userInfo")
       ? JSON.parse(localStorage.getItem("userInfo")!)
       : null;
-
-    const addressId = await axios.get(`/user/${userInfo._id}`, {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    });
     const { data } = await axios.get(
-      `/address/default/${addressId.data.addressDefault}`
+      `/address/default/${userInfo.addressDefault}`
     );
     dispatch({
       type: USER_GET_ONE_ADDRESS,
@@ -146,14 +140,31 @@ export const getOneAddress =
     });
   };
 export const addAddress =
-  (): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  (
+    user: string,
+    fullName: string,
+    phoneNumber: string,
+    street: string,
+    town: string,
+    district: string,
+    province: string
+  ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
   async (
     dispatch: ThunkDispatch<RootState, unknown, AnyAction>
   ): Promise<void> => {
-    const postAddress = await axios.post("/address");
+    const { data } = await axios.post("/address", {
+      user,
+      fullName,
+      phoneNumber,
+      street,
+      town,
+      district,
+      province,
+    });
+
     dispatch({
       type: USER_ADD_ADDRESS,
-      payload: postAddress.data,
+      payload: data,
     });
   };
 export const updateAddress =
