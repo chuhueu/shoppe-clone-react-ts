@@ -4,9 +4,10 @@ const Review = require("../../models/product/reviewModel");
 
 //POST COMMENT
 const postComment = asyncHandler(async (req: Request, res: Response) => {
+  const newComment = new Review(req.body);
   try {
-    const post = await Review.save(req.body);
-    res.status(200).json(post);
+    const postComment = await newComment.save();
+    res.status(200).json(postComment);
   } catch (error) {
     res.status(500).json(error);
   }

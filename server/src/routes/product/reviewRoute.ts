@@ -1,3 +1,4 @@
+const router = require("express").Router();
 import {
   postComment,
   updateComment,
@@ -5,14 +6,13 @@ import {
   deleteComment,
 } from "../../controllers/product/reviewController";
 
-const router = require("express").Router();
-
 //POST COMMENT
 router.route("/comment").post(postComment);
 
 //UPDATE COMMENT
 router
   .route("/comment/:id")
+  .post(postComment)
   .put(updateComment)
   .get(getComment)
   .delete(deleteComment);
