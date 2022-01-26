@@ -1,8 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Button, Grid, Container, Hidden } from "@material-ui/core";
-import { Star } from "@material-ui/icons";
-
+import {
+  Box,
+  Button,
+  Grid,
+  Container,
+  Hidden,
+  Menu,
+  MenuItem,
+} from "@material-ui/core";
+import Rating from "@material-ui/lab/Rating";
+import { Star, ThumbUpAlt, MoreVert } from "@material-ui/icons";
+import { useParams } from "react-router-dom";
+import ReviewDialog from "./ReviewDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { reviewState } from "../../redux/reducers/reviewReducer";
+import { getReview } from "../../redux/actions/reviewAction";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContentLeft: {
@@ -48,6 +62,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: ".3125rem",
         marginTop: ".3125rem",
       },
+      "& div:first-child": {
+        color: "#ee4d2d",
+        borderColor: "#ee4d2d",
+      },
     },
     styleReviewList: {
       borderBottom: "1px solid rgba(0,0,0,.09)",
@@ -60,17 +78,48 @@ const useStyles = makeStyles((theme: Theme) =>
     styleStar: {
       "& svg": {
         fontSize: "15px",
+        //color: "#ee4d2d",
       },
+      // "& span": {
+      //   color: "#ee4d2d",
+      // },
+    },
+    styleComment: {
+      position: "relative",
+      boxSizing: "border-box",
+      margin: ".9375rem 0",
+      fontSize: ".875rem",
+      lineHeight: "1.25rem",
+      color: "rgba(0,0,0,.87)",
+      wordBreak: "break-word",
+      whiteSpace: "pre-wrap",
     },
   })
 );
+
+interface Params {
+  infoID: string;
+}
 const ReviewProduct = () => {
   //styles
   const classes = useStyles();
   //state
+  const params: Params = useParams();
+  const [showReview, setShowReview] = useState(false);
+  const [reload, setReload] = useState(false);
   const userInfo = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo")!)
     : null;
+  // const [review, setReview] = useState<Review[]>([]);
+  const { review } = useSelector<RootState, reviewState>(
+    (state) => state.reviewReducer
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getReview(params.infoID));
+  }, [dispatch, params.infoID, reload]);
+  console.log(review);
+
   return (
     <Container>
       <Box mt={2} mb={2} fontFamily="Roboto">
@@ -106,33 +155,105 @@ const ReviewProduct = () => {
                 </Box>
               </Box>
               <Box mt={1}>
-                <Box display="flex" className={classes.styleReviewList}>
-                  <Box mr={1}>
-                    <img
-                      src={userInfo?.avatar}
-                      alt=""
-                      className={classes.styleAvatar}
-                    />
-                  </Box>
-                  <Box flex="1">
-                    <Box ml={1}>{userInfo?.username}</Box>
-                    <Box color="#ee4d2d" className={classes.styleStar}>
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                      <Star />
-                    </Box>
-                  </Box>
-                </Box>
+                {review &&
+                  review?.map((item, index) => {
+                    // dispatch(getUserForComment(item.id));
+                    return (
+                      <Box
+                        display="flex"
+                        className={classes.styleReviewList}
+                        key={item.id}
+                      >
+                        <Box mr={1}>
+                          <img
+                            src={item?.avatar}
+                            alt=""
+                            className={classes.styleAvatar}
+                          />
+                        </Box>
+                        <Box flex="1">
+                          <Box>{item?.username}</Box>
+                          <Box className={classes.styleStar}>
+                            <Rating value={item?.rating} readOnly />
+                          </Box>
+                          <Box
+                            mt={1}
+                            mb={1}
+                            component="span"
+                            color="rgba(0,0,0,.4)"
+                            fontWeight="300"
+                          >
+                            Phân loại hàng: NÂU, XL
+                          </Box>
+                          <Box mt={2} mb={2} className={classes.styleComment}>
+                            {item?.comment}
+                          </Box>
+                          <Box display="flex">
+                            {item?.image && (
+                              <img
+                                src={item?.image}
+                                alt=""
+                                style={{ width: "60px" }}
+                              />
+                            )}
+                            {item?.video && (
+                              <video
+                                src={item?.video}
+                                width="80"
+                                height="80"
+                                controls
+                              ></video>
+                            )}
+                          </Box>
+                          <Box
+                            mt={1}
+                            mb={2}
+                            fontSize=".75rem"
+                            color="rgba(0,0,0,.54)"
+                          >
+                            {new Date(`${item?.createdAt}`).toLocaleString(
+                              "en-Us"
+                            )}
+                          </Box>
+                          <Box
+                            mt={2}
+                            display="flex"
+                            alignItems="center"
+                            color="rgba(0,0,0,.4)"
+                          >
+                            <Box mr={1}>
+                              <ThumbUpAlt />
+                            </Box>
+                            <Box>Hữu Ích?</Box>
+                            <Box marginLeft="auto">
+                              <MoreVert />
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                    );
+                  })}
               </Box>
             </Box>
           </Grid>
           <Hidden mdDown>
             <Grid item md={3}>
               <Box className={classes.styleContentRight}>
-                <h1>content right</h1>
+                <Button
+                  variant="outlined"
+                  style={{ marginLeft: "10px" }}
+                  onClick={() => setShowReview(true)}
+                >
+                  Review
+                </Button>
               </Box>
+              <ReviewDialog
+                showReview={showReview}
+                setShowReview={setShowReview}
+                params={params}
+                reload={reload}
+                setReload={setReload}
+              />
             </Grid>
           </Hidden>
         </Grid>

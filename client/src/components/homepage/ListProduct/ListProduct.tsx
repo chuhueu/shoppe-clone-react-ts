@@ -102,9 +102,9 @@ const ListProduct = () => {
         {isFetching ? (
           <CircularProgress />
         ) : (
-          productInfo?.map((product) => {
+          productInfo?.map((product, index) => {
             return (
-              <Grid item xs={6} sm={4} md={2}>
+              <Grid item xs={6} sm={4} md={2} key={index}>
                 <Link
                   to={{
                     pathname: "/info/" + product?._id,

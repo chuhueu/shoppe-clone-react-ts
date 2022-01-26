@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./redux/store";
 import { userState } from "./redux/reducers/userReducer";
 import { createCart } from "./redux/actions/cartAction";
+import { storage } from "./constants/firebase";
 function App() {
   const userLogin = useSelector<RootState, userState>(
     (state) => state.userLogin

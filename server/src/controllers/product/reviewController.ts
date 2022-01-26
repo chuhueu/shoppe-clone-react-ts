@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 const asyncHandler = require("express-async-handler");
 const Review = require("../../models/product/reviewModel");
+const User = require("../../models/auth/userModel");
 
 //POST COMMENT
 const postComment = asyncHandler(async (req: Request, res: Response) => {
@@ -34,6 +35,30 @@ const getComment = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+const getUserCommented = asyncHandler(async (req: Request, res: Response) => {
+  try {
+    //const get = await Review.find().distinct("user");
+    //select user from review
+    const get = await Review.find(
+      {},
+      { user: 1, _id: 0 },
+      { product: req.params.id }
+    );
+    //console.log(get);
+
+    let user = [];
+    for (let i = 0; i < get.length; i++) {
+      user.push(get[i].user.toString());
+    }
+
+    // const getUser = await User.find({ _id: { $in: get } });
+    const getUser = await User.find({ _id: { $in: user } });
+    //console.log(getUser);
+    res.status(200).json(getUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //DELETE COMMENT
 const deleteComment = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -43,4 +68,10 @@ const deleteComment = asyncHandler(async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
-export { postComment, updateComment, getComment, deleteComment };
+export {
+  postComment,
+  updateComment,
+  getComment,
+  deleteComment,
+  getUserCommented,
+};

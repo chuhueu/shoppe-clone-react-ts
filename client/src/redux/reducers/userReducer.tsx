@@ -4,6 +4,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILED,
   USER_LOGOUT,
+  USER_FOR_COMMENT,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILED,
@@ -14,7 +15,7 @@ import {
   USER_REMOVE_ADDRESS,
 } from "../constants/userConstants";
 
-interface userInfo {
+export interface userInfo {
   _id?: string;
   username?: string;
   email?: string;
@@ -97,6 +98,17 @@ export const userRegisterReducer = (state: userState, action: AnyAction) => {
         userInfo: null,
         isFetching: false,
         error: false,
+      };
+    }
+    default:
+      return { ...state };
+  }
+};
+export const userReducer = (state = { userInfo: [] }, action: AnyAction) => {
+  switch (action.type) {
+    case USER_FOR_COMMENT: {
+      return {
+        userInfo: [...state.userInfo, action.payload],
       };
     }
     default:

@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default:
-        "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg",
+        "https://cdn5.vectorstock.com/i/1000x1000/70/59/man-flat-avatar-on-white-background-vector-15647059.jpg",
     },
     addressDefault: {
       type: mongoose.Schema.Types.ObjectId,
