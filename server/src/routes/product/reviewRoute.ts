@@ -4,12 +4,12 @@ import {
   updateComment,
   getComment,
   deleteComment,
+  getUserCommented,
 } from "../../controllers/product/reviewController";
 
-//POST COMMENT
-router.route("/comment").post(postComment);
-
-//UPDATE COMMENT
+// //POST COMMENT
+// router.route("/comment").post(postComment);
+router.route("/comment/user/:id").get(getUserCommented);
 router
   .route("/comment/:id")
   .post(postComment)

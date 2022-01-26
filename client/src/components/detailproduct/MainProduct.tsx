@@ -16,16 +16,12 @@ import "swiper/swiper-bundle.min.css";
 import "../../assets/css/navigation.css";
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import axios from "../../axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 import { addToCart } from "../../redux/actions/cartAction";
 import ModalAddCart from "../cartpage/ModalAddCart";
-import {
-  detailProductReducer,
-  detailProductState,
-} from "../../redux/reducers/productReducer";
+import { detailProductState } from "../../redux/reducers/productReducer";
 import { getDetailProduct } from "../../redux/actions/productAction";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -201,7 +197,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 SwiperCore.use([Navigation, Thumbs]);
 
-export interface Params {
+interface Params {
   infoID: string;
 }
 
@@ -291,9 +287,9 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 slidesPerColumn={1}
                 thumbs={{ swiper: thumbsSwiper }}
               >
-                {productInfo?.image.map((img) => {
+                {productInfo?.image.map((img, index) => {
                   return (
-                    <SwiperSlide tag="li">
+                    <SwiperSlide tag="li" key={index}>
                       <img src={img} alt="" />
                     </SwiperSlide>
                   );
@@ -309,9 +305,9 @@ const MainProduct = ({ reload, setReload }: Props) => {
                 navigation
                 className={classes.styleThumbs}
               >
-                {productInfo?.image.map((img) => {
+                {productInfo?.image.map((img, index) => {
                   return (
-                    <SwiperSlide tag="li">
+                    <SwiperSlide tag="li" key={index}>
                       <img src={img} alt="" />
                     </SwiperSlide>
                   );

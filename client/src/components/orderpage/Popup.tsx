@@ -175,7 +175,7 @@ const Popup = ({ openPopup, setOpenPopup }: Props) => {
     setOpenPopup(false);
   };
   return (
-    <Dialog open={openPopup} maxWidth="md">
+    <Dialog open={openPopup} maxWidth="lg">
       <Box padding="20px">
         <DialogTitle>
           <Typography variant="h6" style={{ fontSize: "20px" }}>

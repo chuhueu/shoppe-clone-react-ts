@@ -213,6 +213,7 @@ const HeaderCart = ({ reload }: Props) => {
                         alignItems="center"
                         justifyContent="space-between"
                         className={classes.styleItem}
+                        key={index}
                       >
                         <Box display="flex">
                           <img
