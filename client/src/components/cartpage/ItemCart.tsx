@@ -7,8 +7,8 @@ import shipIcon from "../../assets/images/icons/ship.png";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { brandState } from "../../redux/reducers/productReducer";
-import { getBrand } from "../../redux/actions/productAction";
+import { brandState } from "../../redux/reducers/brandReducer";
+import { getBrand } from "../../redux/actions/brandAction";
 import { addOrderItem, removeOrderItem } from "../../redux/actions/orderAction";
 
 const useStyles = makeStyles((theme: Theme) =>
