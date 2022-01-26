@@ -22,8 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { categoryState } from "../../../redux/reducers/categoryReducer";
 import { getListCategory } from "../../../redux/actions/categoryAction";
-import { proTypeState } from "../../../redux/reducers/productReducer";
-import { getListProType } from "../../../redux/actions/productAction";
+import { proTypeState } from "../../../redux/reducers/productTypeReducer";
+import { getListProType } from "../../../redux/actions/productTypeAction";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -171,10 +171,6 @@ const Category = ({
 
   const handleToggle = (index: number) => {
     setToggle(index);
-  };
-
-  const handleCheckType = (index: number) => {
-    setCheckType(index);
   };
 
   return (

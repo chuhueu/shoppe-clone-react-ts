@@ -6,6 +6,7 @@ export { default as SellerPage } from "./SellerPage";
 export { default as CartPage } from "./CartPage";
 export { default as StorePage } from "./StorePage";
 export { default as OrderPage } from "./OrderPage";
+export { default as ShopPage } from "./ShopPage";
 //Account page
 export { default as AccountPage } from "./accountpage/AccountPage";
 export { default as ProfilePage } from "./accountpage/ProfilePage";

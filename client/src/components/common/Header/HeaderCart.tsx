@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleIcon: {
       color: "#fff",
-      fontSize: "30px",
+      fontSize: "40px",
       cursor: "pointer",
       padding: "5px",
     },

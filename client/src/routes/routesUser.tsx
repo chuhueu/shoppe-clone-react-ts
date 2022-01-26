@@ -9,6 +9,7 @@ import {
   AccountPage,
   ProfilePage,
   AddressPage,
+  ShopPage,
 } from "../pages/index";
 import ListProductPage from "../pages/ListProductPage";
 const Payment = () => <h1>this is the payment page</h1>;
@@ -48,6 +49,16 @@ export const routesUser = [
     path: "/product/category/:category/type/:type/min/:min/max/:max/rating/:rating/page/:pageNumber/sort/:sortOrder",
     exact: true,
     component: ListProductPage,
+  },
+  {
+    path: "/shop/:id",
+    exact: true,
+    component: ShopPage,
+  },
+  {
+    path: "/shop/:id/type/:type/page/:pageNumber/sort/:sortOrder",
+    exact: true,
+    component: ShopPage,
   },
   {
     path: "/checkout",

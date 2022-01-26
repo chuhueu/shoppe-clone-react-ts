@@ -60,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
       left: "0",
       backgroundColor: "#fff",
       boxShadow: "0 1px 1px 0 rgb(0 0 0 / 2%)",
+      zIndex: 99,
       "&.active": {
         display: "block",
       },
@@ -92,29 +93,23 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-  filterProductInfo: any;
+  getFilterUrl: any;
+  brandProductInfo: any;
   isFetching: any;
   error: any;
-  getFilterUrl: any;
-  category?: string;
+  id?: string;
   type?: string;
-  min?: number;
-  max?: number;
-  rating?: number;
   pageNumber?: number;
   sortOrder?: number;
 }
 
 const Sort = ({
-  filterProductInfo,
+  getFilterUrl,
+  brandProductInfo,
   isFetching,
   error,
-  getFilterUrl,
-  category,
+  id,
   type,
-  min,
-  max,
-  rating,
   pageNumber,
   sortOrder,
 }: Props) => {
@@ -127,13 +122,13 @@ const Sort = ({
 
   const pagePrev = () => {
     history.push(
-      getFilterUrl({ page: Number(filterProductInfo?.pageNumber) - 1 })
+      getFilterUrl({ page: Number(brandProductInfo?.pageNumber) - 1 })
     );
   };
 
   const pageNext = () => {
     history.push(
-      getFilterUrl({ page: Number(filterProductInfo?.pageNumber) + 1 })
+      getFilterUrl({ page: Number(brandProductInfo?.pageNumber) + 1 })
     );
   };
 
@@ -201,8 +196,8 @@ const Sort = ({
       </Box>
       <Box display="flex" alignItems="center" className={classes.styleRight}>
         <Box display="flex" alignItems="center">
-          <Typography variant="h5">{filterProductInfo?.pageNumber}</Typography>
-          <Typography variant="h4">/{filterProductInfo?.pages}</Typography>
+          <Typography variant="h5">{brandProductInfo?.pageNumber}</Typography>
+          <Typography variant="h4">/{brandProductInfo?.pages}</Typography>
         </Box>
         <Box display="flex" alignItems="center" marginLeft="10px">
           <Box
@@ -210,7 +205,7 @@ const Sort = ({
             alignItems="center"
             justifyContent="center"
             className={`${classes.stylePagiButton} ${
-              filterProductInfo?.pageNumber === 1 ? "disable" : ""
+              brandProductInfo?.pageNumber === 1 ? "disable" : ""
             }`}
             onClick={pagePrev}
           >
@@ -221,7 +216,7 @@ const Sort = ({
             alignItems="center"
             justifyContent="center"
             className={`${classes.stylePagiButton} ${
-              filterProductInfo?.pageNumber === filterProductInfo?.pages
+              brandProductInfo?.pageNumber === brandProductInfo?.pages
                 ? "disable"
                 : ""
             }`}
