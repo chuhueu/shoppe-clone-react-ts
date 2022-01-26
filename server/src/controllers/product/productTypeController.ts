@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
+import { ObjectId } from "mongoose";
 const asyncHandler = require("express-async-handler");
 const ProductType = require("../../models/product/productTypeModel");
+const Brand = require("../../models/product/brandModel");
+const Product = require("../../models/product/productModel");
 
 //CREATE
 const createProductType = asyncHandler(async (req: Request, res: Response) => {
@@ -31,4 +34,46 @@ const getProductTypeById = asyncHandler(async (req: Request, res: Response) => {
   }
 });
 
-export { createProductType, getProductType, getProductTypeById };
+interface brandDocModel {
+  productType: ObjectId;
+}
+
+//GET BY BRAND
+const getProductTypeByBrand = asyncHandler(
+  async (req: Request, res: Response) => {
+    try {
+      const brandId = req.params.id;
+
+      const brandDoc: Array<brandDocModel> = await Product.find(
+        { brand: brandId },
+        "productType -_id"
+      );
+
+      const brandDocArray: any = [];
+      brandDoc.map((item) => {
+        brandDocArray.push(item.productType);
+      });
+
+      const data = await ProductType.aggregate([
+        {
+          $match: {
+            _id: {
+              $in: Array.from(brandDocArray),
+            },
+          },
+        },
+      ]);
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(500).json({ error: `${error}` });
+    }
+  }
+);
+
+export {
+  createProductType,
+  getProductType,
+  getProductTypeById,
+  getProductTypeByBrand,
+};

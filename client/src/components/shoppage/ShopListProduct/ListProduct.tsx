@@ -1,9 +1,9 @@
+import React, { useEffect } from "react";
 import { Box, CircularProgress, Grid, Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { getFilterProduct } from "../../../redux/actions/productAction";
+import { getBrandProduct } from "../../../redux/actions/brandAction";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
         transform: "translateY(-2px)",
       },
     },
+    styleImg: { width: "100%" },
     styleLink: {
       textDecoration: "none",
       color: "#fff",
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     styleText: {
+      position: "relative",
       fontFamily: "Roboto",
       background: "#fff",
       transition: "transform 0.3s ease",
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         transition: "transform 0.3s ease",
       },
       "& p": {
+        marginBottom: "5px",
         color: "rgba(0,0,0,.87)",
         lineHeight: "14px",
         fontSize: ".75rem",
@@ -50,31 +53,52 @@ const useStyles = makeStyles((theme: Theme) =>
         fontSize: ".75rem",
       },
     },
+    styleDiscount: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      width: "36px",
+      padding: "4px 2px 3px",
+      backgroundColor: "rgba(255,212,36,.9)",
+      textAlign: "center",
+      zIndex: 2,
+    },
+    styleFooter: {
+      position: "absolute",
+      width: "100%",
+      height: 0,
+      left: "-2px",
+      bottom: "-7px",
+      borderColor: "transparent rgba(255,212,36,.9)",
+      borderStyle: "solid",
+      borderWidth: "0 18px 4px",
+    },
+    styleTrend: {
+      color: "rgb(255,0,32) !important",
+      border: "1px solid rgb(255,0,32)",
+      padding: "1px 3px",
+      borderRadius: "2px",
+      width: "auto",
+    },
   })
 );
 
 interface Props {
-  filterProductInfo: any;
+  brandProductInfo: any;
   isFetching: any;
   error: any;
-  category?: string;
+  id?: string;
   type?: string;
-  min?: number;
-  max?: number;
-  rating?: number;
   pageNumber?: number;
   sortOrder?: number;
 }
 
 const ListProduct = ({
-  filterProductInfo,
+  brandProductInfo,
   isFetching,
   error,
-  category,
+  id,
   type,
-  min,
-  max,
-  rating,
   pageNumber,
   sortOrder,
 }: Props) => {
@@ -84,17 +108,14 @@ const ListProduct = ({
 
   useEffect(() => {
     dispatch(
-      getFilterProduct({
-        category: category !== "all" ? category : "all",
+      getBrandProduct({
+        id,
         type: type !== "all" ? type : "all",
-        min,
-        max,
-        rating,
         pageNumber,
         sortOrder,
       })
     );
-  }, [category, dispatch, type, min, max, rating, pageNumber, sortOrder]);
+  }, [id, dispatch, type, pageNumber, sortOrder]);
 
   const toVND = (price: any) => {
     let vnd =
@@ -117,7 +138,7 @@ const ListProduct = ({
         {isFetching ? (
           <CircularProgress />
         ) : (
-          filterProductInfo?.products?.map((product: any) => {
+          brandProductInfo?.products?.map((product: any) => {
             return (
               <Grid item xs={6} sm={4} md={3} key={product._id}>
                 <Link
@@ -130,6 +151,7 @@ const ListProduct = ({
                     <img src={product?.image[0]} alt="" />
                     <Box padding={1}>
                       <Typography>{product?.name}</Typography>
+                      <span className={classes.styleTrend}>#ShopXuHuong</span>
                       <Box
                         mt={2}
                         display="flex"
@@ -147,6 +169,22 @@ const ListProduct = ({
                         <Box>{product.sold} sold</Box>
                       </Box>
                     </Box>
+                    {product.discount > 0 && (
+                      <Box className={classes.styleDiscount}>
+                        <Box
+                          position="relative"
+                          display="flex"
+                          flexDirection="column"
+                          width="100%"
+                        >
+                          <Typography variant="h5">
+                            {product.discount}%
+                          </Typography>
+                          <Typography variant="h3">GIẢM</Typography>
+                          <Box className={classes.styleFooter}></Box>
+                        </Box>
+                      </Box>
+                    )}
                   </Box>
                 </Link>
               </Grid>

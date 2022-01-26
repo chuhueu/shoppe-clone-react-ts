@@ -46,3 +46,9 @@ export { default as TotalOrderPage } from "./orderpage/TotalOrderPage";
 export { default as SideBarAccount } from "./accountpage/SideBarAccount";
 export { default as ProfileAccount } from "./accountpage/ProfileAccount";
 export { default as AddressAccount } from "./accountpage/AddressAccount";
+
+//Shop page
+export { default as ShopInfo } from "./shoppage/ShopInfo";
+export { default as ShopVoucher } from "./shoppage/ShopVoucher";
+export { default as ShopCollection } from "./shoppage/ShopCollection";
+export { default as ShopListProduct } from "./shoppage/ShopListProduct";

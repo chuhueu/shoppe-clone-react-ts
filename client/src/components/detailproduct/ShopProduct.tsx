@@ -105,13 +105,14 @@ const ShopProduct = () => {
     };
     getCategory();
   }, [params?.infoID]);
+
   return (
     <Container>
       <Box mt={3} mb={3} className={classes.styleBox}>
         <Grid container spacing={2} className={classes.styleGrid}>
           <Grid item xs={12} sm={6} md={5}>
             <Box display="flex" className={classes.styleBoxLeft}>
-              <Link to={{ pathname: "/store/" + brand?.name }}>
+              <Link to={{ pathname: "/shop/" + brand?._id }}>
                 <img src={brand?.image} alt={brand?.name} />
               </Link>
               <Box

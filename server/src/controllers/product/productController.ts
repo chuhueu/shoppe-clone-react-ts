@@ -330,64 +330,177 @@ const getProductsByBrand = asyncHandler(async (req: Request, res: Response) => {
       });
     }
 
-    const userDoc = await checkAuth(req);
+    let type = req.query.type || "";
+    let pageNumber = Number(req.query.pageNumber) || 1;
+    let sortOrder = Number(req.query.sortOrder) || 0;
 
-    if (userDoc) {
-      const products = await Product.aggregate([
-        {
-          $match: {
-            brand: brand._id,
-          },
-        },
-        {
-          $lookup: {
-            from: "wishlists",
-            let: { product: "$_id" },
-            pipeline: [
-              {
-                $match: {
-                  $and: [
-                    { $expr: { $eq: ["$$product", "$product"] } },
-                    { user: new mongoose.Types.ObjectId(userDoc.id) },
-                  ],
-                },
-              },
-            ],
-            as: "isLiked",
-          },
-        },
-        {
-          $lookup: {
-            from: "brands",
-            localField: "brand",
-            foreignField: "_id",
-            as: "brands",
-          },
-        },
-        {
-          $addFields: {
-            isLiked: { $arrayElemAt: ["$isLiked.isLiked", 0] },
-          },
-        },
-        {
-          $unwind: "$brands",
-        },
-        {
-          $addFields: {
-            "brand.name": "$brands.name",
-            "brand._id": "$brands._id",
-          },
-        },
-        { $project: { brand: 0 } },
-      ]);
+    const pageSize = 8;
+    const typeFilter = type ? { type } : {};
 
-      res.status(200).json({
-        products: products.reverse().slice(0, 16),
-        page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 16) : 0,
-        totalProducts: products.length,
+    const sortFilter = (sortOrder: any) => {
+      switch (sortOrder) {
+        case 0:
+          return {
+            name: 1,
+          };
+        case 1:
+          return {
+            createdAt: -1,
+          };
+        case 2:
+          return {
+            sold: -1,
+          };
+        case 3:
+          return {
+            price: 1,
+          };
+        case 4:
+          return {
+            price: -1,
+          };
+        default:
+          return {};
+      }
+    };
+
+    let sort = sortFilter(sortOrder);
+
+    const basicQuery: any = [
+      {
+        $match: {
+          brand: brand._id,
+        },
+      },
+      {
+        $lookup: {
+          from: "brands",
+          localField: "brand",
+          foreignField: "_id",
+          as: "brands",
+        },
+      },
+      {
+        $unwind: {
+          path: "$brands",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          "brand.name": "$brands.name",
+          "brand._id": "$brands._id",
+        },
+      },
+      { $project: { brand: 0 } },
+    ];
+
+    const typeDoc = await ProductType.findOne(
+      { slug: typeFilter.type },
+      "content -_id"
+    );
+
+    if (typeDoc && typeFilter !== type) {
+      basicQuery.push({
+        $match: {
+          _id: {
+            $in: Array.from(typeDoc.content),
+          },
+        },
       });
     }
+
+    const userDoc = await checkAuth(req);
+    let products = null;
+    let productsCount: any = 0;
+
+    if (userDoc) {
+      productsCount = await Product.aggregate(
+        [
+          {
+            $lookup: {
+              from: "wishlists",
+              let: { product: "$_id" },
+              pipeline: [
+                {
+                  $match: {
+                    $and: [
+                      { $expr: { $eq: ["$$product", "$product"] } },
+                      { user: new mongoose.Types.ObjectId(userDoc.id) },
+                    ],
+                  },
+                },
+              ],
+              as: "isLiked",
+            },
+          },
+          {
+            $addFields: {
+              isLiked: { $arrayElemAt: ["$isLiked.isLiked", 0] },
+            },
+          },
+        ].concat(basicQuery)
+      );
+      const paginateQuery: any = [
+        {
+          $sort: sort,
+        },
+        {
+          $skip: pageSize * (productsCount.length > 8 ? pageNumber - 1 : 0),
+        },
+        { $limit: pageSize },
+      ];
+      products = await Product.aggregate(
+        [
+          {
+            $lookup: {
+              from: "wishlists",
+              let: { product: "$_id" },
+              pipeline: [
+                {
+                  $match: {
+                    $and: [
+                      { $expr: { $eq: ["$$product", "$product"] } },
+                      { user: new mongoose.Types.ObjectId(userDoc.id) },
+                    ],
+                  },
+                },
+              ],
+              as: "isLiked",
+            },
+          },
+          {
+            $addFields: {
+              isLiked: { $arrayElemAt: ["$isLiked.isLiked", 0] },
+            },
+          },
+        ]
+          .concat(basicQuery)
+          .concat(paginateQuery)
+      );
+    } else {
+      productsCount = await Product.aggregate(basicQuery);
+      const paginateQuery = [
+        {
+          $sort: sort,
+        },
+        {
+          $skip: pageSize * (productsCount.length > 8 ? pageNumber - 1 : 0),
+        },
+        { $limit: pageSize },
+      ];
+      products = await Product.aggregate(basicQuery.concat(paginateQuery));
+    }
+
+    res.status(200).json({
+      products,
+      pageNumber,
+      pages:
+        productsCount.length > 0
+          ? Math.ceil(productsCount.length / pageSize)
+          : 0,
+      totalProducts: productsCount.length,
+    });
   } catch (error) {
     res.status(500).json({ message: `error: ${error}` });
   }

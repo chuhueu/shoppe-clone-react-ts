@@ -7,12 +7,14 @@ import {
   userAddressReducer,
 } from "../reducers/userReducer";
 import {
-  brandReducer,
   detailProductReducer,
   listFilterProductReducer,
   listProductReducer,
-  listProTypeReducer,
 } from "../reducers/productReducer";
+import {
+  brandReducer,
+  listBrandProductReducer,
+} from "../reducers/brandReducer";
 import {
   createCartReducer,
   getCartReducer,
@@ -21,6 +23,10 @@ import {
 } from "../reducers/cartReducer";
 import { orderItemsReducer } from "../reducers/orderReducer";
 import { listCategoryReducer } from "../reducers/categoryReducer";
+import {
+  listBrandProTypeReducer,
+  listProTypeReducer,
+} from "../reducers/productTypeReducer";
 
 const reducers = combineReducers({
   userLogin: userLoginReducer,
@@ -36,7 +42,9 @@ const reducers = combineReducers({
   detailProduct: detailProductReducer,
   listCategory: listCategoryReducer,
   listProType: listProTypeReducer,
+  listBrandProType: listBrandProTypeReducer,
   listFilterProduct: listFilterProductReducer,
+  listBrandProduct: listBrandProductReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
