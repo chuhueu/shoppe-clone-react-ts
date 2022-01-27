@@ -107,6 +107,7 @@ export const logout =
       type: USER_LOGOUT,
     });
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("orderItems");
   };
 
 export const getAddress =

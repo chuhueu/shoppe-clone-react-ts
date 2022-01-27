@@ -10,8 +10,8 @@ import {
   ProfilePage,
   AddressPage,
   ShopPage,
+  ListProductPage,
 } from "../pages/index";
-import ListProductPage from "../pages/ListProductPage";
 const Payment = () => <h1>this is the payment page</h1>;
 const Password = () => <h1>this is the password page</h1>;
 export const routesUser = [
