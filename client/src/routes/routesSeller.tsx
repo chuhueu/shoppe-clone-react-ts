@@ -4,6 +4,8 @@ import {
   LoginPage,
   SignUpPage,
   SellerPage,
+  ListOrderPage,
+  TodoListPage,
 } from "../pages/index";
 
 export const routesSeller = [
@@ -27,5 +29,16 @@ export const routesSeller = [
   {
     path: "/seller",
     component: SellerPage,
+    routes: [
+      {
+        path: "/seller",
+        exact: true,
+        component: TodoListPage,
+      },
+      {
+        path: "/seller/order",
+        component: ListOrderPage,
+      },
+    ],
   },
 ];
