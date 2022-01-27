@@ -5,6 +5,7 @@ import { CameraAlt, VideoCall } from "@material-ui/icons";
 import axios from "../../axios";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../constants/firebase";
+import CircularProgressPercent from "./CircularProgressPercent";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleInput: {
@@ -56,6 +57,14 @@ const useStyles = makeStyles((theme: Theme) =>
         outline: "none",
       },
     },
+    styleImg: {
+      maxWidth: "100px",
+      objectFit: "cover",
+      marginRight: "5px",
+    },
+    styleVideo: {
+      marginRight: "5px",
+    },
   })
 );
 const Upload = ({ setComment, setVideo, video, setImage, image }: any) => {
@@ -80,7 +89,6 @@ const Upload = ({ setComment, setVideo, video, setImage, image }: any) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImage(downloadURL);
-          console.log("File available at", downloadURL);
         });
       }
     );
@@ -102,7 +110,6 @@ const Upload = ({ setComment, setVideo, video, setImage, image }: any) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setVideo(downloadURL);
-          console.log("File available at", downloadURL);
         });
       }
     );
@@ -140,11 +147,21 @@ const Upload = ({ setComment, setVideo, video, setImage, image }: any) => {
             onChange={handleUploadVideo}
           />
         </label>
-        <h2>Uploading done {progress}%</h2>
+        {progress > 0 && progress < 100 && (
+          <CircularProgressPercent value={progress} />
+        )}
       </Box>
       <Box display="flex">
-        {image && <img src={image} alt="" style={{ width: "60px" }} />}
-        {video && <video src={video} width="80" height="80" controls></video>}
+        {image && <img src={image} alt="" className={classes.styleImg} />}
+        {video && (
+          <video
+            src={video}
+            width="100"
+            height="100"
+            controls
+            className={classes.styleVideo}
+          ></video>
+        )}
       </Box>
     </Box>
   );

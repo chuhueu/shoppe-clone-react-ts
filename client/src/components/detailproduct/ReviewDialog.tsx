@@ -162,6 +162,7 @@ const ReviewDialog = ({
       )
     );
     setReload(!reload);
+    setShowReview(false);
   };
 
   return (

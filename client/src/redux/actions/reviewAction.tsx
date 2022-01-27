@@ -52,7 +52,6 @@ export const getReview =
   ): Promise<void> => {
     try {
       const { data } = await axios.get(`/review/comment/${id}`);
-      console.log(data);
 
       dispatch({
         type: GET_REVIEW,

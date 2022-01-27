@@ -20,6 +20,7 @@ export interface Review {
 export interface reviewState {
   review: Array<Review>;
 }
+
 export const reviewReducer = (state: reviewState, action: AnyAction) => {
   switch (action.type) {
     case POST_REVIEW:
