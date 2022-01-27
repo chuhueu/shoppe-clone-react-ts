@@ -94,6 +94,14 @@ const useStyles = makeStyles((theme: Theme) =>
       wordBreak: "break-word",
       whiteSpace: "pre-wrap",
     },
+    styleImg: {
+      maxWidth: "100px",
+      objectFit: "cover",
+      marginRight: "5px",
+    },
+    styleVideo: {
+      marginRight: "5px",
+    },
   })
 );
 
@@ -118,7 +126,6 @@ const ReviewProduct = () => {
   useEffect(() => {
     dispatch(getReview(params.infoID));
   }, [dispatch, params.infoID, reload]);
-  console.log(review);
 
   return (
     <Container>
@@ -155,8 +162,8 @@ const ReviewProduct = () => {
                 </Box>
               </Box>
               <Box mt={1}>
-                {review &&
-                  review?.map((item, index) => {
+                {review.length > 0 &&
+                  review?.map((item) => {
                     // dispatch(getUserForComment(item.id));
                     return (
                       <Box
@@ -193,14 +200,15 @@ const ReviewProduct = () => {
                               <img
                                 src={item?.image}
                                 alt=""
-                                style={{ width: "60px" }}
+                                className={classes.styleImg}
                               />
                             )}
                             {item?.video && (
                               <video
                                 src={item?.video}
-                                width="80"
-                                height="80"
+                                width="100"
+                                height="100"
+                                className={classes.styleVideo}
                                 controls
                               ></video>
                             )}

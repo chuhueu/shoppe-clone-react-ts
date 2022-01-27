@@ -24,6 +24,15 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "rgba(0,0,0,.54)",
     },
     styleList: { padding: "10px" },
+    styleItem: {
+      cursor: "pointer",
+      borderRadius: "10px",
+      transition: "all 0.5s ease",
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+        transition: "all 0.5s ease",
+      },
+    },
     styleNumber: {
       fontSize: "32px",
       fontWeight: 500,
@@ -50,6 +59,7 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
             <Typography variant="h4">Chờ Xác Nhận</Typography>
@@ -62,9 +72,10 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
-            <Typography variant="h4">Chờ Xác Nhận</Typography>
+            <Typography variant="h4">Chờ Lấy Hàng</Typography>
           </Box>
         </Grid>
         <Grid item lg={3}>
@@ -74,9 +85,10 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
-            <Typography variant="h4">Chờ Xác Nhận</Typography>
+            <Typography variant="h4">Đã Xử Lý</Typography>
           </Box>
         </Grid>
         <Grid item lg={3}>
@@ -86,9 +98,10 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
-            <Typography variant="h4">Chờ Xác Nhận</Typography>
+            <Typography variant="h4">Trả hàng / Hoàn tiền chờ xử lý</Typography>
           </Box>
         </Grid>
         <Grid item lg={3}>
@@ -98,9 +111,10 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
-            <Typography variant="h4">Chờ Xác Nhận</Typography>
+            <Typography variant="h4">Đơn Hủy</Typography>
           </Box>
         </Grid>
         <Grid item lg={3}>
@@ -110,9 +124,23 @@ const TodoList = () => {
             alignItems="center"
             justifyContent="center"
             padding="15px 0"
+            className={classes.styleItem}
           >
             <p className={classes.styleNumber}>0</p>
-            <Typography variant="h4">Chờ Xác Nhận</Typography>
+            <Typography variant="h4">Sản phẩm bị khóa</Typography>
+          </Box>
+        </Grid>
+        <Grid item lg={3}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            padding="15px 0"
+            className={classes.styleItem}
+          >
+            <p className={classes.styleNumber}>0</p>
+            <Typography variant="h4">Sản phẩm hết hàng</Typography>
           </Box>
         </Grid>
       </Grid>

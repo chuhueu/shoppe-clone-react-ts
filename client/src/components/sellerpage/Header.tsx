@@ -115,7 +115,7 @@ const Header = () => {
             <img src={logo} alt="" className={classes.styleLogo} />
           </Link>
           <Link to="/cart" className={classes.styleLinkHeader}>
-            <Typography variant="h1">Giỏ Hàng</Typography>
+            <Typography variant="h1">Kênh Người Bán</Typography>
           </Link>
         </Box>
         <Box display="flex" alignItems="center">
