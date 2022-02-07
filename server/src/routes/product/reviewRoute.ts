@@ -5,11 +5,16 @@ import {
   getComment,
   deleteComment,
   getUserCommented,
+  countReview,
+  filterByStar,
+  filterByImageOrVideo,
 } from "../../controllers/product/reviewController";
 
 // //POST COMMENT
-// router.route("/comment").post(postComment);
 router.route("/comment/user/:id").get(getUserCommented);
+router.route("/comment/count/:id").get(countReview);
+router.route("/filterByStar/:id").get(filterByStar);
+router.route("/filterByImageOrVideo/:id").get(filterByImageOrVideo);
 router
   .route("/comment/:id")
   .post(postComment)

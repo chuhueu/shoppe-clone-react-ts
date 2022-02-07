@@ -67,11 +67,19 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const Upload = ({ setComment, setVideo, video, setImage, image }: any) => {
+const Upload = ({
+  setComment,
+  setVideo,
+  video,
+  setImage,
+  image,
+  progress,
+  setProgress,
+}: any) => {
   //styles
   const classes = useStyles();
   //state
-  const [progress, setProgress] = useState(0);
+  //const [progress, setProgress] = useState(0);
   const handleUploadImage = (e: any) => {
     const files = e.target.files[0];
     const storageRef = ref(storage, `/images/${files.name}`);

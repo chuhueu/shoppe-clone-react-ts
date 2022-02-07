@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
-  RATING_5STAR_ITEM1,
-  RATING_5STAR_ITEM2,
-  RATING_5STAR_ITEM3,
-  RATING_5STAR_ITEM4,
-  RATING_5STAR_ITEM5,
-  RATING_4STAR_ITEM1,
-  RATING_4STAR_ITEM2,
-  RATING_4STAR_ITEM3,
-  RATING_4STAR_ITEM4,
-  RATING_4STAR_ITEM5,
-  RATING_3STAR_ITEM1,
-  RATING_3STAR_ITEM2,
-  RATING_3STAR_ITEM3,
-  RATING_3STAR_ITEM4,
-  RATING_3STAR_ITEM5,
+  rating5star,
+  rating4star,
+  rating3star,
 } from "../../constants/recommned";
 import {
   Dialog,
@@ -33,9 +21,10 @@ import { reviewState } from "../../redux/reducers/reviewReducer";
 import { postReview } from "../../redux/actions/reviewAction";
 import { detailProductState } from "../../redux/reducers/productReducer";
 import { Link } from "react-router-dom";
-import axios from "../../axios";
+//import axios from "../../axios";
 import Rating from "./Rating";
 import Upload from "./Upload";
+import clsx from "clsx";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleDialog: {
@@ -69,8 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
       wordBreak: "break-word",
     },
     styleSelected: {
-      borderColor: (selected) => (selected ? "#ee4d2d" : "rgba(0, 0, 0, 0.09)"),
-      color: (selected) => (selected ? "#ee4d2d" : "rgb(34, 34, 34)"),
+      // borderColor: (selected) => (selected ? "#ee4d2d" : "rgba(0, 0, 0, 0.09)"),
+      // color: (selected) => (selected ? "#ee4d2d" : "rgb(34, 34, 34)"),
+      borderColor: "#ee4d2d",
+      color: "#ee4d2d",
     },
     styleSelectReview: {},
     styleButtonOutlined: {
@@ -106,32 +97,12 @@ const ReviewDialog = ({
   setReload,
 }: any) => {
   const [selected, setSelected] = useState(false);
+  const [progress, setProgress] = useState(0);
   //styles
   //const selected = { borderColor: "#ee4d2d", color: "#ee4d2d" };
-  const classes = useStyles(selected);
+  const classes = useStyles();
 
   //state
-  const star5 = [
-    RATING_5STAR_ITEM1,
-    RATING_5STAR_ITEM2,
-    RATING_5STAR_ITEM3,
-    RATING_5STAR_ITEM4,
-    RATING_5STAR_ITEM5,
-  ];
-  const star4 = [
-    RATING_4STAR_ITEM1,
-    RATING_4STAR_ITEM2,
-    RATING_4STAR_ITEM3,
-    RATING_4STAR_ITEM4,
-    RATING_4STAR_ITEM5,
-  ];
-  const star3 = [
-    RATING_3STAR_ITEM1,
-    RATING_3STAR_ITEM2,
-    RATING_3STAR_ITEM3,
-    RATING_3STAR_ITEM4,
-    RATING_3STAR_ITEM5,
-  ];
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [image, setImage] = useState("");
@@ -165,6 +136,10 @@ const ReviewDialog = ({
     setShowReview(false);
   };
 
+  const [activeIndex, setActiveIndex] = useState<any>();
+  const recommend = clsx(classes.styleSelect, {
+    [classes.styleSelected]: activeIndex,
+  });
   return (
     <Dialog open={showReview} maxWidth="lg" className={classes.styleDialog}>
       <Box padding={2} className={classes.styleBox}>
@@ -201,25 +176,56 @@ const ReviewDialog = ({
               <Rating rating={rating} setRating={setRating} />
             </Box>
             <Box textAlign="center" className={classes.styleSelectReview}>
+              {/* {rating === 5 && (
+                <>
+                  <Box className={recommend}>Chất lượng sản phẩm tuyệt vời</Box>
+                  <Box className={recommend}>
+                    Đóng gói sản phẩm rất đẹp và chắc chắn
+                  </Box>
+                  <Box className={recommend}>Shop phục vụ rất tốt</Box>
+                </>
+              )} */}
               {rating === 5 &&
-                star5.map((item, index) => {
+                rating5star.map((item, index) => {
                   return (
                     <Box
                       key={index}
-                      className={`${classes.styleSelect} ${classes.styleSelected}`}
-                      onClick={() => setSelected(!selected)}
+                      className={clsx(classes.styleSelect, {
+                        [classes.styleSelected]: index === activeIndex,
+                      })}
+                      onClick={() => setActiveIndex(index)}
                     >
                       {item}
                     </Box>
                   );
                 })}
               {rating === 4 &&
-                star4.map((i) => {
-                  return <Box className={classes.styleSelect}>{i}</Box>;
+                rating4star.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      className={clsx(classes.styleSelect, {
+                        [classes.styleSelected]: index === activeIndex,
+                      })}
+                      onClick={() => setActiveIndex(index)}
+                    >
+                      {item}
+                    </Box>
+                  );
                 })}
               {rating === 3 &&
-                star3.map((i) => {
-                  return <Box className={classes.styleSelect}>{i}</Box>;
+                rating3star.map((item, index) => {
+                  return (
+                    <Box
+                      key={index}
+                      className={clsx(classes.styleSelect, {
+                        [classes.styleSelected]: index === activeIndex,
+                      })}
+                      onClick={() => setActiveIndex(index)}
+                    >
+                      {item}
+                    </Box>
+                  );
                 })}
             </Box>
             <Upload
@@ -228,6 +234,8 @@ const ReviewDialog = ({
               video={video}
               setVideo={setVideo}
               setComment={setComment}
+              progress={progress}
+              setProgress={setProgress}
             />
           </Box>
         </DialogContent>
@@ -240,13 +248,23 @@ const ReviewDialog = ({
             >
               Trở lại
             </Button>
-            <Button
-              variant="outlined"
-              className={classes.styleButton}
-              onClick={handleSubmit}
-            >
-              Hoàn Thành
-            </Button>
+            {progress > 0 && progress < 100 ? (
+              <Button
+                variant="outlined"
+                className={classes.styleButton}
+                disabled
+              >
+                Hoàn Thành
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                className={classes.styleButton}
+                onClick={handleSubmit}
+              >
+                Hoàn Thành
+              </Button>
+            )}
           </Box>
         </DialogActions>
       </Box>
