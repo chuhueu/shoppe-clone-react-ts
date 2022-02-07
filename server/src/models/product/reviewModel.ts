@@ -15,7 +15,7 @@ const ReviewSchema = new mongoose.Schema(
     username: { type: String, required: true },
     avatar: { type: String, required: true },
     rating: { type: Number, required: true },
-    comment: { type: String, required: true },
+    comment: { type: String },
     image: { type: String },
     video: { type: String },
     // image: { type: Array },
