@@ -7,6 +7,9 @@ import {
   GET_REVIEW,
   UPDATE_REVIEW,
   REMOVE_REVIEW,
+  GET_STATIC,
+  FILTER_BY_STAR,
+  FILTER_BY_IMAGE_OR_VIDEO,
 } from "../constants/reviewConstant";
 
 export const postReview =
@@ -93,6 +96,62 @@ export const updateReview =
       });
       dispatch({
         type: UPDATE_REVIEW,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const getStatic =
+  (id: any): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      const { data } = await axios.get(`/review/comment/count/${id}`);
+      dispatch({
+        type: GET_STATIC,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const filterByStar =
+  (
+    rating: number,
+    id: any
+  ): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      const { data } = await axios.get(
+        `/review/filterByStar/${id}?rating=${rating}`
+      );
+      dispatch({
+        type: FILTER_BY_STAR,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const filterByImageOrVideo =
+  (id: any): ThunkAction<Promise<void>, RootState, unknown, AnyAction> =>
+  async (
+    dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+    getState: () => RootState
+  ): Promise<void> => {
+    try {
+      const { data } = await axios.get(`/review/filterByImageOrVideo/${id}`);
+      dispatch({
+        type: FILTER_BY_IMAGE_OR_VIDEO,
         payload: data,
       });
     } catch (error) {
