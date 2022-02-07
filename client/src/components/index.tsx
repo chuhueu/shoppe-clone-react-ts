@@ -58,3 +58,6 @@ export { default as HeaderSellerPage } from "./sellerpage/Header";
 export { default as Sidebar } from "./sellerpage/Sidebar";
 export { default as TodoList } from "./sellerpage/TodoList";
 export { default as ListOrder } from "./sellerpage/listorder";
+export { default as ListProductSeller } from "./sellerpage/listproduct";
+export { default as AddProduct } from "./sellerpage/addproduct";
+export { default as ProductInfo } from "./sellerpage/addproduct/ProductInfo";

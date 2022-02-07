@@ -35,7 +35,7 @@ export const theme = createTheme({
       fontStyle: "normal",
       fontWeight: 400,
       fontSize: "14px",
-      color: "#d0011b",
+      color: "#ff4d2d",
       lineHeight: "125%",
     },
     h6: {

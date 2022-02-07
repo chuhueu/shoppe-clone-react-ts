@@ -162,7 +162,7 @@ const ReviewProduct = () => {
                 </Box>
               </Box>
               <Box mt={1}>
-                {review.length > 0 &&
+                {review &&
                   review?.map((item) => {
                     // dispatch(getUserForComment(item.id));
                     return (
