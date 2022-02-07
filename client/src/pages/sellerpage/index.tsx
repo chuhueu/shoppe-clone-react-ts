@@ -7,8 +7,9 @@ const SellerPage = ({ route }: any) => {
   return (
     <>
       <HeaderSellerPage />
+      <Sidebar />
       <Box display="flex">
-        <Sidebar />
+        <Box width="250px"></Box>
         <Box marginTop="60px" flex="1">
           {renderRoutes(route.routes)}
         </Box>

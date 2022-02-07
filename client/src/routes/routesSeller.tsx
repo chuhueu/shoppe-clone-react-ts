@@ -14,6 +14,10 @@ import {
   AccountPage,
   ProfilePage,
   AddressPage,
+  ListProductSellerPage,
+  AddProductPage,
+  ProductInfoPage,
+  ProductNamePage,
 } from "../pages/index";
 const Payment = () => <h1>this is the payment page</h1>;
 const Password = () => <h1>this is the password page</h1>;
@@ -102,6 +106,25 @@ export const routesSeller = [
       {
         path: "/seller/order",
         component: ListOrderPage,
+      },
+      {
+        path: "/seller/product",
+        component: ListProductSellerPage,
+      },
+      {
+        path: "/seller/product-add",
+        component: AddProductPage,
+        routes: [
+          {
+            path: "/seller/product-add",
+            exact: true,
+            component: ProductNamePage,
+          },
+          {
+            path: "/seller/product-add/basic",
+            component: ProductInfoPage,
+          },
+        ],
       },
     ],
   },

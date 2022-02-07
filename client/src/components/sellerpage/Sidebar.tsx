@@ -16,10 +16,10 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleSidebar: {
-      height: "100vh",
-      width: "220px",
-      position: "sticky",
+      width: "250px",
+      position: "fixed",
       overflowY: "scroll",
+      height: "100vh",
       background: "#fff",
       padding: "60px 10px 10px 10px",
       "&::-webkit-scrollbar": {
@@ -130,7 +130,7 @@ const Sidebar = () => {
           flexDirection="column"
           className={`${classes.styleList} ${toggle2 ? "active" : ""}`}
         >
-          <Link to="/" className={classes.styleItem}>
+          <Link to="/seller/product" className={classes.styleItem}>
             Tất Cả Sản Phẩm
           </Link>
           <Link to="/" className={classes.styleItem}>
