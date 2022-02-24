@@ -155,12 +155,12 @@ const ReviewProduct = () => {
                 <Box textAlign="center" mr={2}>
                   <Box color="#ee4d2d" fontSize="1.125rem">
                     <Box component="span" fontSize="1.875rem" mr={1}>
-                      {statistic.rateAvg.toFixed(1)}
+                      {statistic?.rateAvg.toFixed(1)}
                     </Box>
                     <Box component="span">trên 5</Box>
                     <Box mt={1} color="#ee4d2d">
-                      <StyledRating
-                        value={statistic.rateAvg}
+                      <Rating
+                        value={statistic?.rateAvg}
                         precision={0.5}
                         readOnly
                       />
