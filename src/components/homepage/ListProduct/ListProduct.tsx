@@ -1,9 +1,18 @@
-import { Box, Hidden, Grid, Typography } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Hidden,
+  Typography,
+} from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { useEffect, useState } from "react";
-import productModel from "../../../models/productModel";
-import axios from "../../../axios";
+import { getListProduct } from "../../../redux/actions/productAction";
+import { productState } from "../../../redux/reducers/productReducer";
+import { RootState } from "../../../redux/store";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleBox: {
@@ -62,18 +71,26 @@ const ListProduct = () => {
   //styles
   const classes = useStyles();
   //state
-  const [listProduct, setListProduct] = useState<Array<productModel>>([]);
+  const dispatch = useDispatch();
+
+  const listProduct = useSelector<RootState, productState>(
+    (state) => state.listProduct
+  );
+  const { productInfo, isFetching, error } = listProduct;
+
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await axios.get("/product");
-        setListProduct(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProduct();
-  }, []);
+    dispatch(getListProduct());
+  }, [dispatch]);
+
+  const toVND = (price: any) => {
+    let vnd =
+      typeof price === "undefined"
+        ? 0
+        : price.toLocaleString("vi-VN", {
+            currency: "VND",
+          });
+    return vnd;
+  };
   return (
     <Box mb={10} pt={1} className={classes.styleBox}>
       <Grid
@@ -82,44 +99,50 @@ const ListProduct = () => {
         spacing={2}
         className={classes.styleGrid}
       >
-        {listProduct.map((product) => {
-          return (
-            <Grid item xs={6} sm={4} md={2}>
-              <Link
-                to={{ pathname: "/info/" + product?._id }}
-                className={classes.styleLink}
-              >
-                <Box className={classes.styleText}>
-                  <img src={product?.image[0]} alt="" />
-                  <Box padding={1}>
-                    <Typography>{product?.name}</Typography>
-                    <Box
-                      mt={2}
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="center"
-                    >
-                      <Box>
-                        <Box component="span" fontSize=".75rem">
-                          đ
+        {isFetching ? (
+          <CircularProgress />
+        ) : (
+          productInfo?.map((product, index) => {
+            return (
+              <Grid item xs={6} sm={4} md={2} key={index}>
+                <Link
+                  to={{
+                    pathname: "/info/" + product?._id,
+                  }}
+                  className={classes.styleLink}
+                >
+                  <Box className={classes.styleText}>
+                    <img src={product?.image[0]} alt="" />
+                    <Box padding={1}>
+                      <Typography>{product?.name}</Typography>
+                      <Box
+                        mt={2}
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                      >
+                        <Box>
+                          <Box component="span" fontSize=".75rem">
+                            đ
+                          </Box>
+                          <Box component="span" fontSize="1rem">
+                            {toVND(product?.price)}
+                          </Box>
                         </Box>
-                        <Box component="span" fontSize="1rem">
-                          {product?.price}
-                        </Box>
+                        <Box>{product.sold} sold</Box>
                       </Box>
-                      <Box>{product.sold} sold</Box>
                     </Box>
                   </Box>
-                </Box>
-                <Hidden mdDown>
-                  <Box textAlign="center" className={classes.styleFind}>
-                    Find Similar
-                  </Box>
-                </Hidden>
-              </Link>
-            </Grid>
-          );
-        })}
+                  <Hidden mdDown>
+                    <Box textAlign="center" className={classes.styleFind}>
+                      Find Similar
+                    </Box>
+                  </Hidden>
+                </Link>
+              </Grid>
+            );
+          })
+        )}
       </Grid>
     </Box>
   );

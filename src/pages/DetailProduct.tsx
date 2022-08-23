@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Header,
   Footer,
   DirectoryProduct,
   MainProduct,
+  ShopProduct,
+  ListProduct,
+  ReviewProduct,
 } from "../components/index";
 const DetailProduct = () => {
+  const [reload, setReload] = useState<boolean>(false);
+
   return (
     <>
-      <Header />
+      <Header reload={reload} />
       <DirectoryProduct />
-      <MainProduct />
+      <MainProduct reload={reload} setReload={setReload} />
+      <ShopProduct />
+      <ReviewProduct />
+      <ListProduct />
       <Footer show={false} />
     </>
   );

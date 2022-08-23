@@ -23,7 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header = () => {
+interface Props {
+  reload?: boolean;
+}
+
+const Header = ({ reload }: Props) => {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -32,7 +36,7 @@ const Header = () => {
           <Hidden smDown>
             <Navbar />
           </Hidden>
-          <HeaderBottom />
+          <HeaderBottom reload={reload} />
         </Container>
       </Box>
       <Box className={classes.styleTop}></Box>

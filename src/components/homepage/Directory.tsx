@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import "swiper/swiper-bundle.min.css";
 import "../../assets/css/navigation.css";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     styleContainer: {
@@ -45,6 +46,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: ".625rem",
       },
     },
+    styleLink: {
+      textDecoration: "none",
+      color: "inherit",
+    },
   })
 );
 SwiperCore.use([Navigation]);
@@ -54,12 +59,14 @@ const Directory = () => {
   for (let i = 0; i < 26; i++) {
     slides.push(
       <SwiperSlide key={`directory-${i}`} tag="li">
-        <img
-          src={`/images/directory/directory-${i + 1}.png`}
-          alt=""
-          className="styleImg"
-        />
-        <Typography>Fashion</Typography>
+        <Link to={`/product/category/all`} className={classes.styleLink}>
+          <img
+            src={`/images/directory/directory-${i + 1}.png`}
+            alt=""
+            className="styleImg"
+          />
+          <Typography>Fashion</Typography>
+        </Link>
       </SwiperSlide>
     );
   }

@@ -20,7 +20,7 @@ import { logout } from "../../../redux/actions/userAction";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "../../../assets/css/popup.css";
-import { RootState } from "../../../redux/store/userStore";
+import { RootState } from "../../../redux/store";
 import { userState } from "../../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -218,6 +218,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: "5px",
       },
     },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
   })
 );
 
@@ -242,6 +246,7 @@ const Navbar = () => {
   const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logout());
+    window.location.reload();
   };
 
   return (
@@ -391,7 +396,7 @@ const Navbar = () => {
               style={{ cursor: "pointer", paddingRight: "20px" }}
             >
               <Avatar
-                alt="Remy Sharp"
+                className={classes.small}
                 src={`${
                   userInfo.avatar
                     ? userInfo.avatar
@@ -401,7 +406,12 @@ const Navbar = () => {
               <Typography variant="h2">{userInfo.username}</Typography>
               <Box className={classes.styleLanguage}>
                 <Box className={classes.styleLanguageBox}>
-                  <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                  <Link
+                    to="/account/profile"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                  </Link>
                 </Box>
                 <Box
                   className={classes.styleLanguageBox}

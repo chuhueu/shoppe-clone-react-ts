@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Box, Button, Typography, Avatar } from "@material-ui/core";
+import { Box, Button, Typography, Avatar, Hidden } from "@material-ui/core";
 import {
   Facebook,
   Instagram,
@@ -20,7 +20,7 @@ import { logout } from "../../redux/actions/userAction";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import "../../assets/css/popup.css";
-import { RootState } from "../../redux/store/userStore";
+import { RootState } from "../../redux/store";
 import { userState } from "../../redux/reducers/userReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "10px 0",
     },
     styleContainer: {
-      maxWidth: "1200px",
+      maxWidth: "1280px",
       padding: "0 24px",
       margin: "0 auto",
       height: "100%",
@@ -228,6 +228,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: "5px",
       },
     },
+    small: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    },
   })
 );
 
@@ -255,200 +259,213 @@ const NavbarCartPage = () => {
   };
 
   return (
-    <Box className={classes.styleWrapper}>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        className={classes.styleContainer}
-      >
-        <Box
-          display="flex"
-          alignItems="center"
-          className={classes.styleWrapperLeft}
-        >
-          <Typography variant="h2">
-            {!checkRole ? (
-              <Popup
-                trigger={
-                  <Link to="/" className={classes.styleLink}>
-                    Kênh Người Bán
-                  </Link>
-                }
-                modal
-                nested
-              >
-                {(
-                  close: React.MouseEventHandler<HTMLButtonElement> | undefined
-                ) => (
-                  <div className="modal">
-                    <button className="close" onClick={close}>
-                      &times;
-                    </button>
-                    <div className="header">Oops!</div>
-                    <div className="content">
-                      Tài khoản bạn chưa đăng kí quyền Người bán!
-                    </div>
-                    <div className="actions">
-                      <Link to="/signup" className="button">
-                        Đăng kí
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </Popup>
-            ) : (
-              <Link to="/seller" className={classes.styleLink}>
-                Kênh Người Bán
-              </Link>
-            )}
-          </Typography>
-          <Typography variant="h2">
-            <Link to="/" className={classes.styleLink}>
-              Trở thành Người bán Shopee
-            </Link>
-          </Typography>
-          <Typography variant="h2" className={classes.styleDownloadHover}>
-            <Link to="/" className={classes.styleLink}>
-              Tải ứng dụng
-            </Link>
-            <Box className={classes.styleDownload}>
-              <img src={qrCode} alt="" style={{ maxWidth: "100%" }} />
-              <Box
-                display="flex"
-                alignItems="center"
-                flexWrap="wrap"
-                justifyContent="space-between"
-              >
-                <img
-                  src={appStore}
-                  alt=""
-                  className={classes.styleDownloadImg}
-                />
-                <img src={ggPlay} alt="" className={classes.styleDownloadImg} />
-                <img
-                  src={appGallery}
-                  alt=""
-                  className={classes.styleDownloadImg}
-                />
-              </Box>
-            </Box>
-          </Typography>
-          <Typography variant="h2">
-            <Box display="flex" alignItems="center">
-              Kết nối
-              <Link to="#" className={classes.styleLink}>
-                <Facebook className={classes.styleIcon} />
-              </Link>
-              <Link to="#" className={classes.styleLink}>
-                <Instagram className={classes.styleIcon} />
-              </Link>
-            </Box>
-          </Typography>
-        </Box>
+    <Hidden smDown>
+      <Box className={classes.styleWrapper}>
         <Box
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          className={classes.styleWrapperRight}
+          className={classes.styleContainer}
         >
-          <Typography variant="h2" className={classes.styleNotiHover}>
-            <Link to="#" className={classes.styleLink}>
-              <NotificationsNoneOutlined className={classes.styleIcon} />
-              Thông báo
-            </Link>
-            <Box
-              className={classes.styleNoti}
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-            >
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                className={classes.styleNotiBox}
-              >
-                <img src={noNoti} alt="" style={{ maxWidth: "40%" }} />
-              </Box>
-              <Box display="flex" alignItems="center" width="100%">
-                <Button fullWidth className={classes.styleButton}>
-                  Đăng kí
-                </Button>
-                <Button fullWidth className={classes.styleButton}>
-                  Đăng nhập
-                </Button>
-              </Box>
-            </Box>
-          </Typography>
-          <Typography variant="h2">
-            <Link to="#" className={classes.styleLink}>
-              <HelpOutlineOutlined className={classes.styleIcon} />
-              Hỗ trợ
-            </Link>
-          </Typography>
-          <Typography variant="h2" className={classes.styleLanguageHover}>
-            <Link to="#" className={classes.styleLink}>
-              <LanguageOutlined className={classes.styleIcon} />
-              Tiếng việt
-              <KeyboardArrowDown className={classes.styleIcon} />
-            </Link>
-            <Box className={classes.styleLanguage}>
-              <Box className={classes.styleLanguageBox}>
-                <Typography variant="h4">Tiếng Việt</Typography>
-              </Box>
-              <Box className={classes.styleLanguageBox}>
-                <Typography variant="h4">English</Typography>
-              </Box>
-            </Box>
-          </Typography>
-          {userInfo ? (
-            <>
-              <Box
-                display="flex"
-                alignItems="center"
-                className={classes.styleLanguageHover}
-                style={{ cursor: "pointer", paddingRight: "20px" }}
-              >
-                <Avatar
-                  alt="Remy Sharp"
-                  src={`${
-                    userInfo.avatar
-                      ? userInfo.avatar
-                      : "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
-                  }`}
-                ></Avatar>
-                <Typography variant="h2">{userInfo.username}</Typography>
-                <Box className={classes.styleLanguage}>
-                  <Box className={classes.styleLanguageBox}>
-                    <Typography variant="h4">Tài Khoản Của Tôi</Typography>
-                  </Box>
-                  <Box
-                    className={classes.styleLanguageBox}
-                    onClick={handleLogout}
-                  >
-                    <Typography variant="h4">Đăng Xuất</Typography>
-                  </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            className={classes.styleWrapperLeft}
+          >
+            <Typography variant="h2">
+              {!checkRole ? (
+                <Popup
+                  trigger={
+                    <Link to="/" className={classes.styleLink}>
+                      Kênh Người Bán
+                    </Link>
+                  }
+                  modal
+                  nested
+                >
+                  {(
+                    close:
+                      | React.MouseEventHandler<HTMLButtonElement>
+                      | undefined
+                  ) => (
+                    <div className="modal">
+                      <button className="close" onClick={close}>
+                        &times;
+                      </button>
+                      <div className="header">Oops!</div>
+                      <div className="content">
+                        Tài khoản bạn chưa đăng kí quyền Người bán!
+                      </div>
+                      <div className="actions">
+                        <Link to="/signup" className="button">
+                          Đăng kí
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </Popup>
+              ) : (
+                <Link to="/seller" className={classes.styleLink}>
+                  Kênh Người Bán
+                </Link>
+              )}
+            </Typography>
+            <Typography variant="h2">
+              <Link to="/" className={classes.styleLink}>
+                Trở thành Người bán Shopee
+              </Link>
+            </Typography>
+            <Typography variant="h2" className={classes.styleDownloadHover}>
+              <Link to="/" className={classes.styleLink}>
+                Tải ứng dụng
+              </Link>
+              <Box className={classes.styleDownload}>
+                <img src={qrCode} alt="" style={{ maxWidth: "100%" }} />
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  flexWrap="wrap"
+                  justifyContent="space-between"
+                >
+                  <img
+                    src={appStore}
+                    alt=""
+                    className={classes.styleDownloadImg}
+                  />
+                  <img
+                    src={ggPlay}
+                    alt=""
+                    className={classes.styleDownloadImg}
+                  />
+                  <img
+                    src={appGallery}
+                    alt=""
+                    className={classes.styleDownloadImg}
+                  />
                 </Box>
               </Box>
-            </>
-          ) : (
-            <>
-              <Typography variant="h2">
-                <Link to="/signup" className={classes.styleLink}>
-                  Đăng ký
+            </Typography>
+            <Typography variant="h2">
+              <Box display="flex" alignItems="center">
+                Kết nối
+                <Link to="#" className={classes.styleLink}>
+                  <Facebook className={classes.styleIcon} />
                 </Link>
-              </Typography>
-              <Typography variant="h2">
-                <Link to="/login" className={classes.styleLink}>
-                  Đăng nhập
+                <Link to="#" className={classes.styleLink}>
+                  <Instagram className={classes.styleIcon} />
                 </Link>
-              </Typography>
-            </>
-          )}
+              </Box>
+            </Typography>
+          </Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            className={classes.styleWrapperRight}
+          >
+            <Typography variant="h2" className={classes.styleNotiHover}>
+              <Link to="#" className={classes.styleLink}>
+                <NotificationsNoneOutlined className={classes.styleIcon} />
+                Thông báo
+              </Link>
+              <Box
+                className={classes.styleNoti}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  className={classes.styleNotiBox}
+                >
+                  <img src={noNoti} alt="" style={{ maxWidth: "40%" }} />
+                </Box>
+                <Box display="flex" alignItems="center" width="100%">
+                  <Button fullWidth className={classes.styleButton}>
+                    Đăng kí
+                  </Button>
+                  <Button fullWidth className={classes.styleButton}>
+                    Đăng nhập
+                  </Button>
+                </Box>
+              </Box>
+            </Typography>
+            <Typography variant="h2">
+              <Link to="#" className={classes.styleLink}>
+                <HelpOutlineOutlined className={classes.styleIcon} />
+                Hỗ trợ
+              </Link>
+            </Typography>
+            <Typography variant="h2" className={classes.styleLanguageHover}>
+              <Link to="#" className={classes.styleLink}>
+                <LanguageOutlined className={classes.styleIcon} />
+                Tiếng việt
+                <KeyboardArrowDown className={classes.styleIcon} />
+              </Link>
+              <Box className={classes.styleLanguage}>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4">Tiếng Việt</Typography>
+                </Box>
+                <Box className={classes.styleLanguageBox}>
+                  <Typography variant="h4">English</Typography>
+                </Box>
+              </Box>
+            </Typography>
+            {userInfo ? (
+              <>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  className={classes.styleLanguageHover}
+                  style={{ cursor: "pointer", paddingRight: "20px" }}
+                >
+                  <Avatar
+                    className={classes.small}
+                    src={`${
+                      userInfo.avatar
+                        ? userInfo.avatar
+                        : "https://pdp.edu.vn/wp-content/uploads/2021/05/hinh-anh-avatar-de-thuong.jpg"
+                    }`}
+                  ></Avatar>
+                  <Typography variant="h2">{userInfo.username}</Typography>
+                  <Box className={classes.styleLanguage}>
+                    <Box className={classes.styleLanguageBox}>
+                      <Link
+                        to="/account/profile"
+                        style={{ textDecoration: "none" }}
+                      >
+                        <Typography variant="h4">Tài Khoản Của Tôi</Typography>
+                      </Link>
+                    </Box>
+                    <Box
+                      className={classes.styleLanguageBox}
+                      onClick={handleLogout}
+                    >
+                      <Typography variant="h4">Đăng Xuất</Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </>
+            ) : (
+              <>
+                <Typography variant="h2">
+                  <Link to="/signup" className={classes.styleLink}>
+                    Đăng ký
+                  </Link>
+                </Typography>
+                <Typography variant="h2">
+                  <Link to="/login" className={classes.styleLink}>
+                    Đăng nhập
+                  </Link>
+                </Typography>
+              </>
+            )}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Hidden>
   );
 };
 
