@@ -220,7 +220,7 @@ const ReviewProduct = () => {
                 </Box>
               </Box>
               <Box mt={1}>
-                {review &&
+                {review ?
                   review?.map((item) => {
                     // dispatch(getUserForComment(item.id));
                     return (
@@ -299,7 +299,7 @@ const ReviewProduct = () => {
                       </Box>
                     );
                   })
-                ) : (
+                 : (
                   <Box
                     display="flex"
                     justifyContent="center"
